@@ -53,8 +53,8 @@ def clean_eiopa_rfr(df: pd.DataFrame, date: str):
 def unpivot_maturities(df: pd.DataFrame):
     """Unpivot the data to have rates in one column
 
-    The original data is pivoted - each maturity's rate is displayed
-    as columns. For example: col 1: 0.5%, col 2: 0.7%, col 3: 0.8% ...
+    The original data is pivoted - each country's rate is displayed
+    as columns. For example: Austria: 0.5%, France: 0.7%, Belgium: 0.8% ...
 
     Args:
         df: Pandas dataframe to be unpivoted
