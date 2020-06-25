@@ -1,3 +1,4 @@
+import pandas as pd
 
 def read_eiopa(filepath: str, sheet_name: str):
     """Read EIOPA RFR Term Structures file.
