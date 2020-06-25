@@ -1,5 +1,5 @@
 
-def read_eiopa(filepath, sheet_name):
+def read_eiopa(filepath: str, sheet_name: str):
     """Read EIOPA RFR Term Structures file.
 
     Args:
@@ -14,7 +14,7 @@ def read_eiopa(filepath, sheet_name):
     return pd.read_excel(filepath, sheet_name=sheet_name, header=1)
 
 
-def clean_eiopa_rfr(df: pd.DataFrame, date):
+def clean_eiopa_rfr(df: pd.DataFrame, date: str):
     """Clean the data so that it can be easily used
 
     Args:
