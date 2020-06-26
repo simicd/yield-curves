@@ -49,6 +49,9 @@ def clean_eiopa_rfr(df: pd.DataFrame, date: str):
     # Generate rate_id with unique identifier generator - UUIDs have a very low probability of being generated twice (ever)
     df_tr['rate_id'] = df_tr.apply(lambda x: str(uuid.uuid4()), axis=1)
 
+    # Convert numeric columns to float
+    df_tr = df_tr.apply(pd.to_numeric, errors='ignore')
+
     return df_tr
 
 
@@ -80,6 +83,3 @@ def unpivot_maturities(df: pd.DataFrame):
         names=[None, 'Maturity'])
 
     return df_temp.stack().reset_index()
-
-
-
