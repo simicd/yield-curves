@@ -83,6 +83,3 @@ def unpivot_maturities(df: pd.DataFrame):
         names=[None, 'Maturity'])
 
     return df_temp.stack().reset_index()
-
-
-
