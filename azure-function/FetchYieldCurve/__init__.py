@@ -35,7 +35,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
         output_data = input_data[input_data["Date"] == clean_date]
 
-        return func.HttpResponse(output_data.to_csv("test.csv", index=False), mimetype="text/csv")
+        return func.HttpResponse(output_data.to_json(), mimetype="application/json")
     else:
         return func.HttpResponse(
              "Please pass a date on the query string or in the request body",
