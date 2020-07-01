@@ -13,9 +13,7 @@
 			"usernamehw.errorlens",
 			"ms-azuretools.vscode-azurefunctions",
 			"GitHub.vscode-pull-request-github",
-			"Gruntfuggly.todo-tree",
-			"ms-azuretools.vscode-azurefunctions",
-			"ms-python.python",
+			"Gruntfuggly.todo-tree"
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
 	"unwantedRecommendations": [
