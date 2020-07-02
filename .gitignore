@@ -1,4 +1,4 @@
 # Ignore files
 *.xlsx
 *.csv
-*.local.settings.json
+local.settings.json
