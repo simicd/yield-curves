@@ -15,101 +15,18 @@ def main(req: func.HttpRequest, rates) -> func.HttpResponse:
 
     Check the parameters given by the API call and filter the data based on them.
     The available parameters are:
-    - date: The date of the curve requested
-    - currency: The currency of the curved requested
-    - maturity: The maturity of the curved requested
+    - date: The date of the requested curve
+    - filter: OData filter (e.g. filter=country_code eq 'US')
 
     Returns:
         Data requested by the API in json format
 
     """
-    logging.info('Python HTTP trigger function processed a request.')
+    logging.info('Python HTTP trigger function processed the rates API request.')
 
     return func.HttpResponse(rates, mimetype="application/json")
 
-    date = get_param(req=req, param='date')
-    currency = get_param(req=req, param='currency')
-    maturity = get_param(req=req, param='maturity')
 
-    if date or currency or maturity:
-
-        output_data = pd.DataFrame([])
-
-        # Date & Currency & Maturity
-        if date and currency and maturity:
-            try:
-                clean_date = pd.to_datetime(date)
-            except:
-                return func.HttpResponse("Please pass a valid date through query string or in the request body",
-                                         status_code=400)
-            try:
-                maturity = int(maturity)
-            except:
-                return func.HttpResponse("Please pass a valid number through query string or in the request body",
-                                         status_code=400)
-            output_data = input_data[(input_data["Date"] == clean_date) &
-                                     (input_data["Currency"] == currency) &
-                                     (input_data["Maturity"] == maturity)]
-        # Date & Currency
-        elif date and currency and not maturity:
-            try:
-                clean_date = pd.to_datetime(date)
-            except:
-                return func.HttpResponse("Please pass a valid date through query string or in the request body",
-                                         status_code=400)
-            output_data = input_data[(input_data["Date"] == clean_date) & (input_data["Currency"] == currency)]
-
-        # Date
-        elif date and not currency and not maturity:
-            try:
-                clean_date = pd.to_datetime(date)
-            except:
-                return func.HttpResponse("Please pass a valid date through query string or in the request body",
-                                         status_code=400)
-            output_data = input_data[(input_data["Date"] == clean_date)]
-
-        # Date & Maturity
-        elif date and not currency and maturity:
-            try:
-                clean_date = pd.to_datetime(date)
-            except:
-                return func.HttpResponse("Please pass a valid date through query string or in the request body",
-                                         status_code=400)
-            try:
-                maturity = int(maturity)
-            except:
-                return func.HttpResponse("Please pass a valid number through query string or in the request body",
-                                         status_code=400)
-            output_data = input_data[(input_data["Date"] == clean_date) &
-                                     (input_data["Maturity"] == maturity)]
-        # Currency
-        elif currency and not date and not maturity:
-            output_data = input_data[(input_data["Currency"] == currency)]
-
-        # Maturity
-        elif maturity and not date and not currency:
-            try:
-                maturity = int(maturity)
-            except:
-                return func.HttpResponse("Please pass a valid number through query string or in the request body",
-                                         status_code=400)
-            output_data = input_data[(input_data["Maturity"] == maturity)]
-
-        # Currency & Maturity
-        elif currency and not date and maturity:
-            try:
-                maturity = int(maturity)
-            except:
-                return func.HttpResponse("Please pass a valid number through query string or in the request body",
-                                         status_code=400)
-            output_data = input_data[(input_data["Currency"] == currency) &
-                                     (input_data["Maturity"] == maturity)]
-
-        return func.HttpResponse(output_data.to_json(), mimetype="application/json")
-
-    else:
-        return func.HttpResponse("Please pass a date or currency or maturity on the query string or in the request body",
-                                 status_code=400)
 
 
 def get_param(req: func.HttpRequest, param: str):
