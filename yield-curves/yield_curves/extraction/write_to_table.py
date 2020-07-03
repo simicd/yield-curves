@@ -1,28 +1,28 @@
 from azure.cosmosdb.table.tablebatch import TableBatch
 from azure.cosmosdb.table.tableservice import TableService
-from azure.cosmosdb.table.models import Entity
 import json
 import pandas as pd
-
-with open(r'yield-curves/yield_curves/extraction/local.settings.json') as json_file:
-    data = json.load(json_file)
+import numpy as np
 
 
-table_service =  TableService(account_name=data["account_name"], account_key=data["table_key"])
+def write_to_table(account_name: str, account_key: str, table: pd.DataFrame, table_name: str):
 
-table_service.create_table('rates')
+    # Set up connection to table service
+    table_service =  TableService(account_name=account_name, account_key=account_key)
 
-table = pd.read_csv("/home/jovyan/repos/yield-curves/azure-function/FetchYieldCurve/yield-curves-file.csv")
+    # Create a new table only if it does not exists
+    table_service.create_table(table_name)
 
-table["PartitionKey"] = table["Date"]
-table["Date"] = pd.to_datetime(table["Date"])
-table["RowKey"] = table["Currency"] + "_" + table["Maturity"].astype(str)
+    # Specify PartitonKey and RowKey
+    table["PartitionKey"] = table["Date"]
+    table["Date"] = pd.to_datetime(table["Date"])
+    table["RowKey"] = table["country_code"] + "_" + table["Maturity"].astype(str)
 
-
-for _, partition_df in table.groupby("PartitionKey"):
-    batch = TableBatch()
-    rates_list = json.loads(partition_df.to_json(date_format="iso", orient="records"))
-    for rate in rates_list:
-        batch.insert_or_replace_entity(rate)
-    table_service.commit_batch('rates', batch)
+    # Iterate through each PartitionKey and insert the rows into batch and submit to table service
+    for _, partition_df in table.groupby(["PartitionKey", np.arange(len(table)) // 100]):
+        batch = TableBatch()
+        rates_list = json.loads(partition_df.to_json(date_format="iso", orient="records"))
+        for rate in rates_list:
+            batch.insert_or_replace_entity(rate)
+        table_service.commit_batch(table_name, batch)
 
