@@ -10,7 +10,7 @@ input_data = pd.DataFrame({
     'Maturity': [2.0, 3.0, 2.0, 3.0]
 })
 
-def main(req: func.HttpRequest) -> func.HttpResponse:
+def main(req: func.HttpRequest, rates) -> func.HttpResponse:
     """Function for API call
 
     Check the parameters given by the API call and filter the data based on them.
@@ -24,6 +24,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     """
     logging.info('Python HTTP trigger function processed a request.')
+
+    return func.HttpResponse(rates, mimetype="application/json")
 
     date = get_param(req=req, param='date')
     currency = get_param(req=req, param='currency')

@@ -2,6 +2,15 @@
   "scriptFile": "__init__.py",
   "bindings": [
     {
+      "name": "rates",
+      "type": "table",
+      "tableName": "rates",
+      "partitionKey": "{date}",
+      "filter": "{filter}",
+      "connection": "AzureWebJobsStorage",
+      "direction": "in"
+    },
+    {
       "authLevel": "function",
       "type": "httpTrigger",
       "direction": "in",
