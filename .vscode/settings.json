@@ -1,9 +1,16 @@
 {
   "python.pythonPath": "/opt/conda/bin/python",
+  "python.autoComplete.extraPaths": ["yield-curves", "azure-functions"],
   "python.testing.pytestArgs": [
     "yield-curves"
   ],
   "python.testing.unittestEnabled": false,
   "python.testing.nosetestsEnabled": false,
-  "python.testing.pytestEnabled": true
+  "python.testing.pytestEnabled": true,
+  "azureFunctions.deploySubpath": "azure-function",
+  "azureFunctions.scmDoBuildDuringDeployment": true,
+  "azureFunctions.pythonVenv": ".venv",
+  "azureFunctions.projectLanguage": "Python",
+  "azureFunctions.projectRuntime": "~3",
+  "debug.internalConsoleOptions": "neverOpen"
 }
