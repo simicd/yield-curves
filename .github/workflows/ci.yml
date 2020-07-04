@@ -14,7 +14,7 @@ on:
 # Environment variables
 env:
   AZURE_FUNCTIONAPP_NAME: flow-functions-test           # Azure Functions app name
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: './azure-function'   # Azure Functions source folder
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: './azure-function'    # Azure Functions source folder
 
 jobs:
   # Build package
@@ -59,6 +59,19 @@ jobs:
         pip install codecov
         pytest --cov=./ --cov-report=xml --cov-branch --ignore main.py
 
+    - name: Build package
+      working-directory: ./yield-curves
+      # Use wheel to create a pre-compiled Python package (saves time later on)
+      run: |
+        pip install wheel
+        python setup.py bdist_wheel --universal
+
+    - name: Archive Python package
+      uses: actions/upload-artifact@v1
+      with:
+        name: package
+        path: ./yield-curves/dist
+
   # Deployment job (depends on successful completion of the build job)
   deploy-azure-functions:
     name: Deploy to Azure Functions
@@ -85,12 +98,11 @@ jobs:
       with:
         python-version: ${{ env.python-version }}
 
-    - name: Build package
-      working-directory: ./yield-curves
-      # Use wheel to create a pre-compiled Python package (saves time later on)
-      run: |
-        pip install wheel
-        python setup.py bdist_wheel --universal
+    - name: Download Python package from build job
+      uses: actions/download-artifact@v1
+      with:
+        name: package
+        path: ./dist
 
     - name: Resolve Azure Functions dependencies
       # Install entries from Azure Functions requirements file as well as the flow package with pandas backend
@@ -101,7 +113,7 @@ jobs:
         pip install -r requirements.txt --target=".python_packages/lib/site-packages"
         #     Install package within the dist folder without hardcoding version number:
         #     (instead of `pip install '../dist/flow-0.1.0-py2.py3-none-any.whl'`)
-        pip install --target=".python_packages/lib/site-packages" --find-links='../yield-curves/dist/' yield_curves
+        pip install --target=".python_packages/lib/site-packages" --find-links='../dist/' yield_curves
         popd
 
     - name: Deploy Azure Functions Action
