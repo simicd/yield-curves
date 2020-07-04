@@ -49,6 +49,9 @@ def clean_eiopa_rfr(df: pd.DataFrame, date: str):
     # Generate rate_id with unique identifier generator - UUIDs have a very low probability of being generated twice (ever)
     df_tr['rate_id'] = df_tr.apply(lambda x: str(uuid.uuid4()), axis=1)
 
+    # Extract the country code from the ID (Country attribute is a long name)
+    df_tr["country_code"] = df_tr["EIOPA_RFR_ID"].str.split("_").str[0]
+
     # Convert numeric columns to float
     df_tr = df_tr.apply(pd.to_numeric, errors='ignore')
 
