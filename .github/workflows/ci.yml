@@ -12,7 +12,6 @@ on:
   pull_request:     # Even without configuration `:` must be appended
   watch:
     types: [started]
-    if: github.actor == github.event.repository.owner.login
 
 
 # Environment variables
@@ -23,6 +22,8 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    if: github.actor == github.event.repository.owner.login
 
     # Execute several builds with different configurations
     strategy:
