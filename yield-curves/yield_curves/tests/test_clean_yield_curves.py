@@ -33,6 +33,7 @@ def test_clean_eiopa_rfr():
         6: {'Euro': 0.00092, 'Austria': 0.00092, 'Belgium': 0.00092},
         7: {'Euro': 0.00215, 'Austria': 0.00215, 'Belgium': 0.00215},
         'Date': {'Euro': '2019-12-31', 'Austria': '2019-12-31', 'Belgium': '2019-12-31'},
+        'country_code': {'Euro': 'EUR', 'Austria': 'AT', 'Belgium': 'BE'},
     })
 
     # Actual output

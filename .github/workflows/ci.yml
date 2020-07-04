@@ -1,0 +1,64 @@
+# This workflow will install Python dependencies, run tests and lint with the chosen Python versions
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Build Python package
+
+# Trigger pipeline if commit pushed to master (merge) or during any pull request
+# See also: https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#example-using-multiple-events-with-activity-types-or-configuration
+on:
+  push:
+    branches:
+      - master
+  pull_request:     # Even without configuration `:` must be appended
+
+# Environment variables
+env:
+  AZURE_FUNCTIONAPP_NAME: flow-functions-test           # Azure Functions app name
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: './azure-functions'   # Azure Functions source folder
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Execute several builds with different configurations
+    strategy:
+      matrix:
+        python-version: [3.7]
+
+    name: Python ${{ matrix.python-version }}
+
+    # Pipeline steps
+    steps:
+    - uses: actions/checkout@v2
+    # Caching stores the dependencies so that subsequent runs are faster (cache duration: 7 days)
+    # Template: https://github.com/actions/cache/blob/master/examples.md#python---pip
+
+    - uses: actions/cache@v1
+      with:
+        path: ~/.cache/pip                                                              # pip stores cached files here by default
+        key: cache-pip-${{ hashFiles('**/requirements.txt') }}    # Lookup key - if .txt changes new cache will be set up
+        restore-keys: |                                                                 # Fallback lookup key(s) if main key not found in cache
+          cache-pip-
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      working-directory: ./yield-curves
+      run: |
+        python -m pip install --upgrade pip
+        #     Install requirements.txt plus optional dependencies specified in `setup.py` (`extra_require`)
+        #     Optional dependencies can be installed with `pip install packagename[extra_param]`
+        #     Requirements.txt with the mandatory dependencies is read in through `setup.py`
+        # pip install -r requirements.txt
+        pip install -e .
+
+    - name: Test with pytest
+      working-directory: ./yield-curves
+      run: |
+        pip install pytest
+        pip install pytest pytest-cov
+        pip install codecov
+        pytest --cov=./ --cov-report=xml --cov-branch --ignore main.py
