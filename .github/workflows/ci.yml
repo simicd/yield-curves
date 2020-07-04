@@ -14,19 +14,18 @@ on:
 # Environment variables
 env:
   AZURE_FUNCTIONAPP_NAME: flow-functions-test           # Azure Functions app name
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: './azure-functions'   # Azure Functions source folder
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: './azure-function'   # Azure Functions source folder
 
 jobs:
   # Build package
   build:
+    name: Build with Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
 
     # Execute several builds with different configurations
     strategy:
       matrix:
         python-version: [3.7]
-
-    name: Python ${{ matrix.python-version }}
 
     # Pipeline steps
     steps:
@@ -59,3 +58,56 @@ jobs:
         pip install pytest pytest-cov
         pip install codecov
         pytest --cov=./ --cov-report=xml --cov-branch --ignore main.py
+
+  # Deployment job (depends on successful completion of the build job)
+  deploy-azure-functions:
+    name: Deploy to Azure Functions
+    runs-on: ubuntu-latest
+    needs: build
+
+    # Set environment variables for job
+    env:
+      python-version: 3.7
+
+    # Pipeline steps
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/cache@v1
+      with:
+        path: ~/.cache/pip
+        key: cache-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          cache-pip-
+
+    - name: Set up Python ${{ env.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ env.python-version }}
+
+    - name: Build package
+      working-directory: ./yield-curves
+      # Use wheel to create a pre-compiled Python package (saves time later on)
+      run: |
+        pip install wheel
+        python setup.py bdist_wheel --universal
+
+    - name: Resolve Azure Functions dependencies
+      # Install entries from Azure Functions requirements file as well as the flow package with pandas backend
+      shell: bash
+      run: |
+        pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt --target=".python_packages/lib/site-packages"
+        #     Install package within the dist folder without hardcoding version number:
+        #     (instead of `pip install '../dist/flow-0.1.0-py2.py3-none-any.whl'`)
+        pip install --target=".python_packages/lib/site-packages" --find-links='../yield-curves/dist/' yield_curves
+        popd
+
+    - name: Deploy Azure Functions Action
+      uses: Azure/functions-action@v1
+      id: fa
+      with:
+        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+        package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+        publish-profile: ${{ secrets.AZURE_FUNCTIONS_PUBLISH_PROFILE }}
