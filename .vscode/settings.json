@@ -1,6 +1,6 @@
 {
   "python.pythonPath": "/opt/conda/bin/python",
-  "python.autoComplete.extraPaths": ["yield-curves", "azure-functions"],
+  "python.autoComplete.extraPaths": ["yield-curves", "azure-function"],
   "python.testing.pytestArgs": [
     "yield-curves"
   ],

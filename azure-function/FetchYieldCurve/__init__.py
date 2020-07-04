@@ -3,41 +3,41 @@ import pandas as pd
 
 import azure.functions as func
 
+input_data = pd.DataFrame({
+    'Currency': ['USD'] * 2 + ['CAD'] * 2,
+    'Date': [pd.to_datetime("2020-01-01")] * 2 + [pd.to_datetime("2020-01-31")] * 2,
+    'Rate': [0.0250, 0.0350, 0.0245, 0.0256],
+    'Maturity': [2.0, 3.0, 2.0, 3.0]
+})
 
-def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
+def main(req: func.HttpRequest, rates) -> func.HttpResponse:
+    """Function for API call
 
-    date = req.params.get('date')
-    if not date: # This can be a function itself for multiple params
+    Check the parameters given by the API call and filter the data based on them.
+    The available parameters are:
+    - date: The date of the requested curve
+    - filter: OData filter (e.g. filter=country_code eq 'US')
+
+    Returns:
+        Data requested by the API in json format
+
+    """
+    logging.info('Python HTTP trigger function processed the rates API request.')
+
+    return func.HttpResponse(rates, mimetype="application/json")
+
+
+
+
+def get_param(req: func.HttpRequest, param: str):
+
+    param_value = req.params.get(param)
+    if not param_value:
         try:
             req_body = req.get_json()
         except ValueError:
             pass
         else:
-            date = req_body.get('date')
+            param_value = req_body.get(param)
 
-
-    if date:
-        try:
-            clean_date = pd.to_datetime(date)
-        except:
-            return func.HttpResponse(
-                "Please pass a valid date through query string or in the request body",
-                status_code=400
-            )
-
-        input_data = pd.DataFrame({
-            'Currency': ['USD'] * 2,
-            'Date': [pd.to_datetime("2020-01-01")] * 2,
-            'Rate': [0.0250, 0.0350],
-            'Maturity': [2.0, 3.0]
-        })
-
-        output_data = input_data[input_data["Date"] == clean_date]
-
-        return func.HttpResponse(output_data.to_json(), mimetype="application/json")
-    else:
-        return func.HttpResponse(
-             "Please pass a date on the query string or in the request body",
-             status_code=400
-        )
+    return param_value

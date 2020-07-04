@@ -2,11 +2,10 @@
   "scriptFile": "__init__.py",
   "bindings": [
     {
-      "name": "rates",
+      "name": "launches",
       "type": "table",
-      "tableName": "rates",
-      "partitionKey": "{date}",
-      "filter": "{filter}",
+      "tableName": "SpaceXLaunch",
+      "partitionKey": "{rocket}",
       "connection": "AzureWebJobsStorage",
       "direction": "in"
     },
