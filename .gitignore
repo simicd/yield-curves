@@ -2,3 +2,4 @@
 *.xlsx
 *.csv
 local.settings.json
+/react-app/node_modules
