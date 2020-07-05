@@ -25,7 +25,7 @@ jobs:
     # Execute several builds with different configurations
     strategy:
       matrix:
-        python-version: [3.7]
+        python-version: [3.8]
 
     # Pipeline steps
     steps:
@@ -80,7 +80,7 @@ jobs:
 
     # Set environment variables for job
     env:
-      python-version: 3.7
+      python-version: 3.8
 
     # Pipeline steps
     steps:
@@ -113,7 +113,7 @@ jobs:
         pip install -r requirements.txt --target=".python_packages/lib/site-packages"
         #     Install package within the dist folder without hardcoding version number:
         #     (instead of `pip install '../dist/flow-0.1.0-py2.py3-none-any.whl'`)
-        pip install --target=".python_packages/lib/site-packages" --find-links='../dist/' yield_curves
+        pip install --target=".python_packages/lib/site-packages" --find-links='../dist/' yield_curves --upgrade
         popd
 
     - name: Deploy Azure Functions Action
