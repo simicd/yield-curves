@@ -1,17 +1,19 @@
 import React, { FC, useState } from "react";
+import { Alert } from "../Alert/Alert";
 
 export const Subscription: FC = () => {
   const [email, setEmail] = useState("");
+  const [notification, setNotification] = useState(false);
 
   return (
     <div className="bg-white">
-      <div className="max-w-screen-xl mx-auto px-4 py-12 sm:px-6 lg:py-16 lg:px-8">
+      <div className="max-w-screen-xl px-4 py-12 mx-auto sm:px-6 lg:py-16 lg:px-8">
         <div className="px-6 py-6 bg-indigo-900 rounded-lg md:py-12 md:px-12 lg:py-16 lg:px-16 xl:flex xl:items-center">
           <div className="xl:w-0 xl:flex-1">
-            <h2 className="text-2xl leading-8 font-bold tracking-tight text-white sm:text-3xl sm:leading-9">
+            <h2 className="text-2xl font-bold leading-8 tracking-tight text-white sm:text-3xl sm:leading-9">
               Want to be notified when we go live?
             </h2>
-            <p className="mt-3 max-w-3xl text-lg leading-6 text-indigo-200" id="newsletter-headline">
+            <p className="max-w-3xl mt-3 text-lg leading-6 text-indigo-200" id="newsletter-headline">
               Sign up to stay up to date.
             </p>
           </div>
@@ -23,13 +25,13 @@ export const Subscription: FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="appearance-none w-full px-5 py-3 border border-transparent text-base leading-6 rounded-md text-gray-900 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 transition duration-150 ease-in-out"
+                className="w-full px-5 py-3 text-base leading-6 text-gray-900 placeholder-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md appearance-none focus:outline-none focus:placeholder-gray-400"
                 placeholder="Enter your email"
               />
               <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">
                 <button
-                  className="w-full flex items-center justify-center px-5 py-3 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-indigo-900 border-white hover:bg-indigo-400 focus:outline-none focus:bg-indigo-400 transition duration-150 ease-in-out"
-                  onClick={() => window.alert("This is a demo - the e-mail address you entered is \n" + email)}>
+                  className="flex items-center justify-center w-full px-5 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-indigo-900 border border-transparent border-white rounded-md hover:bg-indigo-400 focus:outline-none focus:bg-indigo-400"
+                  onClick={() => setNotification(true)}>
                   Notify me
                 </button>
               </div>
@@ -37,6 +39,11 @@ export const Subscription: FC = () => {
           </div>
         </div>
       </div>
+      {notification && (
+        <Alert onClick={() => setNotification(false)}>
+          This is a demo - the e-mail address you entered is <b className="font-bold text-indigo-700">{email}</b>
+        </Alert>
+      )}
     </div>
   );
 };
