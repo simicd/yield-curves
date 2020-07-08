@@ -16,30 +16,30 @@ export const Pricing: FC = () => {
             <div className="max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">
               <div className="relative lg:grid lg:grid-cols-7">
                 <PricingCardBudget
-                  title="Hobby"
-                  amount={79}
-                  benefits={["Pariatur quod similique", "Sapiente libero doloribus", "Vel ipsa esse repudiandae"]}
+                  title="Free"
+                  amount={0}
+                  benefits={["Yield curve dashboard", "Monthly data as .csv", "Free, forever"]}
                   buttonText="Show dashboard"
                   buttonUrl="/"
                 />
                 <PricingCardMain
-                  title="Growth"
-                  amount={149}
+                  title="Individual"
+                  amount={0}
                   benefits={[
-                    "Quia rem est sed impedit magnam",
-                    "Dolorem vero ratione voluptates",
-                    "Qui sed ab doloribus voluptatem dolore",
-                    "Laborum commodi molestiae id et fugiat",
-                    "Nam ut ipsa nesciunt culpa modi dolor",
+                    "All features from Free tier",
+                    "Access to REST API",
+                    "For personal use",
+                    "...",
+                    "...",
                   ]}
-                  buttonText="Show dashboard"
+                  buttonText="Get started"
                   buttonUrl="/"
                 />
                 <PricingCardTop
-                  title="Scale"
-                  amount={349}
-                  benefits={["Pariatur quod similique", "Sapiente libero doloribus", "Vel ipsa esse repudiandae"]}
-                  buttonText="Show dashboard"
+                  title="Enterprise"
+                  amount={0}
+                  benefits={["All features from Individual tier", "Distribution within company", "On-demand support"]}
+                  buttonText="Get started"
                   buttonUrl="/"
                 />
               </div>
