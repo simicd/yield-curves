@@ -121,9 +121,9 @@ const PricingCardMain: FC<PricingCardProps> = ({ title, amount, benefits, button
         <div className="absolute inset-0 border-2 border-indigo-600 rounded-lg pointer-events-none"></div>
         <div className="absolute inset-x-0 top-0 transform translate-y-px">
           <div className="flex justify-center transform -translate-y-1/2">
-            <span className="inline-flex px-4 py-1 text-sm font-semibold leading-5 tracking-wider text-white uppercase bg-indigo-600 rounded-full">
+            {/* <span className="inline-flex px-4 py-1 text-sm font-semibold leading-5 tracking-wider text-white uppercase bg-indigo-600 rounded-full">
               Most popular
-            </span>
+            </span> */}
           </div>
         </div>
         <div className="px-6 pt-12 pb-10 bg-white rounded-t-lg">
