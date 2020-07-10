@@ -6,9 +6,7 @@ import { Playground } from "./views/Playground";
 import { Layout } from "./components/Layout/Layout";
 
 import { loadStripe } from "@stripe/stripe-js";
-
 import { Elements } from "@stripe/react-stripe-js";
-
 import CheckoutForm from "./views/Checkout/CheckoutForm";
 
 import "./views/Checkout/Checkout.css";
@@ -27,9 +25,9 @@ function App() {
       <Route exact path="/" component={Home} />
       {/* <Home />
       <Subscription></Subscription> */}
-        <Elements stripe={promise}>
-          <CheckoutForm />
-        </Elements>
+      <Elements stripe={promise}>
+        <CheckoutForm />
+      </Elements>
     </>
   );
 }
