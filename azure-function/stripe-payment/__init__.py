@@ -22,24 +22,19 @@ def calculate_order_amount(item):
 
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
+    logging.info('Python HTTP trigger function processed a post request for client secret for payment processing.')
 
-    req_body = req.get_json()
-    print(req_body)
-
-    # try:
-    #     req_body = req.get_json()
-    # except ValueError:
-    #     pass
-    # else:
-    #     # data = req_body.get('data')
-    #     print(req_body)
-
-    intent = stripe.PaymentIntent.create(amount=calculate_order_amount(req_body['service']), currency='usd')
-    return func.HttpResponse(json.dumps({'clientSecret': intent['client_secret']}), mimetype="application/json")
-
-    if req_body:
-        intent = stripe.PaymentIntent.create(amount=calculate_order_amount(req_body['items']), currency='usd')
-        return func.HttpResponse({'clientSecret': intent['client_secret']}, mimetype="application/json")
+    try:
+        req_body = req.get_json()
+    except ValueError:
+        pass
     else:
-        return func.HttpResponse("Please pass a item on the query string or in the request body", status_code=400)
+        # The request should come with a service element in its body
+        item = req_body['service']
+
+    # Create PaymentIntent for the item that is given
+    if item:
+        intent = stripe.PaymentIntent.create(amount=calculate_order_amount(item), currency='usd')
+        return func.HttpResponse(json.dumps({'clientSecret': intent['client_secret']}), mimetype="application/json")
+    else:
+        return func.HttpResponse("Please pass a valid service in the request body", status_code=400)
