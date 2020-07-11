@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import "./Checkout.css"
 
 export default function CheckoutForm() {
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
-  const [processing, setProcessing] = useState("");
+  const [processing,   setProcessing] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState("");
   const stripe = useStripe();
@@ -79,10 +79,11 @@ export default function CheckoutForm() {
     }
   };
   return (
+    <div className="stripe-checkout">
     <form id="payment-form" onSubmit={handleSubmit}>
       <CardElement id="card-element" options={cardStyle} onChange={handleChange} />
-      <button disabled={processing || disabled || succeeded} id="submit">
-        <span id="button-text">{processing ? <div className="spinner" id="spinner"></div> : "Pay"}</span>
+      <button className="pay-button" disabled={processing || disabled || succeeded} id="submit">
+        <span id="button-text">{processing ? <div className="text-center text-red-800 bg-blue-100" id="spinner"></div> : "Pay"}</span>
       </button>
       {/* Show any error that happens when processing the payment */}
       {error && (
@@ -96,5 +97,7 @@ export default function CheckoutForm() {
         <a href={`https://dashboard.stripe.com/test/payments`}> Stripe dashboard.</a> Refresh the page to pay again.
       </p>
     </form>
+    </div>
   );
 }
+
