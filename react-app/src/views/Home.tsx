@@ -1,5 +1,8 @@
 import React, { FC } from "react";
 
+import { Subscription } from "../components/Subscribe/Subscribe";
+import { Pricing } from "../components/Pricing/Pricing";
+
 export const Home: FC = () => {
   // const displayName = Home.name;
   return (
@@ -110,6 +113,8 @@ export const Home: FC = () => {
         </div>
       </div>
       <Feature />
+      <Pricing />
+      <Subscription />
     </>
   );
 };
