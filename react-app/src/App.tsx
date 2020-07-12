@@ -1,15 +1,12 @@
 import React from "react";
+import { Route } from "react-router-dom";
 import { Home } from "./views/Home";
 import "./App.css";
-import { Subscription } from "./components/Subscribe/Subscribe";
-import { Pricing } from "./components/Pricing/Pricing";
 
 function App() {
   return (
     <>
-      <Home />
-      <Pricing></Pricing>
-      <Subscription></Subscription>
+      <Route exact path="/" component={Home} />
     </>
   );
 }
