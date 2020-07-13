@@ -16,6 +16,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-router": "^5.1.8",
     "@types/react-router-dom": "^5.1.5",
+    "clsx": "^1.1.1",
     "lodash": "^4.17.19",
     "postcss-cli": "^7.1.1",
     "react": "^16.13.1",
