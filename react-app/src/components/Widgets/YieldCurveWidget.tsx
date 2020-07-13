@@ -3,10 +3,16 @@ import { Serie, ResponsiveLine } from "@nivo/line";
 import clsx from "clsx";
 
 interface YieldCurveWidgetProps {
+  /** Dataset */
   data: Serie[];
 }
 
+/**
+ * Widget displaying yield curves with selection button
+ * @param YieldCurveWidgetProps Widget properties
+ */
 export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
+  // Select first country in the list as default selection
   const [country, setCountry] = useState(data[0].id);
 
   return (
@@ -33,7 +39,7 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
           margin={{ top: 50, right: 60, bottom: 100, left: 60 }}
           xScale={{ type: "linear" }}
           yScale={{ type: "linear", min: -0.01, max: 0.05 }}
-          yFormat=".1%"
+          yFormat=".1%" // Format as percentage with one decimal point
           curve="natural"
           axisTop={null}
           axisRight={null}
@@ -58,19 +64,20 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
             tickValues: 6,
           }}
           enableGridX={false}
-          gridYValues={6}
+          gridYValues={6} // Number of grid lines
           enableSlices="x"
-          colors={"#5145cd"}
+          colors={"#5145cd"} // Line color: indigo
           enablePoints={true}
-          pointColor={{ from: 'color', modifiers: [] }}
+          pointColor={{ from: "color", modifiers: [] }} // Inherit color from line
           pointBorderWidth={2}
-          pointBorderColor={{ from: 'color', modifiers: [] }}
+          pointBorderColor={{ from: "color", modifiers: [] }}
           pointLabel="y"
           pointLabelYOffset={-12}
           crosshairType="bottom"
           useMesh={true}
           enableArea={true}
           defs={[
+            // Define gradient
             {
               id: "gradient",
               type: "linearGradient",
@@ -81,7 +88,7 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
             },
           ]}
           fill={[
-            // match any object
+            // Apply gradient to all lines
             { match: "*", id: "gradient" },
           ]}
         />
