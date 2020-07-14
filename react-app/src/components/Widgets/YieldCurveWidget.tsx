@@ -2,6 +2,32 @@ import React, { FC, useState } from "react";
 import { Serie, ResponsiveLine } from "@nivo/line";
 import clsx from "clsx";
 
+const theme = {
+  axis: {
+    domain: {
+      line: {
+        stroke: 'transparent',
+        strokeWidth: 1
+      }
+    },
+    ticks: {
+      line: {
+        stroke: 'transparent',
+        strokeWidth: 1
+      },
+      text: {
+        fill: "lightgray"
+      }
+    },
+    legend: {
+      text: {
+        fontSize: 12,
+        fill: "lightgray"
+      }
+    }
+  },
+};
+
 interface YieldCurveWidgetProps {
   /** Dataset */
   data: Serie[];
@@ -22,26 +48,11 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
 
   return (
     <>
-      <div style={{ width: 800, height: 500 }} className="mx-auto mt-8">
-        <h3 className="mx-6 text-lg font-semibold tracking-wider text-indigo-600 uppercase">
-          Yield curves <span className="text-xs text-gray-400">June 30th, 2020</span>
-        </h3>
-        <div className="ml-6">
-          {data.map((d) => (
-            <button
-              className={clsx("p-2 mx-1 my-2 text-white rounded-md hover:bg-indigo-400", {
-                "bg-indigo-400": country === d.id,
-                "bg-indigo-700": country !== d.id,
-              })}
-              onClick={() => setCountry(d.id)}>
-              {d.id}
-            </button>
-          ))}
-        </div>
-
+      <div style={{ height: 450 }} className="w-4/5 mx-auto mt-24">
         <ResponsiveLine
           data={selectedData}
-          margin={{ top: 50, right: 60, bottom: 100, left: 60 }}
+          theme={theme}
+          margin={{ top: 50, right: 60, bottom: 60, left: 60 }}
           xScale={{ type: "linear" }}
           yScale={{ type: "linear", min: -0.01, max: 0.05 }}
           yFormat=".1%" // Format as percentage with one decimal point
@@ -62,7 +73,7 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: "Interest rate",
+            legend: "",
             legendOffset: -50,
             legendPosition: "middle",
             format: ".1%",
@@ -71,7 +82,7 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
           enableGridX={false}
           gridYValues={6} // Number of grid lines
           enableSlices="x"
-          colors={"#5145cd"} // Line color: indigo
+          colors={"#8da2fb"} // Line color: indigo
           enablePoints={true}
           pointColor={{ from: "color", modifiers: [] }} // Inherit color from line
           pointBorderWidth={2}
@@ -91,7 +102,7 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
               type: "linearGradient",
               colors: [
                 { offset: 0, color: "inherit" },
-                { offset: 100, color: "white" },
+                { offset: 100, color: "#4b5563" },
               ],
             },
           ]}
@@ -101,6 +112,18 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
           ]}
         />
       </div>
+      <div className="flex justify-center ml-6">
+          {data.map((d) => (
+            <button
+              className={clsx("p-2 mx-1 my-2 text-white rounded-md hover:bg-indigo-400 focus:outline-none shadow-inner", {
+                "bg-indigo-500": country === d.id,
+                "bg-gray-700": country !== d.id,
+              })}
+              onClick={() => setCountry(d.id)}>
+              {d.id}
+            </button>
+          ))}
+        </div>
     </>
   );
 };

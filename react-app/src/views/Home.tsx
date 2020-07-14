@@ -2,6 +2,8 @@ import React, { FC } from "react";
 
 import { Subscription } from "../components/Subscribe/Subscribe";
 import { Pricing } from "../components/Pricing/Pricing";
+import { YieldCurveWidget } from "../components/Widgets/YieldCurveWidget";
+import { lineData } from "../assets/sampleData";
 
 export const Home: FC = () => {
   // const displayName = Home.name;
@@ -79,7 +81,7 @@ export const Home: FC = () => {
                 <h2 className="text-4xl font-extrabold leading-10 tracking-tight text-gray-900 sm:text-5xl sm:leading-none md:text-6xl">
                   A time series of yield curves
                   <br className="xl:hidden" />
-                  <span className="text-indigo-600">at your finger tips</span>
+                  <span className="text-indigo-600"> at your fingertips</span>
                 </h2>
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
                   Browse the risk free EIOPA rates for Solvency II for any currency, any date, at any maturity.
@@ -104,12 +106,14 @@ export const Home: FC = () => {
             </main>
           </div>
         </div>
-        <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-          <img
-            className="object-cover w-full h-56 sm:h-72 md:h-96 lg:w-full lg:h-full"
-            src="https://source.unsplash.com/PhYq704ffdA/3200 × 4800"
-            alt=""
-          />
+        <div
+          className="bg-gray-800 lg:pl-32 lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2"
+          style={{
+            backgroundColor: "#252f3f",
+            backgroundImage:
+              "url(\"data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%235d526f' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E\")",
+          }}>
+          <YieldCurveWidget data={lineData} />
         </div>
       </div>
       <Feature />
