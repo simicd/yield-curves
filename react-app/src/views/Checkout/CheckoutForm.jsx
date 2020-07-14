@@ -87,7 +87,7 @@ export default function CheckoutForm() {
           alt=""
         />
       </div>
-      <form className="w-1/4 mt-48x§ bg-white rounded shadow-2xl p-7 " id="payment-form" onSubmit={handleSubmit}>
+      <form className="w-1/4 mt-48 bg-white rounded shadow-2xl p-7 " id="payment-form" onSubmit={handleSubmit}>
         <CardElement
           className="box-border h-10 p-1 text-center border-2 border-gray-100 border-solid rounded shadow-xl "
           id="card-element"
