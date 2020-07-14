@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./Checkout_copy.css";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import "./Checkout.css";
 
 export default function CheckoutForm() {
   const [succeeded, setSucceeded] = useState(false);
@@ -79,28 +79,17 @@ export default function CheckoutForm() {
     }
   };
   return (
-    <div className="flex items-center content-center justify-center w-screen h-screen font-sans bg-cool-gray-50 ">
-      <div class="lg:absolute lg:inset-y-0 lg:left-0 lg:w-full lg:h-1/2">
-        <img
-          class="w-full object-cover h-full opacity-20"
-          src="https://source.unsplash.com/ULwzqOnPem0/1200 × 2800?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80"
-          alt=""
-        />
-      </div>
-      <form className="w-1/4 mt-48x§ bg-white rounded shadow-2xl p-7 " id="payment-form" onSubmit={handleSubmit}>
-        <CardElement
-          className="box-border h-10 p-1 text-center border-2 border-gray-100 border-solid rounded shadow-xl "
-          id="card-element"
-          options={cardStyle}
-          onChange={handleChange}
-        />
+    <div className="flex items-center content-center justify-center w-screen h-screen font-sans ">
+      <form id="payment-form" onSubmit={handleSubmit}>
+        <CardElement id="card-element" options={cardStyle} onChange={handleChange} />
         <button
-          className="w-full h-8 text-white bg-indigo-900 rounded shadow-xl"
+          className="block w-full px-4 py-2 font-bold text-white ease-out bg-blue-400 border-none rounded cursor-pointer hover:bg-blue-700"
           disabled={processing || disabled || succeeded}
           id="submit">
-          <span id="button-text">{processing ? <div className="spinner" id="spinner"></div> : "Pay"}</span>
+          <span id="button-text">
+            {processing ? <div className="text-center text-red-800 bg-blue-100" id="spinner"></div> : "Pay"}
+          </span>
         </button>
-        <h1 className="mt-1 text-sm text-center text-cool-gray-700">Please enter your card number here</h1>
         {/* Show any error that happens when processing the payment */}
         {error && (
           <div className="card-error" role="alert">
