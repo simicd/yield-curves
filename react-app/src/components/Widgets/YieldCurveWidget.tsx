@@ -15,6 +15,11 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
   // Select first country in the list as default selection
   const [country, setCountry] = useState(data[0].id);
 
+  // Copy the selected data and set always the same ID so that nivo applies animation from one curve to the next
+  // The dataset needs to be copied since otherwise the original data is overwritten
+  const selectedData = [Object.assign({}, data.filter((d) => d.id === country)[0])]
+  selectedData[0].id = "Rate"
+
   return (
     <>
       <div style={{ width: 800, height: 500 }} className="mx-auto mt-8">
@@ -35,7 +40,7 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
         </div>
 
         <ResponsiveLine
-          data={data.filter((d) => d.id === country)}
+          data={selectedData}
           margin={{ top: 50, right: 60, bottom: 100, left: 60 }}
           xScale={{ type: "linear" }}
           yScale={{ type: "linear", min: -0.01, max: 0.05 }}
@@ -76,6 +81,9 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
           crosshairType="bottom"
           useMesh={true}
           enableArea={true}
+          areaOpacity={0.5}
+          motionDamping={8}
+          motionStiffness={80}
           defs={[
             // Define gradient
             {
