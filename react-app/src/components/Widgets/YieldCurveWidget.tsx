@@ -83,7 +83,7 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
           gridYValues={6} // Number of grid lines
           enableSlices="x"
           colors={"#8da2fb"} // Line color: indigo
-          enablePoints={true}
+          enablePoints={false}
           pointColor={{ from: "color", modifiers: [] }} // Inherit color from line
           pointBorderWidth={2}
           pointBorderColor={{ from: "color", modifiers: [] }}

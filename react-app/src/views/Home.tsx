@@ -1,11 +1,72 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import { Subscription } from "../components/Subscribe/Subscribe";
 import { Pricing } from "../components/Pricing/Pricing";
 import { YieldCurveWidget } from "../components/Widgets/YieldCurveWidget";
-import { lineData } from "../assets/sampleData";
+import { Serie } from "@nivo/line";
+import { groupBy } from "lodash";
+
+interface DataRow {
+  CRA: number;
+  Convergence: number;
+  Country: string;
+  Coupon_freq: number;
+  Date: Date;
+  EIOPA_RFR_ID: string;
+  LLP: number;
+  Maturity: number;
+  Rate: number;
+  UFR: number;
+  VA: number;
+  alpha: number;
+  country_code: string;
+  rate_id: string;
+  PartitionKey: string;
+  RowKey: string;
+}
 
 export const Home: FC = () => {
+  const [data, setData] = useState<Serie[]>([
+    {
+      id: "US",
+      data: [{ x: 0, y: 0.0 }, { x: 150, y: 0.0 }],
+    },
+  ]);
+
+  useEffect(() => {
+    // Define asynchronous function - since useEffect hook can't handle async directly,
+    // a nested function needs to be defined first and then called thereafter
+    const fetchData = async () => {
+      // Fetch data from REST API
+      const response = await fetch(
+        "http://api.yield-curves.com/api/yield-curve?date=2020-06-30&filter=country_code eq 'US' or country_code eq 'GB' or country_code eq 'CN' or country_code eq 'CH' or country_code eq 'JP' or country_code eq 'NO' or country_code eq 'DE' or country_code eq 'RU' or country_code eq 'AU' or country_code eq 'HK' or country_code eq 'SG'&code=..."
+      );
+
+      // Extract json
+      const rawData: DataRow[] = await response.json();
+
+      // First extract two columns and reshape it so that they can be fed to nivo and then sort by maturity (x-axis)
+      const transformedData = rawData
+        .map((row) => {
+          return { x: row.Maturity, y: row.Rate, id: row.country_code };
+        })
+        .sort((a, b) => (a.x > b.x ? 1 : -1));
+
+      // Generate required for nivo charts (Serie[])
+      const processedData = groupBy(transformedData, (r) => r.id);
+      const dataArray = [];
+      for (let key in processedData) {
+        dataArray.push({
+          id: key,
+          data: processedData[key],
+        });
+      }
+      setData(dataArray);
+    };
+    // Call async function
+    fetchData();
+  }, []);
+
   // const displayName = Home.name;
   return (
     <>
@@ -113,7 +174,7 @@ export const Home: FC = () => {
             backgroundImage:
               "url(\"data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%235d526f' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E\")",
           }}>
-          <YieldCurveWidget data={lineData} />
+          <YieldCurveWidget data={data} />
         </div>
       </div>
       <Feature />
