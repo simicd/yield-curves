@@ -27,6 +27,7 @@
     "date-fns": "^2.15.0",
     "lodash": "^4.17.19",
     "nivo": "^0.31.0",
+    "framer-motion": "^2.0.1",
     "postcss-cli": "^7.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

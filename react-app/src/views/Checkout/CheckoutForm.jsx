@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { motion } from 'framer-motion'
 import "./Checkout_copy.css";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
@@ -80,6 +81,12 @@ export default function CheckoutForm() {
   };
   return (
     <div className="flex items-center content-center justify-center w-screen h-screen font-sans bg-cool-gray-50 ">
+      <motion.div
+        initial={{ opacity: 0}}
+        animate={{ opacity: 1}}
+        transition= {{
+          duration: 1
+        }}>
       <div class="lg:absolute lg:inset-y-0 lg:left-0 lg:w-full lg:h-1/2">
         <img
           class="w-full object-cover h-full opacity-20"
@@ -87,7 +94,15 @@ export default function CheckoutForm() {
           alt=""
         />
       </div>
+      </motion.div>
       <form className="w-1/4 mt-48 bg-white rounded shadow-2xl p-7 " id="payment-form" onSubmit={handleSubmit}>
+      <motion.div
+        initial={{ scale: 0}}
+        animate={{ scale: 1}}
+        transition= {{
+          type: "spring",
+          duration: 8
+        }}>
         <CardElement
           className="box-border h-10 p-1 text-center border-2 border-gray-100 border-solid rounded shadow-xl "
           id="card-element"
@@ -95,13 +110,14 @@ export default function CheckoutForm() {
           onChange={handleChange}
         />
         <button
-          className="w-full h-8 text-white bg-indigo-900 rounded shadow-xl"
+          className="w-full h-8 text-white bg-indigo-900 rounded shadow-xl hover:bg-indigo-700"
           disabled={processing || disabled || succeeded}
           id="submit">
           <span id="button-text">{processing ? <div className="spinner" id="spinner"></div> : "Pay"}</span>
         </button>
-        <h1 className="mt-1 text-sm text-center text-cool-gray-700">Please enter your card number here</h1>
         {/* Show any error that happens when processing the payment */}
+        <div className="mt-1 text-sm text-center text-cool-gray-700">{! disabled ? <div></div>: "Please enter your card number here"} </div>
+        </motion.div>
         {error && (
           <div className="card-error" role="alert">
             {error}
