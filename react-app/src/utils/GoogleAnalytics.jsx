@@ -50,11 +50,11 @@ const RouteTracker = () =>
 
 const init = (options = {}) => {
   const env = window._env_ || {}
-  const isGAEnabled = !!env.REACT_APP_GA_TRACKING_ID
+  const isGAEnabled = !!"UA-172782347-1"
 
   if (isGAEnabled) {
     ReactGA.initialize(
-      env.REACT_APP_GA_TRACKING_ID, {
+      "UA-172782347-1", {
         debug: env.REACT_APP_GA_DEBUG === 'true',
         ...options
       }

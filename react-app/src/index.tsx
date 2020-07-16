@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Switch} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import GA from './utils/GoogleAnalytics.jsx'
+import GA from './utils/GoogleAnalytics'
 
 import "./assets/main.css";
 
@@ -13,9 +13,7 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter basename={baseUrl}>
       {GA.init() && <GA.RouteTracker />}
-      <Switch>
       <App />
-      </Switch>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
