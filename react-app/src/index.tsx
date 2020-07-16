@@ -12,8 +12,8 @@ const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href") as
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter basename={baseUrl}>
-    <Switch>
-    { GA.init() && <GA.RouteTracker /> }
+      {GA.init() && <GA.RouteTracker />}
+      <Switch>
       <App />
       </Switch>
     </BrowserRouter>
