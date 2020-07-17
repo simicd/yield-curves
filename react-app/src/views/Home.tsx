@@ -1,6 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
 
 import { Subscription } from "../components/Subscribe/Subscribe";
+import { Pricing } from "../components/Pricing/Pricing";
+import { SelectMenu } from "../components/SelectMenu/SelectMenu";
 import { YieldCurveWidget } from "../components/Widgets/YieldCurveWidget";
 import { Feature } from "../components/Feature/Feature";
 import { Serie } from "@nivo/line";
@@ -66,7 +68,7 @@ export const Home: FC = () => {
       setData(dataArray);
     };
     // Call async function
-    fetchData();
+    // fetchData();
   }, []);
 
   // const displayName = Home.name;
@@ -173,6 +175,7 @@ export const Home: FC = () => {
             </p>
           </>
       </Notification>
+      <SelectMenu/>
     </>
   );
 };
