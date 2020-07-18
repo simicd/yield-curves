@@ -1,7 +1,11 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { MonthPicker } from "../MonthPicker/MonthPicker"
 
 export const SelectMenu: FC = () => {
+  const [selectedDate, setSelectedDate] = useState(new Date())
+
+  console.log(selectedDate);
+
   return (
     <div className="bg-gray-50">
       <div className="max-w-screen-xl px-4 py-12 mx-auto sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
@@ -11,7 +15,7 @@ export const SelectMenu: FC = () => {
           <span className="text-indigo-600">Pick a date and currency.</span>
         </h2>
         <>
-        <MonthPicker/>
+        <MonthPicker onChange={setSelectedDate}/>
         </>
           <div className="inline-flex ml-10 rounded-md shadow">
           <div>
