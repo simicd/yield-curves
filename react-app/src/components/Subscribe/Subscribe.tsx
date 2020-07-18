@@ -1,9 +1,9 @@
 import React, { FC, useState } from "react";
-import { Notification } from "../Notification/Notification";
+import { Notification, NotificationProps } from "../Notification/Notification";
 
 export const Subscription: FC = () => {
   const [email, setEmail] = useState("");
-  const [notification, setNotification] = useState(true);
+  const [status, setStatus] = useState<NotificationProps["state"]>();
 
   /**
    * Register e-mail address
@@ -15,13 +15,12 @@ export const Subscription: FC = () => {
       body: JSON.stringify({ email: email }),
     });
     if (response.status === 201) {
-      console.log("Succcess");
       const message = await response.json();
-      console.log(message);
+      setStatus("success");
     } else if (response.status === 500) {
-      console.log("Already registered");
+      setStatus("warn");
     } else {
-      console.log("Error - please try later");
+      setStatus("error");
     }
   };
 
@@ -59,10 +58,32 @@ export const Subscription: FC = () => {
           </div>
         </div>
       </div>
-      {notification && (
-        <Notification state="warn" onClick={() => setNotification(false)}>
-          <p className="text-sm font-medium leading-5 text-gray-900">Successfully registered!</p>
-          <p className="mt-1 text-sm leading-5 text-gray-500">We will notify you on <b className="font-bold">{email}</b> once we go live.</p>
+      {status && (
+        <Notification state={status} onClick={() => setStatus(undefined)}>
+          {status === "success" && (
+            <>
+              <p className="text-sm font-medium leading-5 text-gray-900">Successfully registered!</p>{" "}
+              <p className="mt-1 text-sm leading-5 text-gray-500">
+                We will notify you on <b className="font-bold">{email}</b> once we go live.
+              </p>
+            </>
+          )}
+          {status === "warn" && (
+            <>
+              <p className="text-sm font-medium leading-5 text-gray-900">E-mail already registered</p>{" "}
+              <p className="mt-1 text-sm leading-5 text-gray-500">
+                We will notify you on <b className="font-bold">{email}</b> once we go live.
+              </p>
+            </>
+          )}
+          {status === "error" && (
+            <>
+              <p className="text-sm font-medium leading-5 text-gray-900">Unexpected error</p>{" "}
+              <p className="mt-1 text-sm leading-5 text-gray-500">
+                We couldn't register your e-mail. Please try again later.
+              </p>
+            </>
+          )}
         </Notification>
       )}
     </div>

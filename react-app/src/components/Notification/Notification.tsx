@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import clsx from "clsx";
 import { stat } from "fs";
 
-interface NotificationProps {
+export interface NotificationProps {
   /** Notification status */
   state: "success" | "warn" | "error";
   /** Click callback (implementing React's mouse event handler) */
