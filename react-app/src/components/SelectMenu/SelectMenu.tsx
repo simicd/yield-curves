@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import MonthPicker from "../MonthPicker/MonthPicker"
+import { MonthPicker } from "../MonthPicker/MonthPicker"
 
 export const SelectMenu: FC = () => {
   return (
