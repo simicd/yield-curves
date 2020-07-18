@@ -5,6 +5,26 @@ export const Subscription: FC = () => {
   const [email, setEmail] = useState("");
   const [notification, setNotification] = useState(false);
 
+  /**
+   * Register e-mail address
+   * @param email User e-mail
+   */
+  const submitEmail = async (email: string) => {
+    const response = await fetch("http://localhost:7071/api/register", {
+      method: "POST",
+      body: JSON.stringify({ email: email }),
+    });
+    if (response.status === 201) {
+      console.log("Succcess");
+      const message = await response.json();
+      console.log(message);
+    } else if (response.status === 500) {
+      console.log("Already registered");
+    } else {
+      console.log("Error - please try later");
+    }
+  };
+
   return (
     <div className="bg-white">
       <div className="max-w-screen-xl px-4 py-12 mx-auto sm:px-6 lg:py-16 lg:px-8">
@@ -18,7 +38,7 @@ export const Subscription: FC = () => {
             </p>
           </div>
           <div className="mt-8 sm:w-full sm:max-w-md xl:mt-0 xl:ml-8">
-            <form className="sm:flex" aria-labelledby="newsletter-headline">
+            <form className="sm:flex" aria-labelledby="newsletter-headline" onSubmit={(e) => e.preventDefault()}>
               <input
                 aria-label="Email address"
                 type="email"
@@ -31,7 +51,7 @@ export const Subscription: FC = () => {
               <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">
                 <button
                   className="flex items-center justify-center w-full px-5 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-indigo-900 border border-transparent border-white rounded-md hover:bg-indigo-400 focus:outline-none focus:bg-indigo-400"
-                  onClick={() => setNotification(true)}>
+                  onClick={() => submitEmail(email)}>
                   Notify me
                 </button>
               </div>

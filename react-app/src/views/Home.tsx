@@ -178,7 +178,7 @@ export const Home: FC = () => {
         </div>
       </div>
       <Feature />
-      <Pricing />
+      {/* <Pricing /> */}
       <Subscription />
     </>
   );

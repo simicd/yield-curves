@@ -3,6 +3,7 @@ import json
 
 import azure.functions as func
 
+
 def main(req: func.HttpRequest, registration: func.Out[str]) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
@@ -16,15 +17,12 @@ def main(req: func.HttpRequest, registration: func.Out[str]) -> func.HttpRespons
         return func.HttpResponse(f"Operation failed - no email provided in body", status_code=400)
 
     # Create registration to be saved on Azure Table Storage
-    data = {
-        "Name": "Preview registration",
-        "PartitionKey": "email",
-        "RowKey": email
-    }
+    data = {"Name": "Preview registration", "PartitionKey": "email", "RowKey": email}
 
     # Call the function binding - this step saves the data row to Table Storage
     registration.set(json.dumps(data))
 
     # Finally confirm creation of registration with status code 201 (resource created)
-    return func.HttpResponse(f"Email registered with rowKey: {email}", status_code=201)
-
+    return func.HttpResponse(json.dumps({"message": f"Email registered: {email}"}),
+                             status_code=201,
+                             mimetype="application/json")
