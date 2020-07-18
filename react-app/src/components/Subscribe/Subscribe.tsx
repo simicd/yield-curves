@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Alert } from "../Alert/Alert";
+import { Notification } from "../Notification/Notification";
 
 export const Subscription: FC = () => {
   const [email, setEmail] = useState("");
@@ -60,9 +60,10 @@ export const Subscription: FC = () => {
         </div>
       </div>
       {notification && (
-        <Alert onClick={() => setNotification(false)}>
-          This is a demo - the e-mail address you entered is <b className="font-bold text-indigo-700">{email}</b>
-        </Alert>
+        <Notification onClick={() => setNotification(false)}>
+          <p className="text-sm font-medium leading-5 text-gray-900">Successfully registered!</p>
+          <p className="mt-1 text-sm leading-5 text-gray-500">We will notify you on <b className="font-bold">{email}</b> once we go live.</p>
+        </Notification>
       )}
     </div>
   );
