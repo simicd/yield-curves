@@ -3,7 +3,7 @@ import { Notification } from "../Notification/Notification";
 
 export const Subscription: FC = () => {
   const [email, setEmail] = useState("");
-  const [notification, setNotification] = useState(false);
+  const [notification, setNotification] = useState(true);
 
   /**
    * Register e-mail address
@@ -60,7 +60,7 @@ export const Subscription: FC = () => {
         </div>
       </div>
       {notification && (
-        <Notification onClick={() => setNotification(false)}>
+        <Notification state="warn" onClick={() => setNotification(false)}>
           <p className="text-sm font-medium leading-5 text-gray-900">Successfully registered!</p>
           <p className="mt-1 text-sm leading-5 text-gray-500">We will notify you on <b className="font-bold">{email}</b> once we go live.</p>
         </Notification>

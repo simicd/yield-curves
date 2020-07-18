@@ -1,11 +1,15 @@
 import React, { FC } from "react";
+import clsx from "clsx";
+import { stat } from "fs";
 
 interface NotificationProps {
+  /** Notification status */
+  state: "success" | "warn" | "error";
   /** Click callback (implementing React's mouse event handler) */
   onClick?: React.MouseEventHandler;
 }
 
-export const Notification: FC<NotificationProps> = ({ children, onClick }) => {
+export const Notification: FC<NotificationProps> = ({ children, state, onClick }) => {
   return (
     <>
       <div className="fixed inset-0 z-10 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end">
@@ -19,18 +23,31 @@ export const Notification: FC<NotificationProps> = ({ children, onClick }) => {
       From: "opacity-100"
       To: "opacity-0"
   --> */}
-        <div className="w-full max-w-sm bg-green-100 rounded-lg shadow-xl pointer-events-auto">
+        <div
+          className={clsx("w-full max-w-sm rounded-lg shadow-xl pointer-events-auto", {
+            "bg-green-100": state === "success",
+            "bg-red-100": state === "error",
+            "bg-yellow-100": state === "warn",
+          })}>
           <div className="overflow-hidden rounded-lg shadow-xs">
             <div className="p-4">
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <svg className="w-6 h-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
+                  <svg
+                    className={clsx("w-6 h-6", {
+                      "text-green-400": state === "success",
+                      "text-red-400": state === "error",
+                      "text-yellow-400": state === "warn",
+                    })}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2">
+                    {state === "success" && <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />}
+                    {state === "error" && <path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>}
+                    {state === "warn" && <path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>}
                   </svg>
                 </div>
                 <div className="ml-3 w-0 flex-1 pt-0.5">{children}</div>
