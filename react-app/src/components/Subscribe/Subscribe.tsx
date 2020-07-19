@@ -1,9 +1,28 @@
 import React, { FC, useState } from "react";
-import { Alert } from "../Alert/Alert";
+import { Notification, NotificationProps } from "../Notification/Notification";
 
 export const Subscription: FC = () => {
   const [email, setEmail] = useState("");
-  const [notification, setNotification] = useState(false);
+  const [status, setStatus] = useState<NotificationProps["state"]>();
+
+  /**
+   * Register e-mail address
+   * @param email User e-mail
+   */
+  const submitEmail = async (email: string) => {
+    const response = await fetch("http://api.yield-curves.com/api/register", {
+      method: "POST",
+      body: JSON.stringify({ email: email }),
+    });
+    if (response.status === 201) {
+      // const message = await response.json();
+      setStatus("success");
+    } else if (response.status === 500) {
+      setStatus("warn");
+    } else {
+      setStatus("error");
+    }
+  };
 
   return (
     <div className="bg-white">
@@ -18,7 +37,7 @@ export const Subscription: FC = () => {
             </p>
           </div>
           <div className="mt-8 sm:w-full sm:max-w-md xl:mt-0 xl:ml-8">
-            <form className="sm:flex" aria-labelledby="newsletter-headline">
+            <form className="sm:flex" aria-labelledby="newsletter-headline" onSubmit={(e) => e.preventDefault()}>
               <input
                 aria-label="Email address"
                 type="email"
@@ -31,7 +50,7 @@ export const Subscription: FC = () => {
               <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">
                 <button
                   className="flex items-center justify-center w-full px-5 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-indigo-900 border border-transparent border-white rounded-md hover:bg-indigo-400 focus:outline-none focus:bg-indigo-400"
-                  onClick={() => setNotification(true)}>
+                  onClick={() => submitEmail(email)}>
                   Notify me
                 </button>
               </div>
@@ -39,11 +58,32 @@ export const Subscription: FC = () => {
           </div>
         </div>
       </div>
-      {notification && (
-        <Alert onClick={() => setNotification(false)}>
-          This is a demo - the e-mail address you entered is <b className="font-bold text-indigo-700">{email}</b>
-        </Alert>
-      )}
+      <Notification state={status} onClick={() => setStatus(undefined)}>
+        {status === "success" && (
+          <>
+            <p className="text-sm font-medium leading-5 text-gray-900">Successfully registered!</p>{" "}
+            <p className="mt-1 text-sm leading-5 text-gray-500">
+              We will notify you on <b className="font-bold">{email}</b> once we go live.
+            </p>
+          </>
+        )}
+        {status === "warn" && (
+          <>
+            <p className="text-sm font-medium leading-5 text-gray-900">E-mail already registered</p>{" "}
+            <p className="mt-1 text-sm leading-5 text-gray-500">
+              We will notify you on <b className="font-bold">{email}</b> once we go live.
+            </p>
+          </>
+        )}
+        {status === "error" && (
+          <>
+            <p className="text-sm font-medium leading-5 text-gray-900">Unexpected error</p>{" "}
+            <p className="mt-1 text-sm leading-5 text-gray-500">
+              We couldn't register your e-mail. Please try again later.
+            </p>
+          </>
+        )}
+      </Notification>
     </div>
   );
 };
