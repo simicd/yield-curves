@@ -168,7 +168,7 @@ export const Home: FC = () => {
           </div>
         </div>
         <div
-          className="bg-gray-800 lg:pl-32 lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2"
+          className="bg-gray-800 lg:pl-32 lg:absolute lg:inset-y-0 lg:left-1/2 lg:w-1/2 lg:max-w-4xl"
           style={{
             backgroundColor: "#252f3f",
             backgroundImage:
