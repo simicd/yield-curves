@@ -25,7 +25,7 @@ export const Notification: FC<NotificationProps> = ({ children, state, onClick }
             className={clsx("w-full max-w-sm rounded-lg shadow-xl pointer-events-auto", {
               "bg-green-100": state === "success",
               "bg-red-100": state === "error",
-              "bg-yellow-100": state === "warn",
+              "bg-yellow-50": state === "warn",
             })}>
             <div className="overflow-hidden rounded-lg shadow-xs">
               <div className="p-4">
