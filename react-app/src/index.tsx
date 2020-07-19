@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import GA from './utils/GoogleAnalytics'
 
 import "./assets/main.css";
 
@@ -11,6 +12,7 @@ const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href") as
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter basename={baseUrl}>
+      {GA.init() && <GA.RouteTracker />}
       <App />
     </BrowserRouter>
   </React.StrictMode>,
