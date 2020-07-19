@@ -15,7 +15,7 @@ export const Subscription: FC = () => {
       body: JSON.stringify({ email: email }),
     });
     if (response.status === 201) {
-      const message = await response.json();
+      // const message = await response.json();
       setStatus("success");
     } else if (response.status === 500) {
       setStatus("warn");

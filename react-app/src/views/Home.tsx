@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 
 import { Subscription } from "../components/Subscribe/Subscribe";
-import { Pricing } from "../components/Pricing/Pricing";
 import { YieldCurveWidget } from "../components/Widgets/YieldCurveWidget";
 import { Serie } from "@nivo/line";
 import { groupBy } from "lodash";
