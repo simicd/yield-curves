@@ -108,28 +108,28 @@ export const Home: FC = () => {
                 </div>
                 <div className="hidden md:block md:ml-10 md:pr-4">
                   <a
-                    href="http://api.yield-curves.com/"
+                    href="/"
                     className="font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-900">
                     Product
                   </a>
                   <a
-                    href="http://api.yield-curves.com/"
+                    href="/"
                     className="ml-8 font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-900">
                     Features
                   </a>
                   <a
-                    href="http://api.yield-curves.com/"
+                    href="/"
                     className="ml-8 font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-900">
                     Marketplace
                   </a>
                   <a
-                    href="http://api.yield-curves.com/"
+                    href="/"
                     className="ml-8 font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-900">
                     Company
                   </a>
                   <a
-                    href="http://api.yield-curves.com/"
-                    className="ml-8 font-medium text-indigo-600 transition duration-150 ease-in-out hover:text-indigo-900">
+                    href="/"
+                    className="ml-8 font-medium text-teal-800 transition duration-150 ease-in-out hover:text-teal-500">
                     Log in
                   </a>
                 </div>
@@ -141,7 +141,7 @@ export const Home: FC = () => {
                 <h2 className="text-4xl font-extrabold leading-10 tracking-tight text-gray-900 sm:text-5xl sm:leading-none md:text-6xl">
                   A time series of yield curves
                   <br className="xl:hidden" />
-                  <span className="text-indigo-600"> at your fingertips</span>
+                  <span className="text-teal-500"> at your fingertips</span>
                 </h2>
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
                   Browse the risk free EIOPA rates for Solvency II for any currency, any date, at any maturity.
@@ -150,14 +150,14 @@ export const Home: FC = () => {
                   <div className="rounded-md shadow">
                     <a
                       href="http://api.yield-curves.com/"
-                      className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-600 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo md:py-4 md:text-lg md:px-10">
+                      className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-teal-700 border border-transparent rounded-md hover:bg-teal-500 focus:outline-none focus:border-teal-800 focus:shadow-outline-teal md:py-4 md:text-lg md:px-10">
                       Get started
                     </a>
                   </div>
                   <div className="mt-3 sm:mt-0 sm:ml-3">
                     <a
                       href="http://api.yield-curves.com/"
-                      className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-indigo-700 transition duration-150 ease-in-out bg-indigo-100 border border-transparent rounded-md hover:text-indigo-600 hover:bg-indigo-50 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-300 md:py-4 md:text-lg md:px-10">
+                      className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-teal-800 transition duration-150 ease-in-out border border-transparent rounded-md bg-cool-gray-100 hover:text-teal-500 hover:bg-cool-gray-100 focus:outline-none focus:shadow-outline-teal focus:border-teal-300 md:py-4 md:text-lg md:px-10">
                       Live demo
                     </a>
                   </div>
@@ -188,7 +188,7 @@ export const Feature: FC = () => {
     <div className="py-32 bg-white">
       <div className="max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">
         <div className="lg:text-center">
-          <p className="text-base font-semibold leading-6 tracking-wide text-indigo-600 uppercase">EIOPA rates API</p>
+          <p className="text-base font-semibold leading-6 tracking-wide text-teal-500 uppercase">EIOPA rates API</p>
           <h3 className="mt-2 text-3xl font-extrabold leading-8 tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
             A better way to get yield curves
           </h3>
@@ -202,7 +202,7 @@ export const Feature: FC = () => {
             <li>
               <div className="flex">
                 <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center w-12 h-12 text-white bg-indigo-600 rounded-md">
+                  <div className="flex items-center justify-center w-12 h-12 text-white bg-teal-600 rounded-md">
                     <svg
                       className="w-6 h-6"
                       fill="none"
@@ -224,7 +224,7 @@ export const Feature: FC = () => {
             <li className="mt-10 md:mt-0">
               <div className="flex">
                 <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center w-12 h-12 text-white bg-indigo-600 rounded-md">
+                  <div className="flex items-center justify-center w-12 h-12 text-white bg-teal-600 rounded-md">
                     <svg
                       className="w-6 h-6"
                       fill="none"
@@ -246,7 +246,7 @@ export const Feature: FC = () => {
             <li className="mt-10 md:mt-0">
               <div className="flex">
                 <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center w-12 h-12 text-white bg-indigo-600 rounded-md">
+                  <div className="flex items-center justify-center w-12 h-12 text-white bg-teal-600 rounded-md">
                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path
                         stroke-linecap="round"
@@ -266,7 +266,7 @@ export const Feature: FC = () => {
             <li className="mt-10 md:mt-0">
               <div className="flex">
                 <div className="flex-shrink-0">
-                  <div className="flex items-center justify-center w-12 h-12 text-white bg-indigo-600 rounded-md">
+                  <div className="flex items-center justify-center w-12 h-12 text-white bg-teal-600 rounded-md">
                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path
                         stroke-linecap="round"
