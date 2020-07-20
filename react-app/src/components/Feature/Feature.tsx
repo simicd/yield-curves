@@ -1,17 +1,16 @@
-import React, { FC } from "react"
-
+import React, { FC } from "react";
 
 export const Feature: FC = () => {
   return (
     <div className="py-32 bg-white">
       <div className="max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">
         <div className="lg:text-center">
-          <p className="text-base font-semibold leading-6 tracking-wide text-teal-500 uppercase">EIOPA rates API</p>
+          <p className="text-base font-semibold leading-6 tracking-wide text-teal-500 uppercase">EIOPA risk-free rates API</p>
           <h3 className="mt-2 text-3xl font-extrabold leading-8 tracking-tight text-gray-900 sm:text-4xl sm:leading-10">
             A better way to get yield curves
           </h3>
           <p className="max-w-2xl mt-4 text-xl leading-7 text-gray-500 lg:mx-auto">
-            Watch the risk free rates movement and monitor the sensitivity of insurance liabilities.
+          Tired of <a href="https://www.eiopa.europa.eu/tools-and-data/risk-free-interest-rate-term-structures_en" target="_blank" rel="noopener noreferrer" className="text-teal-400 hover:underline">downloading Excel files</a> and spending hours normalizing the data? Our service provides this to you - cleaned data delivered through an API. Fast & efficient.
           </p>
         </div>
 
@@ -35,7 +34,7 @@ export const Feature: FC = () => {
                 </div>
                 <div className="ml-4">
                   <h4 className="text-lg font-medium leading-6 text-gray-900">Complete time series</h4>
-                  <p className="mt-2 text-base leading-6 text-gray-500">Receive a complete rates time serie</p>
+                  <p className="mt-2 text-base leading-6 text-gray-500">All current & historic rates are available.</p>
                 </div>
               </div>
             </li>
@@ -57,7 +56,7 @@ export const Feature: FC = () => {
                 </div>
                 <div className="ml-4">
                   <h4 className="text-lg font-medium leading-6 text-gray-900">Customize your data output</h4>
-                  <p className="mt-2 text-base leading-6 text-gray-500">Fetch rates for your chosen portflios .</p>
+                  <p className="mt-2 text-base leading-6 text-gray-500">Get rates for your chosen portfolios.</p>
                 </div>
               </div>
             </li>
@@ -96,8 +95,8 @@ export const Feature: FC = () => {
                   </div>
                 </div>
                 <div className="ml-4">
-                  <h4 className="text-lg font-medium leading-6 text-gray-900">Pay as you use</h4>
-                  <p className="mt-2 text-base leading-6 text-gray-500">No hidden cost and pay as you use.</p>
+                  <h4 className="text-lg font-medium leading-6 text-gray-900">Flat fees</h4>
+                  <p className="mt-2 text-base leading-6 text-gray-500">Monthly payment gives you unlimited access.</p>
                 </div>
               </div>
             </li>

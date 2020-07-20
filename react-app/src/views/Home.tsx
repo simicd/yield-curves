@@ -140,12 +140,12 @@ export const Home: FC = () => {
             <main className="max-w-screen-xl px-4 mx-auto mt-10 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
               <div className="sm:text-center lg:text-left">
                 <h2 className="text-4xl font-extrabold leading-10 tracking-tight text-gray-900 sm:text-5xl sm:leading-none md:text-6xl">
-                  A time series of yield curves
+                  A <span className="text-teal-500"> time series of yield curves </span>
                   <br className="xl:hidden" />
-                  <span className="text-teal-500"> at your fingertips</span>
+                  at your fingertips
                 </h2>
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                  Browse the risk free EIOPA rates for Solvency II for any currency, any date, at any maturity.
+                  Browse EIOPA's Solvency II risk free rates for any currency, any maturity, at any date.
                 </p>
                 <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                   <div className="rounded-md shadow">
