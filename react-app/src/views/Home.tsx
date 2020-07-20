@@ -85,9 +85,7 @@ export const Home: FC = () => {
               <nav className="relative flex items-center justify-between sm:h-10 lg:justify-start">
                 <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
                   <div className="flex items-center justify-between w-full md:w-auto">
-                    <a href="http://api.yield-curves.com/" aria-label="Home">
-                      <img className="w-auto h-8 sm:h-10" src="/img/logos/workflow-mark-on-white.svg" alt="Logo" />
-                    </a>
+
                     <div className="flex items-center -mr-2 md:hidden">
                       <button
                         type="button"
@@ -108,31 +106,16 @@ export const Home: FC = () => {
                   </div>
                 </div>
                 <div className="hidden md:block md:ml-10 md:pr-4">
-                  <a
+                  {/* <a
                     href="/"
                     className="font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-900">
                     Product
                   </a>
                   <a
                     href="/"
-                    className="ml-8 font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-900">
-                    Features
-                  </a>
-                  <a
-                    href="/"
-                    className="ml-8 font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-900">
-                    Marketplace
-                  </a>
-                  <a
-                    href="/"
-                    className="ml-8 font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-900">
-                    Company
-                  </a>
-                  <a
-                    href="/"
                     className="ml-8 font-medium text-teal-800 transition duration-150 ease-in-out hover:text-teal-500">
                     Log in
-                  </a>
+                  </a> */}
                 </div>
               </nav>
             </div>
