@@ -66,7 +66,7 @@ export const Home: FC = () => {
       setData(dataArray);
     };
     // Call async function
-    // fetchData();
+    fetchData();
   }, []);
 
   // const displayName = Home.name;
@@ -97,9 +97,9 @@ export const Home: FC = () => {
                         aria-haspopup="true">
                         <svg className="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                           <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
                             d="M4 6h16M4 12h16M4 18h16"
                           />
                         </svg>

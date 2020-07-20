@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { Serie, ResponsiveLine } from "@nivo/line";
-import {lineData} from '../../assets/sampleData'
+// import {lineData} from '../../assets/sampleData'
 import clsx from "clsx";
 
 const theme = {
@@ -115,7 +115,7 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
       </div>
       <div className="flex justify-center ml-6">
           {data.map((d) => (
-            <button
+            <button key={d.id}
               className={clsx("p-2 mx-1 my-2 text-white rounded-md hover:bg-teal-500 focus:outline-none shadow-inner", {
                 "bg-teal-600": country === d.id,
                 "bg-gray-700": country !== d.id,
