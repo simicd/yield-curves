@@ -25,7 +25,7 @@ export const Subscription: FC = () => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-white" id="subscription">
       <div className="max-w-screen-xl px-4 py-12 mx-auto sm:px-6 lg:py-16 lg:px-8">
         <div className="px-6 py-6 bg-teal-800 rounded-lg md:py-12 md:px-12 lg:py-16 lg:px-16 xl:flex xl:items-center">
           <div className="xl:w-0 xl:flex-1">

@@ -5,6 +5,7 @@ import { YieldCurveWidget } from "../components/Widgets/YieldCurveWidget";
 import { Feature } from "../components/Feature/Feature";
 import { Serie } from "@nivo/line";
 import { groupBy } from "lodash";
+import { Notification, NotificationProps } from "../components/Notification/Notification";
 
 interface DataRow {
   CRA: number;
@@ -32,6 +33,7 @@ export const Home: FC = () => {
       data: [{ x: 0, y: 0.0 }, { x: 150, y: 0.0 }],
     },
   ]);
+  const [showNotification, setShowNotification] = useState<NotificationProps["state"]>()
 
   useEffect(() => {
     // Define asynchronous function - since useEffect hook can't handle async directly,
@@ -133,17 +135,17 @@ export const Home: FC = () => {
                 <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                   <div className="rounded-md shadow">
                     <a
-                      href="http://api.yield-curves.com/"
+                      href="#subscription"
                       className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-teal-700 border border-transparent rounded-md hover:bg-teal-500 focus:outline-none focus:border-teal-800 focus:shadow-outline-teal md:py-4 md:text-lg md:px-10">
                       Get started
                     </a>
                   </div>
                   <div className="mt-3 sm:mt-0 sm:ml-3">
-                    <a
-                      href="http://api.yield-curves.com/"
+                    <button
+                      onClick={() => {setShowNotification("info")}}
                       className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-teal-800 transition duration-150 ease-in-out border border-transparent rounded-md bg-cool-gray-100 hover:text-teal-500 hover:bg-cool-gray-100 focus:outline-none focus:shadow-outline-teal focus:border-teal-300 md:py-4 md:text-lg md:px-10">
                       Live demo
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -163,6 +165,14 @@ export const Home: FC = () => {
       <Feature />
       {/* <Pricing /> */}
       <Subscription />
+      <Notification state={showNotification} onClick={() => setShowNotification(undefined)}>
+          <>
+            <p className="text-sm font-medium leading-5 text-gray-900">Live demo</p>{" "}
+            <p className="mt-1 text-sm leading-5 text-gray-500">
+            The chart displays the latest yield curves for a selected set of countries. Click on the country code buttons to explore the different rates!
+            </p>
+          </>
+      </Notification>
     </>
   );
 };
