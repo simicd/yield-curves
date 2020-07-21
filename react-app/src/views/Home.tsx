@@ -166,7 +166,6 @@ export const Home: FC = () => {
       </div>
       <Feature />
       {/* <Pricing /> */}
-      <Subscription />
       <Notification state={showNotification} onClick={() => setShowNotification(undefined)}>
           <>
             <p className="text-sm font-medium leading-5 text-gray-900">Live demo</p>{" "}
@@ -176,6 +175,7 @@ export const Home: FC = () => {
           </>
       </Notification>
       <SelectMenu/>
+      <Subscription />
     </>
   );
 };

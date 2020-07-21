@@ -12,7 +12,7 @@ export const MonthPicker: FC<MonthPickerProps> = ({ onChange }) =>  {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <DatePicker
-        className="text-100"
+        className="ml-5"
         value={selectedDate}
         onChange={(date) => { setSelectedDate(date as Date); onChange(date as Date); }}
         views={["year", "month"]}
