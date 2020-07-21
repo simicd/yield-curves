@@ -1,7 +1,8 @@
 import pandas as pd
 import uuid
+from typing import Dict
 
-def read_eiopa(filepath: str, sheet_name: str):
+def read_eiopa(filepath: str, sheet_name: str) -> pd.DataFrame:
     """Read EIOPA RFR Term Structures file.
 
     Args:
@@ -16,7 +17,7 @@ def read_eiopa(filepath: str, sheet_name: str):
     return pd.read_excel(filepath, sheet_name=sheet_name, header=1)
 
 
-def clean_eiopa_rfr(df: pd.DataFrame, date: str):
+def clean_eiopa_rfr(df: pd.DataFrame, date: str) -> pd.DataFrame:
     """Clean the data so that it can be easily used
 
     Args:
@@ -58,7 +59,7 @@ def clean_eiopa_rfr(df: pd.DataFrame, date: str):
     return df_tr
 
 
-def unpivot_maturities(df: pd.DataFrame):
+def unpivot_maturities(df: pd.DataFrame) -> pd.DataFrame:
     """Unpivot the data to have rates in one column
 
     The original data is pivoted - each country's rate is displayed
@@ -86,3 +87,43 @@ def unpivot_maturities(df: pd.DataFrame):
         names=[None, 'Maturity'])
 
     return df_temp.stack().reset_index()
+
+
+def clean_file(filepath: str, date: str) -> pd.DataFrame:
+    """Clean a RFR Excel file and return the cleaned dataframe
+
+    Args:
+        filepath: Pandas dataframe to be unpivoted
+        date: Yield curve date
+
+    Returns:
+        Cleaned padnas dataframe
+    """
+
+    df = read_eiopa(filepath, sheet_name="RFR_spot_no_VA")
+    df = clean_eiopa_rfr(df, date)
+    df = unpivot_maturities(df)
+
+    return df
+
+
+def clean_files(file_dict: Dict[str, str]):
+    """Clean all RFR Excel files and return the cleaned dataframes as dictionary
+
+    Args:
+        file_dict: Dictionary with dates as keys and filepaths as values
+
+    Returns:
+        Dictionary with dates as keys and cleaned dataframes as values
+    """
+
+    cleaned_dfs: Dict[str, pd.DataFrame] = {}
+
+    for date, filepath in file_dict.items():
+        try:
+            # Load & clean dataframe and store into dictionary
+            cleaned_dfs[date] = clean_file(filepath, date)
+        except:
+            print(f"Load and transform of {date} not successful")
+
+    return cleaned_dfs

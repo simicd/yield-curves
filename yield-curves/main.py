@@ -1,6 +1,6 @@
 
 import os
-from yield_curves.extraction import download_files, download_file, write_to_table, read_eiopa, clean_eiopa_rfr, unpivot_maturities
+from yield_curves.extraction import download_files, download_file, write_to_table, read_eiopa, clean_eiopa_rfr, unpivot_maturities, clean_file, clean_files
 from datetime import date
 import glob
 import re
@@ -12,6 +12,10 @@ clean_data_path = r'./datasets/eiopa/clean'
 # Create folders if they don't exist
 os.makedirs(raw_data_path, exist_ok=True)
 os.makedirs(clean_data_path, exist_ok=True)
+
+# Extract the credentials from the local settings file
+with open(r'yield-curves/local.settings.json') as json_file:
+    credentials = json.load(json_file)
 
 # # Download risk-free yield curves between these two dates
 # download_files(start_date=date(2016, 1, 1), end_date=date(2020, 7, 1), path=raw_data_path)
@@ -29,21 +33,13 @@ file_dict = {
     for filepath in eiopa_files
 }
 
+# Clean all files listed in the dictionary
+cleaned_dfs = clean_files(file_dict)
 
-# Extract the credentials from the local settings file
-with open(r'yield-curves/local.settings.json') as json_file:
-    credentials = json.load(json_file)
-
-for date, filepath in file_dict.items():
-    try:
-        df = read_eiopa(filepath, sheet_name="RFR_spot_no_VA")
-        df = clean_eiopa_rfr(df, date)
-        df = unpivot_maturities(df)
-        # Store output as .csv
-        df.to_csv(os.path.join(clean_data_path, f"eiopa-rfr-{date}.csv"), index=False, sep=',')
-        # Write to table service
-        # write_to_table(account_name=credentials["account_name"], account_key=credentials["account_key"], table=df, table_name="rates")
-    except:
-        print(f"Load and transform of {date} not successful")
+for date, df in cleaned_dfs.items():
+    # Store output as .csv
+    df.to_csv(os.path.join(clean_data_path, f"eiopa-rfr-{date}.csv"), index=False, sep=',')
+    # Write to table service
+    # write_to_table(account_name=credentials["account_name"], account_key=credentials["account_key"], table=df, table_name="rates")
 
 print("Done")
