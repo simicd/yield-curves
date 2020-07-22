@@ -1,5 +1,6 @@
 import React, { FC, useState } from "react";
 import { Serie, ResponsiveLine } from "@nivo/line";
+// import {lineData} from '../../assets/sampleData'
 import clsx from "clsx";
 
 const theme = {
@@ -82,7 +83,7 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
           enableGridX={false}
           gridYValues={6} // Number of grid lines
           enableSlices="x"
-          colors={"#8da2fb"} // Line color: indigo
+          colors={"#4FD1C5"} // Line color: bg-teal-400
           enablePoints={false}
           pointColor={{ from: "color", modifiers: [] }} // Inherit color from line
           pointBorderWidth={2}
@@ -114,9 +115,9 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
       </div>
       <div className="flex justify-center ml-6">
           {data.map((d) => (
-            <button
-              className={clsx("p-2 mx-1 my-2 text-white rounded-md hover:bg-indigo-400 focus:outline-none shadow-inner", {
-                "bg-indigo-500": country === d.id,
+            <button key={d.id}
+              className={clsx("p-2 mx-1 my-2 text-white rounded-md hover:bg-teal-500 focus:outline-none shadow-inner", {
+                "bg-teal-600": country === d.id,
                 "bg-gray-700": country !== d.id,
               })}
               onClick={() => setCountry(d.id)}>

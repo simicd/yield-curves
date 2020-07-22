@@ -4,7 +4,7 @@ import Transition from "../Utils/Transition";
 
 export interface NotificationProps {
   /** Notification status */
-  state: "success" | "warn" | "error" | undefined;
+  state: "info" | "success" | "warn" | "error" | undefined;
   /** Click callback (implementing React's mouse event handler) */
   onClick?: React.MouseEventHandler;
 }
@@ -23,6 +23,7 @@ export const Notification: FC<NotificationProps> = ({ children, state, onClick }
           leaveTo="opacity-0">
           <div
             className={clsx("w-full max-w-sm rounded-lg shadow-xl pointer-events-auto", {
+              "bg-blue-50": state === "info",
               "bg-green-100": state === "success",
               "bg-red-100": state === "error",
               "bg-yellow-50": state === "warn",
@@ -33,6 +34,7 @@ export const Notification: FC<NotificationProps> = ({ children, state, onClick }
                   <div className="flex-shrink-0">
                     <svg
                       className={clsx("w-6 h-6", {
+                        "text-blue-400": state === "info",
                         "text-green-400": state === "success",
                         "text-red-400": state === "error",
                         "text-yellow-400": state === "warn",
@@ -43,6 +45,7 @@ export const Notification: FC<NotificationProps> = ({ children, state, onClick }
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth="2">
+                      {state === "info" && <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />}
                       {state === "success" && <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />}
                       {state === "error" && (
                         <path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
