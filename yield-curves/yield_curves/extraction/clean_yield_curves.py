@@ -89,7 +89,7 @@ def unpivot_maturities(df: pd.DataFrame) -> pd.DataFrame:
     return df_temp.stack().reset_index()
 
 
-def clean_file(filepath: str, date: str) -> pd.DataFrame:
+def clean_file(date: str, filepath: str = None, dataframe: pd.DataFrame = None) -> pd.DataFrame:
     """Clean a RFR Excel file and return the cleaned dataframe
 
     Args:
@@ -100,7 +100,14 @@ def clean_file(filepath: str, date: str) -> pd.DataFrame:
         Cleaned padnas dataframe
     """
 
-    df = read_eiopa(filepath, sheet_name="RFR_spot_no_VA")
+    if filepath is None and dataframe is None:
+        raise ValueError("Please specify either a filepath or pass a dataframe")
+
+    if filepath is None:
+        df = dataframe
+    else:
+        df = read_eiopa(filepath, sheet_name="RFR_spot_no_VA")
+
     df = clean_eiopa_rfr(df, date)
     df = unpivot_maturities(df)
 
