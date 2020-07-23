@@ -8,6 +8,7 @@ interface MonthPickerProps {
 
 export const MonthPicker: FC<MonthPickerProps> = ({ onChange }) =>  {
   const [selectedDate, setSelectedDate] = useState(new Date(2020, 5));
+  const maxMonth = new Date()
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -16,6 +17,8 @@ export const MonthPicker: FC<MonthPickerProps> = ({ onChange }) =>  {
         value={selectedDate}
         onChange={(date) => { setSelectedDate(date as Date); onChange(date as Date); }}
         views={["year", "month"]}
+        minDate={new Date('2016-01-01')}
+        maxDate={maxMonth.setMonth(maxMonth.getMonth() - 1)}
       />
     </MuiPickersUtilsProvider>
   );
