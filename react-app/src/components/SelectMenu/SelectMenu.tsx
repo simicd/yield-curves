@@ -3,69 +3,68 @@ import { MonthPicker } from "../MonthPicker/MonthPicker";
 
 export const SelectMenu: FC = () => {
   // Extract a dictionary of countries from the EIOPA curves and its corresponding country code for filtering
-
   const options = {
-    Euro: "EUR",
+    Australia: "AU",
     Austria: "AT",
     Belgium: "BE",
+    Brazil: "BR",
     Bulgaria: "BG",
+    Canada: "CA",
+    Chile: "CL",
+    China: "CN",
+    Colombia: "CO",
     Croatia: "HR",
     Cyprus: "CY",
     "Czech Republic": "CZ",
     Denmark: "DK",
     Estonia: "EE",
+    Euro: "EUR",
     Finland: "FI",
     France: "FR",
     Germany: "DE",
     Greece: "GR",
+    "Hong Kong": "HK",
     Hungary: "HU",
     Iceland: "IS",
+    India: "IN",
     Ireland: "IE",
     Italy: "IT",
+    Japan: "JP",
     Latvia: "LV",
     Liechtenstein: "LI",
     Lithuania: "LT",
     Luxembourg: "LU",
+    Malaysia: "MY",
     Malta: "MT",
+    Mexico: "MX",
     Netherlands: "NL",
+    "New Zealand": "NZ",
     Norway: "NO",
     Poland: "PL",
     Portugal: "PT",
     Romania: "RO",
     Russia: "RU",
+    Singapore: "SG",
     Slovakia: "SK",
     Slovenia: "SI",
+    "South Africa": "ZA",
+    "South Korea": "KR",
     Spain: "ES",
     Sweden: "SE",
     Switzerland: "CH",
-    "United Kingdom": "GB",
-    Australia: "AU",
-    Brazil: "BR",
-    Canada: "CA",
-    Chile: "CL",
-    China: "CN",
-    Colombia: "CO",
-    "Hong Kong": "HK",
-    India: "IN",
-    Japan: "JP",
-    Malaysia: "MY",
-    Mexico: "MX",
-    "New Zealand": "NZ",
-    Singapore: "SG",
-    "South Africa": "ZA",
-    "South Korea": "KR",
     Taiwan: "TW",
     Thailand: "TH",
     Turkey: "TR",
+    "United Kingdom": "GB",
     "United States": "US",
   };
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedCountry, setSelectedCountry] = useState<keyof typeof options>("United Kingdom");
-  const lastDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 0);
+  const lastDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1).toISOString().split('T')[0];
 
-  console.log(selectedDate);
-  console.log(lastDay);
+  // console.log(lastDay);
+  // console.log(options[selectedCountry]);
 
   return (
     <div className="bg-gray-50">
@@ -94,7 +93,7 @@ export const SelectMenu: FC = () => {
             </select>
           </div>
           <a
-            href={
+            href={ // replace with http://api.yield-curves.com/api/
               "http://localhost:7071/api/yield-curve?date=" +
               lastDay +
               "&filter=country_code eq '" +
