@@ -43,7 +43,7 @@ export const Home: FC = () => {
     const fetchData = async () => {
       // Fetch data from REST API
       const response = await fetch(
-        "http://localhost:7071/api.yield-curves.com/api/yield-curve?date=2020-06-30&filter=country_code eq 'US' or country_code eq 'GB' or country_code eq 'CN' or country_code eq 'CH' or country_code eq 'JP' or country_code eq 'NO' or country_code eq 'DE' or country_code eq 'RU' or country_code eq 'AU' or country_code eq 'HK' or country_code eq 'SG'"
+        "http://localhost:7071/api/yield-curve?date=2020-06-30&filter=country_code eq 'US' or country_code eq 'GB' or country_code eq 'CN' or country_code eq 'CH' or country_code eq 'JP' or country_code eq 'NO' or country_code eq 'DE' or country_code eq 'RU' or country_code eq 'AU' or country_code eq 'HK' or country_code eq 'SG'"
       );
 
       // Extract json

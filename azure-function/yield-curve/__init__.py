@@ -27,7 +27,8 @@ def main(req: func.HttpRequest, rates) -> func.HttpResponse:
 
     if param == "csv":
         rates_df = pd.read_json(rates)
-        return func.HttpResponse(rates_df.to_csv(), mimetype="text/csv")
+        return func.HttpResponse(rates_df.to_csv(), mimetype="text/csv", headers={"Content-disposition":
+       "attachment; filename=eiopa_rfr_yield_curves.csv"})
     else:
         return func.HttpResponse(rates, mimetype="application/json")
 
