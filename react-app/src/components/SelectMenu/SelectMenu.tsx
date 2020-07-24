@@ -94,7 +94,7 @@ export const SelectMenu: FC = () => {
           </div>
           <a
             href={ // for local testing replace with http://localhost:7071/api
-              "https://api.yield-curves.com/api/yield-curve?date=" +
+              "https://yield-curve-functions.azurewebsites.net/api/yield-curve?date=" +
               lastDay +
               "&filter=country_code eq '" +
               options[selectedCountry] +
