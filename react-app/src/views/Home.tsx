@@ -44,7 +44,7 @@ export const Home: FC = () => {
       // Fetch data from REST API
       const response = await fetch(
         // for local testing replace with http://localhost:7071/api
-        "https://api.yield-curves.com/api/yield-curve?date=2020-06-30&filter=country_code eq 'US' or country_code eq 'GB' or country_code eq 'CN' or country_code eq 'CH' or country_code eq 'JP' or country_code eq 'NO' or country_code eq 'DE' or country_code eq 'RU' or country_code eq 'AU' or country_code eq 'HK' or country_code eq 'SG'"
+        "https://yield-curve-functions.azurewebsites.net/api/yield-curve?date=2020-06-30&filter=country_code eq 'US' or country_code eq 'GB' or country_code eq 'CN' or country_code eq 'CH' or country_code eq 'JP' or country_code eq 'NO' or country_code eq 'DE' or country_code eq 'RU' or country_code eq 'AU' or country_code eq 'HK' or country_code eq 'SG'"
       );
 
       // Extract json

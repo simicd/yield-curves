@@ -10,7 +10,7 @@ export const Subscription: FC = () => {
    * @param email User e-mail
    */
   const submitEmail = async (email: string) => {
-    const response = await fetch("https://api.yield-curves.com/api/register", {
+    const response = await fetch("https://yield-curve-functions.azurewebsites.net/api/register", {
       method: "POST",
       body: JSON.stringify({ email: email }),
     });
