@@ -49,7 +49,7 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
 
   return (
     <>
-      <div style={{ height: 450 }} className="w-4/5 mx-auto mt-24">
+      <div style={{ height: 450 }} className="mx-auto -mr-6 md:mr-8 md:mt-6 md:w-11/12">
         <ResponsiveLine
           data={selectedData}
           theme={theme}
@@ -113,10 +113,10 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
           ]}
         />
       </div>
-      <div className="flex justify-center ml-6">
+      <div className="flex flex-wrap px-4 mx-auto md:w-4/5">
           {data.map((d) => (
             <button key={d.id}
-              className={clsx("p-2 mx-1 my-2 text-white rounded-md hover:bg-teal-500 focus:outline-none shadow-inner", {
+              className={clsx("ml-1 mt-1 w-10 h-10 text-white rounded-md hover:bg-teal-500 focus:outline-none shadow-inner", {
                 "bg-teal-600": country === d.id,
                 "bg-gray-700": country !== d.id,
               })}
