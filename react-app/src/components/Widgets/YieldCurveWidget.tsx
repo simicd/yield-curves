@@ -114,7 +114,7 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
         />
       </div>
       <div className="flex flex-wrap px-4 mx-auto md:w-4/5">
-          {data.map((d) => (
+          {data.sort((a, b) => (a.id > b.id ? 1 : -1)).map((d) => (
             <button key={d.id}
               className={clsx("ml-1 mt-1 w-10 h-10 text-white rounded-md hover:bg-teal-500 focus:outline-none shadow-inner", {
                 "bg-teal-600": country === d.id,
