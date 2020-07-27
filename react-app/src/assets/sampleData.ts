@@ -1,6 +1,7 @@
 export const defaultData = [
   {
     id: "AU",
+    date: "2020-06-30",
     data: [
       { x: 1, y: 0.00052 },
       { x: 2, y: 0.00096 },
@@ -156,6 +157,7 @@ export const defaultData = [
   },
   {
     id: "CH",
+    date: "2020-06-30",
     data: [
       { x: 1, y: -0.00737 },
       { x: 2, y: -0.00736 },
@@ -311,6 +313,7 @@ export const defaultData = [
   },
   {
     id: "CN",
+    date: "2020-06-30",
     data: [
       { x: 1, y: 0.01792 },
       { x: 2, y: 0.01843 },
@@ -466,6 +469,7 @@ export const defaultData = [
   },
   {
     id: "DE",
+    date: "2020-06-30",
     data: [
       { x: 1, y: -0.00445 },
       { x: 2, y: -0.00475 },
@@ -621,6 +625,7 @@ export const defaultData = [
   },
   {
     id: "GB",
+    date: "2020-06-30",
     data: [
       { x: 1, y: 0.00097 },
       { x: 2, y: 0.00047 },
@@ -776,6 +781,7 @@ export const defaultData = [
   },
   {
     id: "HK",
+    date: "2020-06-30",
     data: [
       { x: 1, y: 0.00411 },
       { x: 2, y: 0.0037 },
@@ -931,6 +937,7 @@ export const defaultData = [
   },
   {
     id: "JP",
+    date: "2020-06-30",
     data: [
       { x: 1, y: -0.00116 },
       { x: 2, y: -0.00122 },
@@ -1086,6 +1093,7 @@ export const defaultData = [
   },
   {
     id: "NO",
+    date: "2020-06-30",
     data: [
       { x: 1, y: 0.00252 },
       { x: 2, y: 0.00365 },
@@ -1241,6 +1249,7 @@ export const defaultData = [
   },
   {
     id: "RU",
+    date: "2020-06-30",
     data: [
       { x: 1, y: 0.03942 },
       { x: 2, y: 0.04203 },
@@ -1396,6 +1405,7 @@ export const defaultData = [
   },
   {
     id: "SG",
+    date: "2020-06-30",
     data: [
       { x: 1, y: -0.00025 },
       { x: 2, y: 0.00025 },
@@ -1551,6 +1561,7 @@ export const defaultData = [
   },
   {
     id: "US",
+    date: "2020-06-30",
     data: [
       { x: 1, y: 0.00062 },
       { x: 2, y: 0.00024 },
