@@ -49,7 +49,7 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
 
   return (
     <figure className="px-4 mx-auto md:w-11/12">
-      <div style={{ height: 450 }} className="-mr-6 md:mr-8 md:mt-6">
+      <div style={{ height: 450 }} className="-mr-6 md:mt-6">
         <ResponsiveLine
           data={selectedData}
           theme={theme}
@@ -113,7 +113,7 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
           ]}
         />
       </div>
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap ml-4">
         {data
           .sort((a, b) => (a.id > b.id ? 1 : -1))
           .map((d) => (
@@ -131,7 +131,7 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
             </button>
           ))}
       </div>
-      <figcaption className="mt-4 ml-2 text-xs text-gray-400">
+      <figcaption className="mt-4 ml-6 text-xs text-gray-400">
         Source:{" "}
         <a
           className="underline"
