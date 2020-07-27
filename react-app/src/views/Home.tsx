@@ -89,7 +89,7 @@ export const Home: FC = () => {
 
             <div className="relative px-4 pt-6 sm:px-6 lg:px-8">
               <nav className="relative flex items-center justify-between sm:h-10 lg:justify-start">
-                <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
+                {/* <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
                   <div className="flex items-center justify-between w-full md:w-auto">
                     <div className="flex items-center -mr-2 md:hidden">
                       <button
@@ -109,7 +109,7 @@ export const Home: FC = () => {
                       </button>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="hidden md:block md:ml-10 md:pr-4">
                   {/* <a
                     href="/"
