@@ -8,6 +8,7 @@ import { Feature } from "../components/Feature/Feature";
 import { Serie } from "@nivo/line";
 import { groupBy } from "lodash";
 import { Notification, NotificationProps } from "../components/Notification/Notification";
+import { defaultData } from "../assets/sampleData";
 
 interface DataRow {
   CRA: number;
@@ -29,12 +30,8 @@ interface DataRow {
 }
 
 export const Home: FC = () => {
-  const [data, setData] = useState<Serie[]>([
-    {
-      id: "US",
-      data: [{ x: 0, y: 0.0 }, { x: 150, y: 0.0 }],
-    },
-  ]);
+  const [data, setData] = useState<Serie[]>(defaultData);
+  console.log(data)
   const [showNotification, setShowNotification] = useState<NotificationProps["state"]>()
 
   useEffect(() => {
