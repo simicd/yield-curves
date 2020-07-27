@@ -1,5 +1,7 @@
 import React, { FC, useState } from "react";
+import ReactGA from "react-ga";
 import { MonthPicker } from "../MonthPicker/MonthPicker";
+
 
 export const SelectMenu: FC = () => {
   // Extract a dictionary of countries from the EIOPA curves and its corresponding country code for filtering
@@ -93,18 +95,32 @@ export const SelectMenu: FC = () => {
             </select>
           </div>
           <a
-            href={ // for local testing replace with http://localhost:7071/api
+            href={
+              // for local testing replace with http://localhost:7071/api
               "https://yield-curve-functions.azurewebsites.net/api/yield-curve?date=" +
               lastDay +
               "&filter=country_code eq '" +
               options[selectedCountry] +
               "'&data_format=csv"
             }
-            className="px-6 py-2 text-sm font-normal text-white bg-teal-700 border border-transparent rounded-md md:self-end hover:text-teal-white hover:bg-teal-500 focus:outline-none focus:shadow-outline-teal focus:border-teal-300">
-            Download
+            className="px-6 py-2 text-sm font-normal text-white bg-teal-700 border border-transparent rounded-md md:self-end hover:text-teal-white hover:bg-teal-500 focus:outline-none focus:shadow-outline-teal focus:border-teal-300"
+            onClick={() => GAevent("User", "Download Yield Curves")}>
+            <button onClick={() => GAevent("User", "Download Yield Curves")}>Download</button>
           </a>
         </div>
       </div>
     </div>
   );
 };
+
+
+export const GAevent = (categoryName: string, eventName: string) => {
+  ReactGA.event({
+      category: categoryName,  // Required
+      action: eventName,       // Required
+      label: 'labelName',
+      value: 10,
+      nonInteraction: false
+  });
+}
+
