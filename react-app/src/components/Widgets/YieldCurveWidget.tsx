@@ -7,25 +7,25 @@ const theme = {
   axis: {
     domain: {
       line: {
-        stroke: 'transparent',
-        strokeWidth: 1
-      }
+        stroke: "transparent",
+        strokeWidth: 1,
+      },
     },
     ticks: {
       line: {
-        stroke: 'transparent',
-        strokeWidth: 1
+        stroke: "transparent",
+        strokeWidth: 1,
       },
       text: {
-        fill: "lightgray"
-      }
+        fill: "lightgray",
+      },
     },
     legend: {
       text: {
         fontSize: 12,
-        fill: "lightgray"
-      }
-    }
+        fill: "lightgray",
+      },
+    },
   },
 };
 
@@ -44,12 +44,12 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
 
   // Copy the selected data and set always the same ID so that nivo applies animation from one curve to the next
   // The dataset needs to be copied since otherwise the original data is overwritten
-  const selectedData = [Object.assign({}, data.filter((d) => d.id === country)[0])]
-  selectedData[0].id = "Rate"
+  const selectedData = [Object.assign({}, data.filter((d) => d.id === country)[0])];
+  selectedData[0].id = "Rate";
 
   return (
-    <>
-      <div style={{ height: 450 }} className="mx-auto -mr-6 md:mr-8 md:mt-6 md:w-11/12">
+    <figure className="px-4 mx-auto md:w-11/12">
+      <div style={{ height: 450 }} className="-mr-6 md:mt-6">
         <ResponsiveLine
           data={selectedData}
           theme={theme}
@@ -113,18 +113,35 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
           ]}
         />
       </div>
-      <div className="flex flex-wrap px-4 mx-auto md:w-4/5">
-          {data.sort((a, b) => (a.id > b.id ? 1 : -1)).map((d) => (
-            <button key={d.id}
-              className={clsx("ml-1 mt-1 w-10 h-10 text-white rounded-md hover:bg-teal-500 focus:outline-none shadow-inner", {
-                "bg-teal-600": country === d.id,
-                "bg-gray-700": country !== d.id,
-              })}
+      <div className="flex flex-wrap ml-4">
+        {data
+          .sort((a, b) => (a.id > b.id ? 1 : -1))
+          .map((d) => (
+            <button
+              key={d.id}
+              className={clsx(
+                "ml-1 mt-1 w-10 h-10 text-white rounded-md hover:bg-teal-500 focus:outline-none shadow-inner",
+                {
+                  "bg-teal-600": country === d.id,
+                  "bg-gray-700": country !== d.id,
+                }
+              )}
               onClick={() => setCountry(d.id)}>
               {d.id}
             </button>
           ))}
-        </div>
-    </>
+      </div>
+      <figcaption className="mt-4 ml-6 text-xs text-gray-400">
+        Source:{" "}
+        <a
+          className="underline"
+          href="https://www.eiopa.europa.eu/tools-and-data/risk-free-interest-rate-term-structures_en#MonthlyRFRcalculations"
+          target="_blank"
+          rel="noopener noreferrer">
+          EIOPA monthly RFR
+        </a>{" "}
+        (data: {new Date(selectedData[0].date).toISOString().split("T")[0]})
+      </figcaption>
+    </figure>
   );
 };

@@ -88,7 +88,7 @@ export const SelectMenu: FC = () => {
               id="currency"
               className="block w-full mt-1 text-sm leading-6 border-gray-300 cursor-pointer form-select focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5">
               {Object.keys(options).map((country) => (
-                <option> {country} </option>
+                <option key={country}>{country}</option>
               ))}
             </select>
           </div>

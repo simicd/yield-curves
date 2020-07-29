@@ -8,6 +8,7 @@ import { Feature } from "../components/Feature/Feature";
 import { Serie } from "@nivo/line";
 import { groupBy } from "lodash";
 import { Notification, NotificationProps } from "../components/Notification/Notification";
+import { defaultData } from "../assets/sampleData";
 
 interface DataRow {
   CRA: number;
@@ -29,22 +30,21 @@ interface DataRow {
 }
 
 export const Home: FC = () => {
-  const [data, setData] = useState<Serie[]>([
-    {
-      id: "US",
-      data: [{ x: 0, y: 0.0 }, { x: 150, y: 0.0 }],
-    },
-  ]);
-  const [showNotification, setShowNotification] = useState<NotificationProps["state"]>()
+  const [data, setData] = useState<Serie[]>(defaultData);
+  const [showNotification, setShowNotification] = useState<NotificationProps["state"]>();
 
   useEffect(() => {
+    // Note that JS/TS months are zero-indexed (e.g. new Date(2020, 5, 30) => June 30th, 2020)
+    const date = new Date(Date.UTC(2020, 6 - 1, 30));
     // Define asynchronous function - since useEffect hook can't handle async directly,
     // a nested function needs to be defined first and then called thereafter
     const fetchData = async () => {
       // Fetch data from REST API
       // for local testing replace with http://localhost:7071/api
       const response = await fetch(
-        "https://yield-curve-functions.azurewebsites.net/api/yield-curve?date=2020-06-30&filter=country_code eq 'US' or country_code eq 'GB' or country_code eq 'CN' or country_code eq 'CH' or country_code eq 'JP' or country_code eq 'NO' or country_code eq 'DE' or country_code eq 'RU' or country_code eq 'AU' or country_code eq 'HK' or country_code eq 'SG'"
+        `https://yield-curve-functions.azurewebsites.net/api/yield-curve?date=${
+          date.toISOString().split("T")[0]
+        }&filter=country_code eq 'US' or country_code eq 'GB' or country_code eq 'CN' or country_code eq 'CH' or country_code eq 'JP' or country_code eq 'NO' or country_code eq 'DE' or country_code eq 'RU' or country_code eq 'AU' or country_code eq 'HK' or country_code eq 'SG'`
       );
 
       // Extract json
@@ -63,6 +63,7 @@ export const Home: FC = () => {
       for (let key in processedData) {
         dataArray.push({
           id: key,
+          date: date,
           data: processedData[key],
         });
       }
@@ -88,9 +89,8 @@ export const Home: FC = () => {
 
             <div className="relative px-4 pt-6 sm:px-6 lg:px-8">
               <nav className="relative flex items-center justify-between sm:h-10 lg:justify-start">
-                <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
+                {/* <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
                   <div className="flex items-center justify-between w-full md:w-auto">
-
                     <div className="flex items-center -mr-2 md:hidden">
                       <button
                         type="button"
@@ -109,7 +109,7 @@ export const Home: FC = () => {
                       </button>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="hidden md:block md:ml-10 md:pr-4">
                   {/* <a
                     href="/"
@@ -145,7 +145,9 @@ export const Home: FC = () => {
                   </div>
                   <div className="mt-3 sm:mt-0 sm:ml-3">
                     <button
-                      onClick={() => {setShowNotification("info")}}
+                      onClick={() => {
+                        setShowNotification("info");
+                      }}
                       className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-teal-800 transition duration-150 ease-in-out border border-transparent rounded-md bg-cool-gray-100 hover:text-teal-500 hover:bg-cool-gray-100 focus:outline-none focus:shadow-outline-teal focus:border-teal-300 md:py-4 md:text-lg md:px-10">
                       Live demo
                     </button>
@@ -168,14 +170,15 @@ export const Home: FC = () => {
       <Feature />
       {/* <Pricing /> */}
       <Notification state={showNotification} onClick={() => setShowNotification(undefined)}>
-          <>
-            <p className="text-sm font-medium leading-5 text-gray-900">Live demo</p>{" "}
-            <p className="mt-1 text-sm leading-5 text-gray-500">
-            The chart displays the latest yield curves for a selected set of countries. Click on the country code buttons to explore the different rates!
-            </p>
-          </>
+        <>
+          <p className="text-sm font-medium leading-5 text-gray-900">Live demo</p>{" "}
+          <p className="mt-1 text-sm leading-5 text-gray-500">
+            The chart displays the latest yield curves for a selected set of countries. Click on the country code
+            buttons to explore the different rates!
+          </p>
+        </>
       </Notification>
-      <SelectMenu/>
+      <SelectMenu />
       <Subscription />
     </>
   );
