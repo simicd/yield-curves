@@ -40,38 +40,47 @@ export const Home: FC = () => {
     // Define asynchronous function - since useEffect hook can't handle async directly,
     // a nested function needs to be defined first and then called thereafter
     const fetchData = async () => {
-      // Fetch data from REST API
-      // for local testing replace with http://localhost:7071/api
-      const response = await fetch(
-        `https://api.yield-curves.com/yield-curve?date=${
-          date.toISOString().split("T")[0]
-        }&filter=country_code eq 'US' or country_code eq 'GB' or country_code eq 'CN' or country_code eq 'CH' or country_code eq 'JP' or country_code eq 'NO' or country_code eq 'DE' or country_code eq 'RU' or country_code eq 'AU' or country_code eq 'HK' or country_code eq 'SG'`
-      );
+      try {
+        // Fetch data from REST API
+        // for local testing replace with http://localhost:7071/api
+        const response = await fetch(
+          `https://api.yield-curves.com/yield-curve?date=${
+            date.toISOString().split("T")[0]
+          }&filter=country_code eq 'US' or country_code eq 'GB' or country_code eq 'CN' or country_code eq 'CH' or country_code eq 'JP' or country_code eq 'NO' or country_code eq 'DE' or country_code eq 'RU' or country_code eq 'AU' or country_code eq 'HK' or country_code eq 'SG'`
+        );
 
-      // Extract json
-      const rawData: DataRow[] = await response.json(); //TODO@simicd: Catch error 404
+        if (response.status === 200) {
+          // const message = await response.json();
+          // Extract json
+          const rawData: DataRow[] = await response.json();
 
-      // First extract two columns and reshape it so that they can be fed to nivo and then sort by maturity (x-axis)
-      const transformedData = rawData
-        .map((row) => {
-          return { x: row.Maturity, y: row.Rate, id: row.country_code };
-        })
-        .sort((a, b) => (a.x > b.x ? 1 : -1));
+          // First extract two columns and reshape it so that they can be fed to nivo and then sort by maturity (x-axis)
+          const transformedData = rawData
+            .map((row) => {
+              return { x: row.Maturity, y: row.Rate, id: row.country_code };
+            })
+            .sort((a, b) => (a.x > b.x ? 1 : -1));
 
-      // Generate required for nivo charts (Serie[])
-      const processedData = groupBy(transformedData, (r) => r.id);
-      const dataArray = [];
-      for (let key in processedData) {
-        dataArray.push({
-          id: key,
-          date: date,
-          data: processedData[key],
-        });
+          // Generate required for nivo charts (Serie[])
+          const processedData = groupBy(transformedData, (r) => r.id);
+          const dataArray = [];
+          for (let key in processedData) {
+            dataArray.push({
+              id: key,
+              date: date,
+              data: processedData[key],
+            });
+          }
+          setData(dataArray);
+        } else {
+          console.error("Couldn't reach server");
+        }
+      } catch (error) {
+        console.error(error)
       }
-      setData(dataArray);
     };
     // Call async function
-    // fetchData();  //TODO@simicd: Activate again after catching error
+    fetchData();
   }, []);
 
   return (
