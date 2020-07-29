@@ -10,6 +10,9 @@ import { Notification, NotificationProps } from "../components/Notification/Noti
 import { defaultData } from "../assets/sampleData";
 import { TimeSerie } from "../types/TimeSerie";
 
+import { FeatureList } from "../components/Feature/FeatureList";
+import { FeatureListItem } from "../components/Feature/FeatureListItem";
+
 interface DataRow {
   CRA: number;
   Convergence: number;
@@ -76,7 +79,7 @@ export const Home: FC = () => {
           console.error("Couldn't reach server");
         }
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
     };
     // Call async function
@@ -96,74 +99,38 @@ export const Home: FC = () => {
               <polygon points="50,0 100,0 50,100 0,100" />
             </svg>
 
-            <div className="relative px-4 pt-6 sm:px-6 lg:px-8">
-              <nav className="relative flex items-center justify-between sm:h-10 lg:justify-start">
-                {/* <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
-                  <div className="flex items-center justify-between w-full md:w-auto">
-                    <div className="flex items-center -mr-2 md:hidden">
+            <div className="pt-6">
+              <main className="max-w-screen-xl px-4 mx-auto mt-10 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+                <div className="sm:text-center lg:text-left">
+                  <h2 className="text-4xl font-extrabold leading-10 tracking-tight text-gray-900 sm:text-5xl sm:leading-none md:text-6xl">
+                    A <span className="text-teal-500"> time series of yield curves </span>
+                    <br className="xl:hidden" />
+                    at your fingertips
+                  </h2>
+                  <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                    Browse EIOPA's Solvency II risk free rates for any currency, any maturity, at any date.
+                  </p>
+                  <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                    <div className="rounded-md shadow">
+                      <a
+                        href="#subscription"
+                        className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-teal-700 border border-transparent rounded-md hover:bg-teal-500 focus:outline-none focus:border-teal-800 focus:shadow-outline-teal md:py-4 md:text-lg md:px-10">
+                        Get started
+                      </a>
+                    </div>
+                    <div className="mt-3 sm:mt-0 sm:ml-3">
                       <button
-                        type="button"
-                        className="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500"
-                        id="main-menu"
-                        aria-label="Main menu"
-                        aria-haspopup="true">
-                        <svg className="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M4 6h16M4 12h16M4 18h16"
-                          />
-                        </svg>
+                        onClick={() => {
+                          setShowNotification("info");
+                        }}
+                        className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-teal-800 transition duration-150 ease-in-out border border-transparent rounded-md bg-cool-gray-100 hover:text-teal-500 hover:bg-cool-gray-100 focus:outline-none focus:shadow-outline-teal focus:border-teal-300 md:py-4 md:text-lg md:px-10">
+                        Live demo
                       </button>
                     </div>
                   </div>
-                </div> */}
-                <div className="hidden md:block md:ml-10 md:pr-4">
-                  {/* <a
-                    href="/"
-                    className="font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-900">
-                    Product
-                  </a>
-                  <a
-                    href="/"
-                    className="ml-8 font-medium text-teal-800 transition duration-150 ease-in-out hover:text-teal-500">
-                    Log in
-                  </a> */}
                 </div>
-              </nav>
+              </main>
             </div>
-
-            <main className="max-w-screen-xl px-4 mx-auto mt-10 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-              <div className="sm:text-center lg:text-left">
-                <h2 className="text-4xl font-extrabold leading-10 tracking-tight text-gray-900 sm:text-5xl sm:leading-none md:text-6xl">
-                  A <span className="text-teal-500"> time series of yield curves </span>
-                  <br className="xl:hidden" />
-                  at your fingertips
-                </h2>
-                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                  Browse EIOPA's Solvency II risk free rates for any currency, any maturity, at any date.
-                </p>
-                <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                  <div className="rounded-md shadow">
-                    <a
-                      href="#subscription"
-                      className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-teal-700 border border-transparent rounded-md hover:bg-teal-500 focus:outline-none focus:border-teal-800 focus:shadow-outline-teal md:py-4 md:text-lg md:px-10">
-                      Get started
-                    </a>
-                  </div>
-                  <div className="mt-3 sm:mt-0 sm:ml-3">
-                    <button
-                      onClick={() => {
-                        setShowNotification("info");
-                      }}
-                      className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-teal-800 transition duration-150 ease-in-out border border-transparent rounded-md bg-cool-gray-100 hover:text-teal-500 hover:bg-cool-gray-100 focus:outline-none focus:shadow-outline-teal focus:border-teal-300 md:py-4 md:text-lg md:px-10">
-                      Live demo
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </main>
           </div>
         </div>
         <div
@@ -176,8 +143,53 @@ export const Home: FC = () => {
           <YieldCurveWidget data={data} />
         </div>
       </div>
-      <FeatureSection />
+      <FeatureSection sectionHeader="EIOPA risk-free rates API" title="A better way to get yield curves">
+        <div className="lg:text-center">
+          <p className="max-w-2xl mt-4 text-xl leading-7 text-gray-500 lg:mx-auto">
+            Tired of{" "}
+            <a
+              href="https://www.eiopa.europa.eu/tools-and-data/risk-free-interest-rate-term-structures_en"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-teal-400 hover:underline">
+              downloading Excel files
+            </a>{" "}
+            and spending hours normalizing the data? Our service provides this to you - cleaned data delivered through
+            an API. Fast & efficient.
+          </p>
+        </div>
+        <FeatureList>
+          <FeatureListItem
+            title="Complete time series"
+            description="All current & historic rates are available."
+            svgPath={<path d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />}
+          />
+          <FeatureListItem
+            title="Customize your data output"
+            description="Get rates for your chosen portfolios."
+            svgPath={<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />}
+          />
+          <FeatureListItem
+            title="Speedy data transfer"
+            description="Use our API to fetch data instantly."
+            svgPath={<path d="M13 10V3L4 14h7v7l9-11h-7z" />}
+          />
+          <FeatureListItem
+            title="Flat fees"
+            description="Monthly payment gives you unlimited access."
+            svgPath={
+              <path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+            }
+          />
+        </FeatureList>
+      </FeatureSection>
+
       {/* <Pricing /> */}
+
+      <SelectMenu />
+
+      <SubscriptionSection />
+
       <Notification status={showNotification} onClick={() => setShowNotification(undefined)}>
         <>
           <p className="text-sm font-medium leading-5 text-gray-900">Live demo</p>{" "}
@@ -187,8 +199,6 @@ export const Home: FC = () => {
           </p>
         </>
       </Notification>
-      <SelectMenu />
-      <SubscriptionSection />
     </>
   );
 };

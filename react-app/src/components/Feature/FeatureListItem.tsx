@@ -10,7 +10,7 @@ interface FeatureListItemProps {
 }
 
 /**
- * List items with svg icon and a bold title plus light description - works well with the FeatureList component
+ * List items with svg icon, a bold title plus light description - works well with FeatureList component
  * @param FeatureListItemProps Title, description and svgPath
  */
 export const FeatureListItem: FC<FeatureListItemProps> = ({ title, description, svgPath }) => {

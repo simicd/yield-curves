@@ -1,7 +1,8 @@
 import React, { FC } from "react";
 
 /**
- * List of features displayed as two-column grid (medium screens larger) or single column (smaller screens)
+ * List of features displayed as two-column grid (medium screens or larger)
+ * or single column (smaller screens)
  * @param props Component children
  */
 export const FeatureList: FC = ({ children }) => {
