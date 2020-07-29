@@ -1,9 +1,12 @@
 import React, { FC, useState } from "react";
 import { Notification, NotificationProps } from "../Notification/Notification";
 
-export const Subscription: FC = () => {
+/**
+ * Subscription section with e-mail field
+ */
+export const SubscriptionSection: FC = () => {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<NotificationProps["state"]>();
+  const [status, setStatus] = useState<NotificationProps["status"]>();
 
   /**
    * Register e-mail address
@@ -58,7 +61,7 @@ export const Subscription: FC = () => {
           </div>
         </div>
       </div>
-      <Notification state={status} onClick={() => setStatus(undefined)}>
+      <Notification status={status} onClick={() => setStatus(undefined)}>
         {status === "success" && (
           <>
             <p className="text-sm font-medium leading-5 text-gray-900">Successfully registered!</p>{" "}

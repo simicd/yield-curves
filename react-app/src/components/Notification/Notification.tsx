@@ -4,17 +4,21 @@ import Transition from "../Utils/Transition";
 
 export interface NotificationProps {
   /** Notification status */
-  state: "info" | "success" | "warn" | "error" | undefined;
+  status: "info" | "success" | "warn" | "error" | undefined;
   /** Click callback (implementing React's mouse event handler) */
   onClick?: React.MouseEventHandler;
 }
 
-export const Notification: FC<NotificationProps> = ({ children, state, onClick }) => {
+/**
+ * Notification component displayed in top right corner (info, success, warning or error).
+ * @param NotificationProps Props with notification status and onClick callback
+ */
+export const Notification: FC<NotificationProps> = ({ children, status, onClick }) => {
   return (
     <>
       <div className="fixed inset-0 z-10 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end">
         <Transition
-          show={!!state}
+          show={!!status}
           enter="transform ease-out duration-300 transition"
           enterFrom="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
           enterTo="translate-y-0 opacity-100 sm:translate-x-0"
@@ -23,10 +27,10 @@ export const Notification: FC<NotificationProps> = ({ children, state, onClick }
           leaveTo="opacity-0">
           <div
             className={clsx("w-full max-w-sm rounded-lg shadow-xl pointer-events-auto", {
-              "bg-blue-50": state === "info",
-              "bg-green-100": state === "success",
-              "bg-red-100": state === "error",
-              "bg-yellow-50": state === "warn",
+              "bg-blue-50": status === "info",
+              "bg-green-100": status === "success",
+              "bg-red-100": status === "error",
+              "bg-yellow-50": status === "warn",
             })}>
             <div className="overflow-hidden rounded-lg shadow-xs">
               <div className="p-4">
@@ -34,10 +38,10 @@ export const Notification: FC<NotificationProps> = ({ children, state, onClick }
                   <div className="flex-shrink-0">
                     <svg
                       className={clsx("w-6 h-6", {
-                        "text-blue-400": state === "info",
-                        "text-green-400": state === "success",
-                        "text-red-400": state === "error",
-                        "text-yellow-400": state === "warn",
+                        "text-blue-400": status === "info",
+                        "text-green-400": status === "success",
+                        "text-red-400": status === "error",
+                        "text-yellow-400": status === "warn",
                       })}
                       fill="none"
                       viewBox="0 0 24 24"
@@ -45,12 +49,12 @@ export const Notification: FC<NotificationProps> = ({ children, state, onClick }
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth="2">
-                      {state === "info" && <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />}
-                      {state === "success" && <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />}
-                      {state === "error" && (
+                      {status === "info" && <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />}
+                      {status === "success" && <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />}
+                      {status === "error" && (
                         <path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                       )}
-                      {state === "warn" && <path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>}
+                      {status === "warn" && <path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>}
                     </svg>
                   </div>
                   <div className="ml-3 w-0 flex-1 pt-0.5">{children}</div>

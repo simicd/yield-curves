@@ -1,14 +1,14 @@
 import React, { FC, useEffect, useState } from "react";
 
-import { Subscription } from "../components/Subscribe/Subscribe";
-// import { Pricing } from "../components/Pricing/Pricing";
+import { SubscriptionSection } from "../components/Subscribe/SubscriptionSection";
+// import { PricingSection } from "../components/Pricing/PricingSection";
 import { SelectMenu } from "../components/SelectMenu/SelectMenu";
 import { YieldCurveWidget } from "../components/Widgets/YieldCurveWidget";
-import { Feature } from "../components/Feature/Feature";
-import { Serie } from "@nivo/line";
+import { FeatureSection } from "../components/Feature/FeatureSection";
 import { groupBy } from "lodash";
 import { Notification, NotificationProps } from "../components/Notification/Notification";
 import { defaultData } from "../assets/sampleData";
+import { TimeSerie } from "../types/TimeSerie";
 
 interface DataRow {
   CRA: number;
@@ -30,8 +30,8 @@ interface DataRow {
 }
 
 export const Home: FC = () => {
-  const [data, setData] = useState<Serie[]>(defaultData);
-  const [showNotification, setShowNotification] = useState<NotificationProps["state"]>();
+  const [data, setData] = useState<TimeSerie[]>(defaultData);
+  const [showNotification, setShowNotification] = useState<NotificationProps["status"]>();
   console.log(data);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export const Home: FC = () => {
       );
 
       // Extract json
-      const rawData: DataRow[] = await response.json();
+      const rawData: DataRow[] = await response.json(); //TODO@simicd: Catch error 404
 
       // First extract two columns and reshape it so that they can be fed to nivo and then sort by maturity (x-axis)
       const transformedData = rawData
@@ -71,10 +71,9 @@ export const Home: FC = () => {
       setData(dataArray);
     };
     // Call async function
-    fetchData();
+    // fetchData();  //TODO@simicd: Activate again after catching error
   }, []);
 
-  // const displayName = Home.name;
   return (
     <>
       <div className="relative overflow-hidden bg-white">
@@ -168,9 +167,9 @@ export const Home: FC = () => {
           <YieldCurveWidget data={data} />
         </div>
       </div>
-      <Feature />
+      <FeatureSection />
       {/* <Pricing /> */}
-      <Notification state={showNotification} onClick={() => setShowNotification(undefined)}>
+      <Notification status={showNotification} onClick={() => setShowNotification(undefined)}>
         <>
           <p className="text-sm font-medium leading-5 text-gray-900">Live demo</p>{" "}
           <p className="mt-1 text-sm leading-5 text-gray-500">
@@ -180,7 +179,7 @@ export const Home: FC = () => {
         </>
       </Notification>
       <SelectMenu />
-      <Subscription />
+      <SubscriptionSection />
     </>
   );
 };

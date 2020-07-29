@@ -2,7 +2,10 @@ import React, { FC } from "react";
 import { FeatureList } from "./FeatureList";
 import { FeatureListItem } from "./FeatureListItem";
 
-export const Feature: FC = () => {
+/**
+ * Feature section
+ */
+export const FeatureSection: FC = () => {
   return (
     <div className="py-32 bg-white">
       <div className="max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">

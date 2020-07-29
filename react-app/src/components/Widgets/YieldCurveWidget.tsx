@@ -1,8 +1,12 @@
 import React, { FC, useState } from "react";
-import { Serie, ResponsiveLine } from "@nivo/line";
+import { ResponsiveLine } from "@nivo/line";
 // import {lineData} from '../../assets/sampleData'
 import clsx from "clsx";
+import { TimeSerie } from "../../types/TimeSerie";
 
+/**
+ * Chart theme customization
+ */
 const theme = {
   axis: {
     domain: {
@@ -30,8 +34,8 @@ const theme = {
 };
 
 interface YieldCurveWidgetProps {
-  /** Dataset */
-  data: Serie[];
+  /** Dataset rows with date as mandatory additional field */
+  data: TimeSerie[];
 }
 
 /**
@@ -140,7 +144,7 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
           rel="noopener noreferrer">
           EIOPA monthly RFR
         </a>{" "}
-        (data: {new Date(selectedData[0].date).toISOString().split("T")[0]})
+        (data: {selectedData[0].date.toISOString().split("T")[0]})
       </figcaption>
     </figure>
   );
