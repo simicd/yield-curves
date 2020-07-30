@@ -123,6 +123,7 @@ export const Home: FC = () => {
           ),
           image: (
             <div
+              className="py-6 bg-gray-800 md:py-12 lg:pl-32 "
               style={{
                 backgroundColor: "#252f3f",
                 backgroundImage:
