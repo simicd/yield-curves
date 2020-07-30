@@ -12,6 +12,7 @@ import { TimeSerie } from "../types/TimeSerie";
 
 import { FeatureList } from "../components/Feature/FeatureList";
 import { FeatureListItem } from "../components/Feature/FeatureListItem";
+import { HeaderSection } from "../components/Layout/HeaderSection";
 
 interface DataRow {
   CRA: number;
@@ -88,61 +89,50 @@ export const Home: FC = () => {
 
   return (
     <>
-      <div className="relative overflow-hidden bg-white">
-        <div className="max-w-screen-xl mx-auto ">
-          <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
-            <svg
-              className="absolute inset-y-0 right-0 hidden w-48 h-full text-white transform translate-x-1/2 lg:block"
-              fill="currentColor"
-              viewBox="0 0 100 100"
-              preserveAspectRatio="none">
-              <polygon points="50,0 100,0 50,100 0,100" />
-            </svg>
-
-            <div className="pt-6">
-              <main className="max-w-screen-xl px-4 mx-auto mt-10 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-                <div className="sm:text-center lg:text-left">
-                  <h2 className="text-4xl font-extrabold leading-10 tracking-tight text-gray-900 sm:text-5xl sm:leading-none md:text-6xl">
-                    A <span className="text-teal-500"> time series of yield curves </span>
-                    <br className="xl:hidden" />
-                    at your fingertips
-                  </h2>
-                  <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                    Browse EIOPA's Solvency II risk free rates for any currency, any maturity, at any date.
-                  </p>
-                  <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                    <div className="rounded-md shadow">
-                      <a
-                        href="#subscription"
-                        className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-teal-700 border border-transparent rounded-md hover:bg-teal-500 focus:outline-none focus:border-teal-800 focus:shadow-outline-teal md:py-4 md:text-lg md:px-10">
-                        Get started
-                      </a>
-                    </div>
-                    <div className="mt-3 sm:mt-0 sm:ml-3">
-                      <button
-                        onClick={() => {
-                          setShowNotification("info");
-                        }}
-                        className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-teal-800 transition duration-150 ease-in-out border border-transparent rounded-md bg-cool-gray-100 hover:text-teal-500 hover:bg-cool-gray-100 focus:outline-none focus:shadow-outline-teal focus:border-teal-300 md:py-4 md:text-lg md:px-10">
-                        Live demo
-                      </button>
-                    </div>
-                  </div>
+      <HeaderSection>
+        {{
+          content: (
+            <>
+              <h2 className="text-4xl font-extrabold leading-10 tracking-tight text-gray-900 sm:text-5xl sm:leading-none md:text-6xl">
+                A <span className="text-teal-500"> time series of yield curves </span>
+                <br className="xl:hidden" />
+                at your fingertips
+              </h2>
+              <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                Browse EIOPA's Solvency II risk free rates for any currency, any maturity, at any date.
+              </p>
+              <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                <div className="rounded-md shadow">
+                  <a
+                    href="#subscription"
+                    className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-teal-700 border border-transparent rounded-md hover:bg-teal-500 focus:outline-none focus:border-teal-800 focus:shadow-outline-teal md:py-4 md:text-lg md:px-10">
+                    Get started
+                  </a>
                 </div>
-              </main>
+                <div className="mt-3 sm:mt-0 sm:ml-3">
+                  <button
+                    onClick={() => {
+                      setShowNotification("info");
+                    }}
+                    className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-teal-800 transition duration-150 ease-in-out border border-transparent rounded-md bg-cool-gray-100 hover:text-teal-500 hover:bg-cool-gray-100 focus:outline-none focus:shadow-outline-teal focus:border-teal-300 md:py-4 md:text-lg md:px-10">
+                    Live demo
+                  </button>
+                </div>
+              </div>
+            </>
+          ),
+          image: (
+            <div
+              style={{
+                backgroundColor: "#252f3f",
+                backgroundImage:
+                  "url(\"data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%235d526f' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E\")",
+              }}>
+              <YieldCurveWidget data={data} />
             </div>
-          </div>
-        </div>
-        <div
-          className="py-6 bg-gray-800 md:py-12 lg:pl-32 lg:absolute lg:inset-y-0 lg:left-1/2 lg:w-1/2 lg:max-w-4xl"
-          style={{
-            backgroundColor: "#252f3f",
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%235d526f' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E\")",
-          }}>
-          <YieldCurveWidget data={data} />
-        </div>
-      </div>
+          ),
+        }}
+      </HeaderSection>
       <FeatureSection sectionHeader="EIOPA risk-free rates API" title="A better way to get yield curves">
         <div className="lg:text-center">
           <p className="max-w-2xl mt-4 text-xl leading-7 text-gray-500 lg:mx-auto">
