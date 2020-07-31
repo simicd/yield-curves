@@ -1,16 +1,19 @@
 import React, { FC, useState } from "react";
 import { Notification, NotificationProps } from "../Notification/Notification";
 
-export const Subscription: FC = () => {
+/**
+ * Subscription section with e-mail field
+ */
+export const SubscriptionSection: FC = () => {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<NotificationProps["state"]>();
+  const [status, setStatus] = useState<NotificationProps["status"]>();
 
   /**
    * Register e-mail address
    * @param email User e-mail
    */
   const submitEmail = async (email: string) => {
-    const response = await fetch("https://yield-curve-functions.azurewebsites.net/api/register", {
+    const response = await fetch("https://api.yield-curves.com/register", {
       method: "POST",
       body: JSON.stringify({ email: email }),
     });
@@ -58,7 +61,7 @@ export const Subscription: FC = () => {
           </div>
         </div>
       </div>
-      <Notification state={status} onClick={() => setStatus(undefined)}>
+      <Notification status={status} onClick={() => setStatus(undefined)}>
         {status === "success" && (
           <>
             <p className="text-sm font-medium leading-5 text-gray-900">Successfully registered!</p>{" "}
