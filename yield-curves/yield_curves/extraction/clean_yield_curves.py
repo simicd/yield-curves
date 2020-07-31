@@ -129,7 +129,7 @@ def clean_files(file_dict: Dict[str, str]):
     for date, filepath in file_dict.items():
         try:
             # Load & clean dataframe and store into dictionary
-            cleaned_dfs[date] = clean_file(filepath, date)
+            cleaned_dfs[date] = clean_file(date=date, filepath=filepath)
         except:
             print(f"Load and transform of {date} not successful")
 
