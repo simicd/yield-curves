@@ -33,7 +33,6 @@ interface DataRow {
   RowKey: string;
 }
 
-import logo from "/home/jovyan/repos/yield-curves/react-app/src/logo.svg"
 
 export const Home: FC = () => {
   const [data, setData] = useState<TimeSerie[]>(defaultData);

@@ -15,7 +15,7 @@ export default function CheckoutForm() {
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     window
-      .fetch("http://127.0.0.1:7071/api/stripe-payment", {
+      .fetch("http://127.0.0.1:7071/stripe-payment", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -87,9 +87,9 @@ export default function CheckoutForm() {
         transition= {{
           duration: 1
         }}>
-      <div class="lg:absolute lg:inset-y-0 lg:left-0 lg:w-full lg:h-1/2">
+      <div className="lg:absolute lg:inset-y-0 lg:left-0 lg:w-full lg:h-1/2">
         <img
-          class="w-full object-cover h-full opacity-20"
+          className="object-cover w-full h-full opacity-20"
           src="https://source.unsplash.com/ULwzqOnPem0/1200 × 2800?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80"
           alt=""
         />
