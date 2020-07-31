@@ -1,12 +1,46 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import ReactGA from "react-ga";
 import { MonthPicker } from "../MonthPicker/MonthPicker";
-
 import { Notification, NotificationProps } from "../Notification/Notification";
 import { defaultCountries } from "../../assets/sampleData";
 
-export const SelectMenu: FC = () => {
+export const DownloadSection: FC = () => {
   // List of countries from the EIOPA curves and its corresponding country code for filtering
+  const [countries, setCountries] = useState(defaultCountries);
+
+  useEffect(() => {
+    // Define asynchronous function - since useEffect hook can't handle async directly,
+    // a nested function needs to be defined first and then called thereafter
+    const fetchData = async () => {
+      try {
+        // Fetch data from REST API
+        // for local testing replace with http://localhost:7071/api
+        const response = await fetch("https://api.yield-curves.com/config?id=countries");
+
+        if (response.status === 200) {
+          // const message = await response.json();
+          // Extract json
+          const data: {
+            PartitionKey: string;
+            RowKey: string;
+            countries: {
+              country: string;
+              country_code: string;
+            }[];
+          } = await response.json();
+
+          setCountries(data.countries);
+        } else {
+          console.error("Couldn't reach server");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    // Call async function
+    fetchData();
+  }, []);
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedCountry, setSelectedCountry] = useState("United Kingdom");
   const lastDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1).toISOString().split("T")[0];
@@ -50,7 +84,7 @@ export const SelectMenu: FC = () => {
                 onChange={(e) => setSelectedCountry(e.target.value)}
                 id="currency"
                 className="block w-full mt-1 text-sm leading-6 border-gray-300 cursor-pointer form-select focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5">
-                {defaultCountries.map((c) => (
+                {countries.map((c) => (
                   <option key={c.country_code}>{c.country}</option>
                 ))}
               </select>
@@ -59,7 +93,7 @@ export const SelectMenu: FC = () => {
               href={
                 // for local testing replace with http://localhost:7071/api
                 `https://api.yield-curves.com/yield-curve?date=${lastDay}&filter=country_code eq '${
-                  defaultCountries.filter((d) => d.country === selectedCountry)[0].country_code
+                  countries.filter((d) => d.country === selectedCountry)[0].country_code
                 }'&data_format=csv`
               }
               className="px-6 py-2 text-sm font-normal text-white bg-teal-700 border border-transparent rounded-md md:self-end hover:text-teal-white hover:bg-teal-500 focus:outline-none focus:shadow-outline-teal focus:border-teal-300"
