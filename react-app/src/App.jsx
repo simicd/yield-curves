@@ -19,11 +19,10 @@ function App() {
       <Layout>
         <Route exact path="/" component={Home} />
         <Route exact path="/playground" component={Playground} />
+        <Elements stripe={promise}>
+          <Route exact path="/payment" component={CheckoutForm} />
+        </Elements>
       </Layout>
-      <Route exact path="/" component={Home} />
-      <Elements stripe={promise}>
-        <Route exact path="/payment" component={CheckoutForm}/>
-      </Elements>
     </>
   );
 }
