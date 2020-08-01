@@ -22,6 +22,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/react-transition-group": "^4.4.0",
     "clsx": "^1.1.1",
+    "cross-env": "^7.0.2",
     "date-fns": "^2.15.0",
     "lodash": "^4.17.19",
     "nivo": "^0.31.0",
@@ -37,8 +38,8 @@
     "typescript": "^3.7.5"
   },
   "scripts": {
-    "start": "npm run watch:css && react-scripts start",
-    "build": "npm run build:css && react-scripts build",
+    "start": "cross-env npm run watch:css && react-scripts start",
+    "build": "cross-env NODE_ENV=production npm run build:css && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
