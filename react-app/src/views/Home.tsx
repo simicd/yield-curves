@@ -13,6 +13,7 @@ import { TimeSerie } from "../types/TimeSerie";
 import { FeatureList } from "../components/Feature/FeatureList";
 import { FeatureListItem } from "../components/Feature/FeatureListItem";
 import { HeaderSection } from "../components/Layout/HeaderSection";
+import { useAppInsightsEvent } from "../utils/AppInsights";
 
 interface DataRow {
   CRA: number;
@@ -36,6 +37,7 @@ interface DataRow {
 export const Home: FC = () => {
   const [data, setData] = useState<TimeSerie[]>(defaultData);
   const [showNotification, setShowNotification] = useState<NotificationProps["status"]>();
+  const trackDataFetching = useAppInsightsEvent("Data fetching", {});
   console.log(data);
 
   useEffect(() => {
@@ -44,10 +46,11 @@ export const Home: FC = () => {
     // Define asynchronous function - since useEffect hook can't handle async directly,
     // a nested function needs to be defined first and then called thereafter
     const fetchData = async () => {
+      try {
         // Fetch data from REST API
         // for local testing replace with http://localhost:7071/api
         const response = await fetch(
-          `https://apis.yield-curves.com/yield-curve?date=${
+          `https://api.yield-curves.com/yield-curve?date=${
             date.toISOString().split("T")[0]
           }&filter=country_code eq 'US' or country_code eq 'GB' or country_code eq 'CN' or country_code eq 'CH' or country_code eq 'JP' or country_code eq 'NO' or country_code eq 'DE' or country_code eq 'RU' or country_code eq 'AU' or country_code eq 'HK' or country_code eq 'SG'`
         );
@@ -75,10 +78,13 @@ export const Home: FC = () => {
             });
           }
           setData(dataArray);
+          trackDataFetching({ status: "Success" });
         } else {
-          console.error("Couldn't reach server");
+          trackDataFetching({ status: "Error", message: "Couldn't reach server" });
         }
-
+      } catch (error) {
+        console.error(error);
+      }
     };
     // Call async function
     fetchData();
