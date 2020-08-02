@@ -44,11 +44,10 @@ export const Home: FC = () => {
     // Define asynchronous function - since useEffect hook can't handle async directly,
     // a nested function needs to be defined first and then called thereafter
     const fetchData = async () => {
-      try {
         // Fetch data from REST API
         // for local testing replace with http://localhost:7071/api
         const response = await fetch(
-          `https://api.yield-curves.com/yield-curve?date=${
+          `https://apis.yield-curves.com/yield-curve?date=${
             date.toISOString().split("T")[0]
           }&filter=country_code eq 'US' or country_code eq 'GB' or country_code eq 'CN' or country_code eq 'CH' or country_code eq 'JP' or country_code eq 'NO' or country_code eq 'DE' or country_code eq 'RU' or country_code eq 'AU' or country_code eq 'HK' or country_code eq 'SG'`
         );
@@ -79,9 +78,7 @@ export const Home: FC = () => {
         } else {
           console.error("Couldn't reach server");
         }
-      } catch (error) {
-        console.error(error);
-      }
+
     };
     // Call async function
     fetchData();
