@@ -1,16 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script type="application/ld+json">
-      {
-        "@context": "http://schema.org/",
-        "@type": "interestRate",
-        "availableRangeFrom": 2016,
-        "country": "world",
-        "provider": "EIOPA",
-        "source": "https://www.eiopa.europa.eu/"
+  <title>Yield curves - Solvency II RFR for any currency, any maturity, at any date.</title>
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org/",
+      "@type": "Product",
+      "additionalProperty": "Financial product",
+      "name": "EIOPA risk free rates",
+      "description": "Our service provides cleaned EIOPA risk free rates delivered through an API in a fast & efficient manner.",
+      "alternateName": "EIOPA risk free yield curves",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Insurance industry",
+        "geographicArea": "Europe"},
+      "provider": "EIOPA",
+      "url": "https://www.yield-curves.com",
+      "logo":"%PUBLIC_URL%/icon_48x48.png",
+      "offers": {
+        "@type": "Offer",
+        "price": "1",
+        "priceCurrency": "CHF",
+        "priceValidUntil": "2021-12-31",
+        "priceSpecification": "Monthly subscription",
+        "availability": "https://schema.org/InStock",
+        "url": "yield-curves.com",
+        "acceptedPaymentMethod": "Card Payment",
+        "availabilityStarts": "2016-01-01",
+        "availableDeliveryMethod": "REST API",
+        "sku": "1000000",
+        "slogan": "Get risk free rates published by EIOPA for Solvency II valuations for any currency, any maturity, at any date",
+        "category": "financial product > risk free rates"
       }
-    </script>
+    }
+  </script>
     <meta charset="utf-8" />
     <meta name="google-site-verification" content="gMdq3uih0wj0izD9nqyFXzbFrxtle-faJxAyb65W6iA" />
     <link rel="icon" href="%PUBLIC_URL%/icon_48x48.png" />
@@ -36,8 +60,6 @@
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>Yield curves - Solvency II RFR for any currency, any maturity, at any date.</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
