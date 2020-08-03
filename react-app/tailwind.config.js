@@ -1,17 +1,23 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
-  purge: ["./src/**/*.html", "./src/**/*.tsx", "./src/**/*.ts", "./src/**/*.jsx", "./src/**/*.js"],
+  purge: [
+    "./src/**/*.html",
+    "./src/**/*.tsx",
+    "./src/**/*.ts",
+    "./src/**/*.jsx",
+    "./src/**/*.js",
+  ],
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Inter", ...defaultTheme.fontFamily.sans]
-      }
-    }
+        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+      },
+    },
   },
   variants: {
     margin: ["responsive", "first", "hover", "focus"],
-    textColor: ["responsive", "first", "hover", "focus"]
+    textColor: ["responsive", "first", "hover", "focus"],
   },
-  plugins: [require("@tailwindcss/ui")]
+  plugins: [require("@tailwindcss/ui")],
 };
