@@ -25,7 +25,7 @@ const AppInsights: FC = () => {
   const appInsights = new ApplicationInsights({
     config: {
       // For more configurations visit: https://github.com/microsoft/ApplicationInsights-JS#configuration
-      instrumentationKey: "1ed20de5-33b5-4b2a-a90f-c48a8071c6a6",
+      instrumentationKey: process.env.REACT_APP_APPINSIGHTS_INSTRUMENTATION_KEY || "",
       extensions: [reactPlugin],
       extensionConfig: {
         [reactPlugin.identifier]: { history: useHistory() },
