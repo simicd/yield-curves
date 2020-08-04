@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 
 import { SubscriptionSection } from "../components/Subscribe/SubscriptionSection";
 // import { PricingSection } from "../components/Pricing/PricingSection";
@@ -13,7 +13,7 @@ import { TimeSerie } from "../types/TimeSerie";
 import { FeatureList } from "../components/Feature/FeatureList";
 import { FeatureListItem } from "../components/Feature/FeatureListItem";
 import { HeaderSection } from "../components/Layout/HeaderSection";
-import { useTrackException } from "../utils/AppInsights";
+import { useFetch } from "../utils/useFetch";
 
 interface DataRow {
   CRA: number;
@@ -34,61 +34,45 @@ interface DataRow {
   RowKey: string;
 }
 
+const processData = (data: DataRow[], date: Date) => {
+  // First extract two columns and reshape it so that they can be fed to nivo and then sort by maturity (x-axis)
+  const transformedData = data
+    .map((row) => {
+      return { x: row.Maturity, y: row.Rate, id: row.country_code };
+    })
+    .sort((a, b) => (a.x > b.x ? 1 : -1));
+
+  // Generate required for nivo charts (Serie[])
+  const processedData = groupBy(transformedData, (r) => r.id);
+  const dataArray: TimeSerie[] = [];
+  for (let key in processedData) {
+    dataArray.push({
+      id: key,
+      date: date,
+      data: processedData[key],
+    });
+  }
+  return dataArray;
+};
+
 export const Home: FC = () => {
-  const [data, setData] = useState<TimeSerie[]>(defaultData);
+  // const [data, setData] = useState<TimeSerie[]>(defaultData);
   const [showNotification, setShowNotification] = useState<NotificationProps["status"]>();
-  const trackError = useTrackException();
 
-  useEffect(() => {
-    // Note that JS/TS months are zero-indexed (e.g. new Date(2020, 5, 30) => June 30th, 2020)
-    const date = new Date(Date.UTC(2020, 6 - 1, 30));
-    // Define asynchronous function - since useEffect hook can't handle async directly,
-    // a nested function needs to be defined first and then called thereafter
-    const fetchData = async () => {
-      try {
-        // Fetch data from REST API
-        // for local testing replace with http://localhost:7071/api
-        const response = await fetch(
-          `https://api.yield-curves.com/yield-curve?date=${
-            date.toISOString().split("T")[0]
-          }&filter=country_code eq 'US' or country_code eq 'GB' or country_code eq 'CN' or country_code eq 'CH' or country_code eq 'JP' or country_code eq 'NO' or country_code eq 'DE' or country_code eq 'RU' or country_code eq 'AU' or country_code eq 'HK' or country_code eq 'SG'`
-        );
+  // Note that JS/TS months are zero-indexed (e.g. new Date(2020, 5, 30) => June 30th, 2020)
+  const date = new Date(Date.UTC(2020, 6 - 1, 30));
 
-        if (response.status === 200) {
-          // Extract json
-          const rawData: DataRow[] = await response.json();
+  // for local testing replace with http://localhost:7071/api
+  const result = useFetch<TimeSerie[]>(
+    `https://api.yield-curves.com/yield-curve?date=${
+      date.toISOString().split("T")[0]
+    }&filter=country_code eq 'US' or country_code eq 'GB' or country_code eq 'CN' or country_code eq 'CH' or country_code eq 'JP' or country_code eq 'NO' or country_code eq 'DE' or country_code eq 'RU' or country_code eq 'AU' or country_code eq 'HK' or country_code eq 'SG'`,
+    undefined,
+    (data) => processData(data, date)
+  );
 
-          // First extract two columns and reshape it so that they can be fed to nivo and then sort by maturity (x-axis)
-          const transformedData = rawData
-            .map((row) => {
-              return { x: row.Maturity, y: row.Rate, id: row.country_code };
-            })
-            .sort((a, b) => (a.x > b.x ? 1 : -1));
-
-          // Generate required for nivo charts (Serie[])
-          const processedData = groupBy(transformedData, (r) => r.id);
-          const dataArray = [];
-          for (let key in processedData) {
-            dataArray.push({
-              id: key,
-              date: date,
-              data: processedData[key],
-            });
-          }
-          setData(dataArray);
-        } else {
-          trackError({
-            exception: new ReferenceError("Couldn't reach server"),
-            properties: { statusCode: response.status, status: response.statusText },
-          });
-        }
-      } catch (error) {
-        trackError({ exception: new TypeError(error) });
-      }
-    };
-    // Call async function
-    fetchData();
-  }, [trackError]);
+  console.log(result)
+  const data = result.status === "success" ? result.data : defaultData;
 
   return (
     <>

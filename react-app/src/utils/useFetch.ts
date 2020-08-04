@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useTrackException } from "./AppInsights";
 
 /**
@@ -24,7 +24,7 @@ interface RequestError {
 }
 
 /** Hook return type - tagged union can be distinguished by checking status field */
-type RequestState<T> = RequestSuccess<T> | RequestPending | RequestError;
+type RequestState<T> = RequestPending | RequestSuccess<T> | RequestError;
 
 /**
  * Hook for fetching API data
@@ -43,6 +43,9 @@ export const useFetch = <T>(url: RequestInfo, init?: RequestInit, processData?: 
 
   // If no processing function is passed just cast the object to type T
   const processJson = processData || ((responseJson: any) => responseJson as T);
+  // Function must be memoized with useCallback as otherwise fetch will run repeatedly
+  // This step ensures that the function is only created once and not on every re-render
+  const memoizedProcessJson = useCallback(processJson, []);
 
   useEffect(() => {
     // Define asynchronous function - since useEffect hook can't handle async directly,
@@ -56,7 +59,7 @@ export const useFetch = <T>(url: RequestInfo, init?: RequestInit, processData?: 
         if (response.status >= 200 && response.status < 300) {
           // Extract json and process data
           const data = await response.json();
-          const processedData = processJson(data);
+          const processedData = memoizedProcessJson(data);
           setResponseData({ status: "success", data: processedData });
         } else {
           const result = {
@@ -75,7 +78,7 @@ export const useFetch = <T>(url: RequestInfo, init?: RequestInit, processData?: 
     };
     // Call async function
     fetchData();
-  }, [trackError]);
+  }, [trackError, url, init, memoizedProcessJson]);
 
   return responseData;
 };
