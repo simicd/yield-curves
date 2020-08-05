@@ -34,7 +34,7 @@ interface DataRow {
   RowKey: string;
 }
 
-const processData = (data: DataRow[], date: Date) => {
+const processData = (data: DataRow[]) => {
   // First extract two columns and reshape it so that they can be fed to nivo and then sort by maturity (x-axis)
   const transformedData = data
     .map((row) => {
@@ -48,7 +48,7 @@ const processData = (data: DataRow[], date: Date) => {
   for (let key in processedData) {
     dataArray.push({
       id: key,
-      date: date,
+      date: new Date(Date.UTC(2020, 6 - 1, 30)), // Note that JS/TS months are zero-indexed (e.g. new Date(2020, 5, 30) => June 30th, 2020) TODO@simicd: Use data from API instead of hard-coding
       data: processedData[key],
     });
   }
@@ -66,10 +66,11 @@ export const Home: FC = () => {
   const result = useFetch<TimeSerie[]>(
     `https://api.yield-curves.com/yield-curve?date=${
       date.toISOString().split("T")[0]
-    }&filter=country_code eq 'US' or country_code eq 'GB' or country_code eq 'CN' or country_code eq 'CH' or country_code eq 'JP' or country_code eq 'NO' or country_code eq 'DE' or country_code eq 'RU' or country_code eq 'AU' or country_code eq 'HK' or country_code eq 'SG'`,
+    }&filter=${["US", "GB", "CN", "CH", "JP", "NO", "DE", "RU", "AU", "HK", "SG"].map(c => `country_code eq '${c}'`).join(" or ")}`,
     undefined,
-    (data) => processData(data, date)
+    processData
   );
+
 
   console.log(result)
   const data = result.status === "success" ? result.data : defaultData;
