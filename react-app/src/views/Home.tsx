@@ -56,19 +56,18 @@ const processData = (data: DataRow[]) => {
 };
 
 export const Home: FC = () => {
-  // const [data, setData] = useState<TimeSerie[]>(defaultData);
   const [showNotification, setShowNotification] = useState<NotificationProps["status"]>();
 
   // Note that JS/TS months are zero-indexed (e.g. new Date(2020, 5, 30) => June 30th, 2020)
   const date = new Date(Date.UTC(2020, 6 - 1, 30));
 
   // for local testing replace with http://localhost:7071/api
-  const [response] = useFetch<TimeSerie[]>({
+  const { response } = useFetch<TimeSerie[]>({
     url: `https://api.yield-curves.com/yield-curve?date=${date.toISOString().split("T")[0]}&filter=${
       ["US", "GB", "CN", "CH", "JP", "NO", "DE", "RU", "AU", "HK", "SG"]
       .map((c) => `country_code eq '${c}'`)
       .join(" or ")}`,
-    processData: processData
+    processData: processData,
   });
 
   const data = response.status === "success" ? response.data : defaultData;

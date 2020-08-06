@@ -26,7 +26,7 @@ interface RequestError {
 /** Hook return type - tagged union can be distinguished by checking status field */
 type RequestState<T> = RequestPending | RequestSuccess<T> | RequestError;
 
-interface FetchProps {
+interface RequestProps {
   url?: RequestInfo;
   init?: RequestInit;
 }
@@ -47,8 +47,10 @@ interface ProcessingProps<T> {
  * @param init Optional additional fetch parameter such as header, authentication, etc.
  * @param processData Optional callback function to convert json response into target shape
  */
-export const useFetch = <T>({ url, init, processData, skipFirstRun = false }: FetchProps & ProcessingProps<T>) => {
-  const [responseData, setResponseData] = React.useState<RequestState<T>>({ status: "pending" });
+export const useFetch = <T>({ url, init, processData, skipFirstRun = false }: RequestProps & ProcessingProps<T>) => {
+  // Response state
+  const [response, setResponse] = React.useState<RequestState<T>>({ status: "pending" });
+  // Azure App Insights logger
   const trackError = useTrackException();
 
   // If no processing function is passed just cast the object to type T
@@ -58,13 +60,14 @@ export const useFetch = <T>({ url, init, processData, skipFirstRun = false }: Fe
   const memoizedProcessJson = useCallback(processJson, []);
   // Turn objects into strings for useCallback & useEffect dependencies - both variables
   // can be objects which creates an infinite loop since an object seems to always be recognized as "new"
-  // hence causing a re-run
+  // hence causing a re-render
   const [stringifiedUrl, stringifiedInit] = [JSON.stringify(url), JSON.stringify(init)];
 
-  // Define asynchronous function - since useEffect hook can't handle async directly,
-  // a nested function needs to be defined first and then called thereafter
-  const fetchData = useCallback(
-    async (props?: Partial<FetchProps>) => {
+  /**
+   * Fetch data from API and catch errors - any failure is logged to Azure App Insights
+   */
+  const fetchApi = useCallback(
+    async (props?: Partial<RequestProps>) => {
       let responseObj: RequestState<T>;
       try {
         // Fetch data from REST API
@@ -75,7 +78,7 @@ export const useFetch = <T>({ url, init, processData, skipFirstRun = false }: Fe
           // Extract json and process data
           const data = await response.json();
           responseObj = { status: "success", data: memoizedProcessJson(data) };
-          setResponseData(responseObj);
+          setResponse(responseObj);
         } else {
           const result = {
             exception: new ReferenceError("Couldn't reach server"),
@@ -85,13 +88,13 @@ export const useFetch = <T>({ url, init, processData, skipFirstRun = false }: Fe
 
           // Log to Azure App Insights
           trackError(result);
-          setResponseData(responseObj);
+          setResponse(responseObj);
         }
         return responseObj;
       } catch (error) {
         responseObj = { status: "error", message: "Operation failed", exception: new TypeError(error) };
         trackError({ exception: new TypeError(error) });
-        setResponseData(responseObj);
+        setResponse(responseObj);
         return responseObj;
       }
     },
@@ -101,19 +104,21 @@ export const useFetch = <T>({ url, init, processData, skipFirstRun = false }: Fe
     [trackError, stringifiedUrl, stringifiedInit, memoizedProcessJson]
   );
 
+  // Use ref to prevent logging on first run
   const firstRun = useRef(skipFirstRun);
 
   useEffect(() => {
     // Check if this is the first run, if yes set to false and end the function
+    // Refs don't trigger a re-render
     if (firstRun.current) {
       firstRun.current = false;
       return;
     }
 
     // Call async function
-    fetchData({ url: url, init: init });
+    fetchApi({ url: url, init: init });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchData, stringifiedUrl, stringifiedInit]);
+  }, [fetchApi, stringifiedUrl, stringifiedInit]);
 
-  return [responseData, fetchData] as const;
+  return { response, fetchApi };
 };

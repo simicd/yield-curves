@@ -8,14 +8,14 @@ import { useFetch } from "../../utils/useFetch";
 export const SubscriptionSection: FC = () => {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<NotificationProps["status"]>();
-  const [, submitRequest] = useFetch<{ email: string }>({ skipFirstRun: true });
+  const { fetchApi } = useFetch<{ email: string }>({ skipFirstRun: true });
 
   /**
    * Register e-mail address
    * @param email User e-mail
    */
   const submitEmail = async (email: string) => {
-    const response = await submitRequest({
+    const response = await fetchApi({
       url: "https://api.yield-curves.com/register",
       init: {
         method: "POST",
