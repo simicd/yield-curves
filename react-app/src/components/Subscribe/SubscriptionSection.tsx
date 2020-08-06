@@ -1,5 +1,6 @@
 import React, { FC, useState } from "react";
 import { Notification, NotificationProps } from "../Notification/Notification";
+import { useFetch } from "../../utils/useFetch";
 
 /**
  * Subscription section with e-mail field
@@ -7,24 +8,42 @@ import { Notification, NotificationProps } from "../Notification/Notification";
 export const SubscriptionSection: FC = () => {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<NotificationProps["status"]>();
+  const [, submitRequest] = useFetch<{ email: string }>({ skipFirstRun: true });
 
   /**
    * Register e-mail address
    * @param email User e-mail
    */
   const submitEmail = async (email: string) => {
-    const response = await fetch("https://api.yield-curves.com/register", {
-      method: "POST",
-      body: JSON.stringify({ email: email }),
+    const response = await submitRequest({
+      url: "https://api.yield-curves.com/register",
+      init: {
+        method: "POST",
+        body: JSON.stringify({ email: email }),
+      },
     });
-    if (response.status === 201) {
-      // const message = await response.json();
+    console.log(response);
+    if (response.status === "success") {
       setStatus("success");
-    } else if (response.status === 500) {
-      setStatus("warn");
-    } else {
-      setStatus("error");
+    } else if (response.status === "error") {
+      if (response.properties?.statusCode === 500) {
+        setStatus("warn");
+      } else {
+        setStatus("error");
+      }
     }
+    // const response = await fetch("https://api.yield-curves.com/register", {
+    //   method: "POST",
+    //   body: JSON.stringify({ email: email }),
+    // });
+    // if (response.status === 201) {
+    //   // const message = await response.json();
+    //   setStatus("success");
+    // } else if (response.status === 500) {
+    //   setStatus("warn");
+    // } else {
+    //   setStatus("error");
+    // }
   };
 
   return (

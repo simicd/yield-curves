@@ -63,17 +63,15 @@ export const Home: FC = () => {
   const date = new Date(Date.UTC(2020, 6 - 1, 30));
 
   // for local testing replace with http://localhost:7071/api
-  const result = useFetch<TimeSerie[]>(
-    `https://api.yield-curves.com/yield-curve?date=${
-      date.toISOString().split("T")[0]
-    }&filter=${["US", "GB", "CN", "CH", "JP", "NO", "DE", "RU", "AU", "HK", "SG"].map(c => `country_code eq '${c}'`).join(" or ")}`,
-    undefined,
-    processData
-  );
+  const [response] = useFetch<TimeSerie[]>({
+    url: `https://api.yield-curves.com/yield-curve?date=${date.toISOString().split("T")[0]}&filter=${
+      ["US", "GB", "CN", "CH", "JP", "NO", "DE", "RU", "AU", "HK", "SG"]
+      .map((c) => `country_code eq '${c}'`)
+      .join(" or ")}`,
+    processData: processData
+  });
 
-
-  console.log(result)
-  const data = result.status === "success" ? result.data : defaultData;
+  const data = response.status === "success" ? response.data : defaultData;
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useRef } from "react";
 import { useTrackException } from "./AppInsights";
 
 /**
@@ -26,6 +26,16 @@ interface RequestError {
 /** Hook return type - tagged union can be distinguished by checking status field */
 type RequestState<T> = RequestPending | RequestSuccess<T> | RequestError;
 
+interface FetchProps {
+  url?: RequestInfo;
+  init?: RequestInit;
+}
+
+interface ProcessingProps<T> {
+  processData?: (responseJson: any) => T;
+  skipFirstRun?: boolean;
+}
+
 /**
  * Hook for fetching API data
  *
@@ -37,7 +47,7 @@ type RequestState<T> = RequestPending | RequestSuccess<T> | RequestError;
  * @param init Optional additional fetch parameter such as header, authentication, etc.
  * @param processData Optional callback function to convert json response into target shape
  */
-export const useFetch = <T>(url: RequestInfo, init?: RequestInit, processData?: (responseJson: any) => T) => {
+export const useFetch = <T>({ url, init, processData, skipFirstRun = false }: FetchProps & ProcessingProps<T>) => {
   const [responseData, setResponseData] = React.useState<RequestState<T>>({ status: "pending" });
   const trackError = useTrackException();
 
@@ -46,39 +56,64 @@ export const useFetch = <T>(url: RequestInfo, init?: RequestInit, processData?: 
   // Function must be memoized with useCallback as otherwise fetch will run repeatedly
   // This step ensures that the function is only created once and not on every re-render
   const memoizedProcessJson = useCallback(processJson, []);
+  // Turn objects into strings for useCallback & useEffect dependencies - both variables
+  // can be objects which creates an infinite loop since an object seems to always be recognized as "new"
+  // hence causing a re-run
+  const [stringifiedUrl, stringifiedInit] = [JSON.stringify(url), JSON.stringify(init)];
 
-  useEffect(() => {
-    // Define asynchronous function - since useEffect hook can't handle async directly,
-    // a nested function needs to be defined first and then called thereafter
-    const fetchData = async () => {
+  // Define asynchronous function - since useEffect hook can't handle async directly,
+  // a nested function needs to be defined first and then called thereafter
+  const fetchData = useCallback(
+    async (props?: Partial<FetchProps>) => {
+      let responseObj: RequestState<T>;
       try {
         // Fetch data from REST API
-        const response = await fetch(url, init);
+        const response = await fetch(props?.url || url || "", props?.init || init);
 
         // Check response code - 2xx indicate success
         if (response.status >= 200 && response.status < 300) {
           // Extract json and process data
           const data = await response.json();
-          const processedData = memoizedProcessJson(data);
-          setResponseData({ status: "success", data: processedData });
+          responseObj = { status: "success", data: memoizedProcessJson(data) };
+          setResponseData(responseObj);
         } else {
           const result = {
             exception: new ReferenceError("Couldn't reach server"),
             properties: { statusCode: response.status, status: response.statusText },
           };
+          responseObj = { status: "error", message: "Couldn't reach server", ...result };
 
           // Log to Azure App Insights
           trackError(result);
-          setResponseData({ status: "error", message: "Couldn't reach server", ...result });
+          setResponseData(responseObj);
         }
+        return responseObj;
       } catch (error) {
+        responseObj = { status: "error", message: "Operation failed", exception: new TypeError(error) };
         trackError({ exception: new TypeError(error) });
-        setResponseData({ status: "error", message: "Operation failed", exception: new TypeError(error) });
+        setResponseData(responseObj);
+        return responseObj;
       }
-    };
-    // Call async function
-    fetchData();
-  }, [trackError, url, init, memoizedProcessJson]);
+    },
+    // Disable warning (url and init missing) - they are checked as string to avoid infinite loop
+    // since objects are recognized as "new" on every render
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [trackError, stringifiedUrl, stringifiedInit, memoizedProcessJson]
+  );
 
-  return responseData;
+  const firstRun = useRef(skipFirstRun);
+
+  useEffect(() => {
+    // Check if this is the first run, if yes set to false and end the function
+    if (firstRun.current) {
+      firstRun.current = false;
+      return;
+    }
+
+    // Call async function
+    fetchData({ url: url, init: init });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchData, stringifiedUrl, stringifiedInit]);
+
+  return [responseData, fetchData] as const;
 };
