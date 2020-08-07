@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Notification, NotificationProps } from "../Notification/Notification";
+import { Notification, NotificationProps } from "../Notification";
 import { useFetch } from "../../utils/useFetch";
 
 /**

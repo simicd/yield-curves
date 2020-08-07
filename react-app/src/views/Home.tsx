@@ -1,19 +1,16 @@
 import React, { FC, useState } from "react";
-
-import { SubscriptionSection } from "../components/Subscribe/SubscriptionSection";
-// import { PricingSection } from "../components/Pricing/PricingSection";
-import { DownloadSection } from "../components/DownloadSection/DownloadSection";
-import { YieldCurveWidget } from "../components/Widgets/YieldCurveWidget";
-import { FeatureSection } from "../components/Feature/FeatureSection";
 import { groupBy } from "lodash";
-import { Notification, NotificationProps } from "../components/Notification/Notification";
-import { defaultData } from "../assets/sampleData";
-import { TimeSerie } from "../types/TimeSerie";
 
-import { FeatureList } from "../components/Feature/FeatureList";
-import { FeatureListItem } from "../components/Feature/FeatureListItem";
-import { HeaderSection } from "../components/Layout/HeaderSection";
+// import { PricingSection } from "../components/Pricing";
+import { SubscriptionSection } from "../components/Subscribe";
+import { DownloadSection } from "../components/DownloadSection";
+import { YieldCurveWidget } from "../components/Widgets";
+import { Notification, NotificationProps } from "../components/Notification";
+import { FeatureSection, FeatureList, FeatureListItem } from "../components/Feature";
+import { HeaderSection } from "../components/Layout";
 import { useFetch } from "../utils/useFetch";
+import { defaultData } from "../assets/sampleData";
+import { TimeSerie } from "../types";
 
 interface DataRow {
   CRA: number;
