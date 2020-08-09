@@ -78,7 +78,7 @@ export const SelectMenu: FC = () => {
             Download risk free EIOPA rates <br />
             between 2016 and{" "}
             <span
-              className="underline hover:text-gray-500"
+              className="hover:text-gray-500"
               // On mobile devices there is no mouse over - hence the click event
               onClick={() => {
                 setShowNotification("info");
@@ -135,7 +135,7 @@ export const SelectMenu: FC = () => {
         <>
           <p className="text-sm font-medium leading-5 text-gray-900">Data availability</p>
           <p className="mt-1 text-sm leading-5 text-gray-500">
-            EIOPA publishes the risk free rates once a manth a few days after month end. So the latest curve you can
+            EIOPA publishes the risk free rates once a month a few days after month end. So the latest curve you can
             find here is the previous month end.
           </p>
         </>
