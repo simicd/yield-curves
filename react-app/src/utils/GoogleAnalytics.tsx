@@ -44,10 +44,10 @@ const RouteTracker = () => <Route component={GoogleAnalytics} />;
 
 const init = (options = {}) => {
   const env = process.env || {};
-  const isGAEnabled = !!"UA-172782347-1";
+  const isGAEnabled = !!env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID;
 
   if (isGAEnabled) {
-    ReactGA.initialize("UA-172782347-1", {
+    ReactGA.initialize(env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID as string, {
       debug: env.REACT_APP_GA_DEBUG === "true",
       ...options,
     });

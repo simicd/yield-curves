@@ -13,6 +13,7 @@ import { TimeSerie } from "../types/TimeSerie";
 import { FeatureList } from "../components/Feature/FeatureList";
 import { FeatureListItem } from "../components/Feature/FeatureListItem";
 import { HeaderSection } from "../components/Layout/HeaderSection";
+import { useTrackException } from "../utils/AppInsights";
 
 interface DataRow {
   CRA: number;
@@ -36,7 +37,7 @@ interface DataRow {
 export const Home: FC = () => {
   const [data, setData] = useState<TimeSerie[]>(defaultData);
   const [showNotification, setShowNotification] = useState<NotificationProps["status"]>();
-  console.log(data);
+  const trackError = useTrackException();
 
   useEffect(() => {
     // Note that JS/TS months are zero-indexed (e.g. new Date(2020, 5, 30) => June 30th, 2020)
@@ -54,7 +55,6 @@ export const Home: FC = () => {
         );
 
         if (response.status === 200) {
-          // const message = await response.json();
           // Extract json
           const rawData: DataRow[] = await response.json();
 
@@ -77,15 +77,18 @@ export const Home: FC = () => {
           }
           setData(dataArray);
         } else {
-          console.error("Couldn't reach server");
+          trackError({
+            exception: new ReferenceError("Couldn't reach server"),
+            properties: { statusCode: response.status, status: response.statusText },
+          });
         }
       } catch (error) {
-        console.error(error);
+        trackError({ exception: new TypeError(error) });
       }
     };
     // Call async function
     fetchData();
-  }, []);
+  }, [trackError]);
 
   return (
     <>
