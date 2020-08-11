@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { PricingCardProps } from "./PricingCardProps";
 import { CheckmarkIcon } from "./CheckMarkIcon";
+import { Link } from "react-router-dom";
 
 /**
  * Central pricing card for main offer
@@ -45,12 +46,12 @@ export const PricingCardMain: FC<PricingCardProps> = ({ title, amount, benefits,
           </ul>
           <div className="mt-10">
             <div className="rounded-lg shadow-md">
-              <a
-                href={buttonUrl}
+              <Link
+                to={buttonUrl}
                 className="block w-full px-6 py-4 text-xl font-medium leading-6 text-center text-white transition duration-150 ease-in-out bg-indigo-600 border border-transparent rounded-lg hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo"
                 aria-describedby="tier-growth">
                 {buttonText}
-              </a>
+              </Link>
             </div>
           </div>
         </div>
