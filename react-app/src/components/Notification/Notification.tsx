@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import clsx from "clsx";
-import Transition from "../Utils/Transition";
+import { Transition } from "../Utils";
 
 export interface NotificationProps {
   /** Notification status */

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import { YieldCurveWidget } from "../components/Widgets/YieldCurveWidget";
-import { HeatMapChart } from "../components/Charts/HeatMapChart";
+import { YieldCurveWidget } from "../components/Widgets";
+import { HeatMapChart } from "../components/Charts";
 import { lineData, heatMapData } from '../assets/sampleData'
 
 export const Playground: FC = () => {

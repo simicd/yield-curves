@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { ResponsiveLine } from "@nivo/line";
 // import {lineData} from '../../assets/sampleData'
 import clsx from "clsx";
-import { TimeSerie } from "../../types/TimeSerie";
+import { TimeSerie } from "../../types";
 
 /**
  * Chart theme customization

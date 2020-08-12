@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 import { Home } from "./views/Home";
 import "./App.css";
 import { Playground } from "./views/Playground";
-import { Layout } from "./components/Layout/Layout";
+import { Layout } from "./components/Layout";
 import { AppInsightsContextProvider } from "./utils/AppInsights";
 
 function App() {

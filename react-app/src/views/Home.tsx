@@ -1,19 +1,16 @@
-import React, { FC, useEffect, useState } from "react";
-
-import { SubscriptionSection } from "../components/Subscribe/SubscriptionSection";
-// import { PricingSection } from "../components/Pricing/PricingSection";
-import { DownloadSection } from "../components/DownloadSection/DownloadSection";
-import { YieldCurveWidget } from "../components/Widgets/YieldCurveWidget";
-import { FeatureSection } from "../components/Feature/FeatureSection";
+import React, { FC, useState } from "react";
 import { groupBy } from "lodash";
-import { Notification, NotificationProps } from "../components/Notification/Notification";
-import { defaultData } from "../assets/sampleData";
-import { TimeSerie } from "../types/TimeSerie";
 
-import { FeatureList } from "../components/Feature/FeatureList";
-import { FeatureListItem } from "../components/Feature/FeatureListItem";
-import { HeaderSection } from "../components/Layout/HeaderSection";
-import { useTrackException } from "../utils/AppInsights";
+// import { PricingSection } from "../components/Pricing";
+import { SubscriptionSection } from "../components/Subscribe";
+import { DownloadSection } from "../components/DownloadSection";
+import { YieldCurveWidget } from "../components/Widgets";
+import { Notification, NotificationProps } from "../components/Notification";
+import { FeatureSection, FeatureList, FeatureListItem } from "../components/Feature";
+import { HeaderSection } from "../components/Layout";
+import { useFetch } from "../utils/useFetch";
+import { defaultData } from "../assets/sampleData";
+import { TimeSerie } from "../types";
 
 interface DataRow {
   CRA: number;
@@ -34,61 +31,43 @@ interface DataRow {
   RowKey: string;
 }
 
+const processData = (data: DataRow[]) => {
+  // First extract two columns and reshape it so that they can be fed to nivo and then sort by maturity (x-axis)
+  const transformedData = data
+    .map((row) => {
+      return { x: row.Maturity, y: row.Rate, id: row.country_code };
+    })
+    .sort((a, b) => (a.x > b.x ? 1 : -1));
+
+  // Generate required for nivo charts (Serie[])
+  const processedData = groupBy(transformedData, (r) => r.id);
+  const dataArray: TimeSerie[] = [];
+  for (let key in processedData) {
+    dataArray.push({
+      id: key,
+      date: new Date(Date.UTC(2020, 6 - 1, 30)), // Note that JS/TS months are zero-indexed (e.g. new Date(2020, 5, 30) => June 30th, 2020) TODO@simicd: Use data from API instead of hard-coding
+      data: processedData[key],
+    });
+  }
+  return dataArray;
+};
+
 export const Home: FC = () => {
-  const [data, setData] = useState<TimeSerie[]>(defaultData);
   const [showNotification, setShowNotification] = useState<NotificationProps["status"]>();
-  const trackError = useTrackException();
 
-  useEffect(() => {
-    // Note that JS/TS months are zero-indexed (e.g. new Date(2020, 5, 30) => June 30th, 2020)
-    const date = new Date(Date.UTC(2020, 6 - 1, 30));
-    // Define asynchronous function - since useEffect hook can't handle async directly,
-    // a nested function needs to be defined first and then called thereafter
-    const fetchData = async () => {
-      try {
-        // Fetch data from REST API
-        // for local testing replace with http://localhost:7071/api
-        const response = await fetch(
-          `https://api.yield-curves.com/yield-curve?date=${
-            date.toISOString().split("T")[0]
-          }&filter=country_code eq 'US' or country_code eq 'GB' or country_code eq 'CN' or country_code eq 'CH' or country_code eq 'JP' or country_code eq 'NO' or country_code eq 'DE' or country_code eq 'RU' or country_code eq 'AU' or country_code eq 'HK' or country_code eq 'SG'`
-        );
+  // Note that JS/TS months are zero-indexed (e.g. new Date(2020, 5, 30) => June 30th, 2020)
+  const date = new Date(Date.UTC(2020, 6 - 1, 30));
 
-        if (response.status === 200) {
-          // Extract json
-          const rawData: DataRow[] = await response.json();
+  // for local testing replace with http://localhost:7071/api
+  const { response } = useFetch<TimeSerie[]>({
+    url: `https://api.yield-curves.com/yield-curve?date=${date.toISOString().split("T")[0]}&filter=${
+      ["US", "GB", "CN", "CH", "JP", "NO", "DE", "RU", "AU", "HK", "SG"]
+      .map((c) => `country_code eq '${c}'`)
+      .join(" or ")}`,
+    processData: processData,
+  });
 
-          // First extract two columns and reshape it so that they can be fed to nivo and then sort by maturity (x-axis)
-          const transformedData = rawData
-            .map((row) => {
-              return { x: row.Maturity, y: row.Rate, id: row.country_code };
-            })
-            .sort((a, b) => (a.x > b.x ? 1 : -1));
-
-          // Generate required for nivo charts (Serie[])
-          const processedData = groupBy(transformedData, (r) => r.id);
-          const dataArray = [];
-          for (let key in processedData) {
-            dataArray.push({
-              id: key,
-              date: date,
-              data: processedData[key],
-            });
-          }
-          setData(dataArray);
-        } else {
-          trackError({
-            exception: new ReferenceError("Couldn't reach server"),
-            properties: { statusCode: response.status, status: response.statusText },
-          });
-        }
-      } catch (error) {
-        trackError({ exception: new TypeError(error) });
-      }
-    };
-    // Call async function
-    fetchData();
-  }, [trackError]);
+  const data = response.status === "success" ? response.data : defaultData;
 
   return (
     <>
