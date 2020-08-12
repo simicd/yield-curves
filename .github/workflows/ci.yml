@@ -15,6 +15,8 @@ on:
 env:
   AZURE_FUNCTIONAPP_NAME: yield-curve-functions         # Azure Functions app name
   AZURE_FUNCTIONAPP_PACKAGE_PATH: './azure-function'    # Azure Functions source folder
+  REACT_APP_APPINSIGHTS_INSTRUMENTATION_KEY: ${{ secrets.APPINSIGHTS_INSTRUMENTATION_KEY }}   # Application Insights key
+  REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID: ${{ secrets.GOOGLE_ANALYTICS_TRACKING_ID }}         # Google Analytics tracking code
 
 jobs:
   # Build package

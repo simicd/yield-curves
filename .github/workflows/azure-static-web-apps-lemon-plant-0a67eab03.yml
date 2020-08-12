@@ -9,6 +9,11 @@ on:
     branches:
       - master
 
+# Environment variables
+env:
+  REACT_APP_APPINSIGHTS_INSTRUMENTATION_KEY: ${{ secrets.APPINSIGHTS_INSTRUMENTATION_KEY }}   # Application Insights key
+  REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID: ${{ secrets.GOOGLE_ANALYTICS_TRACKING_ID }}         # Google Analytics tracking code
+
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
