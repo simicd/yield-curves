@@ -1,6 +1,6 @@
 
 import os
-from yield_curves.extraction import download_files, download_file, write_to_table, read_eiopa, clean_eiopa_rfr, unpivot_maturities, clean_file, clean_files
+from yield_curves.extraction import download_files, download_file, write_rates_df_to_table, write_config_to_table, read_eiopa, clean_eiopa_rfr, unpivot_maturities, clean_file, clean_files
 from datetime import date
 import glob
 import re
@@ -40,6 +40,14 @@ for date, df in cleaned_dfs.items():
     # Store output as .csv
     df.to_csv(os.path.join(clean_data_path, f"eiopa-rfr-{date}.csv"), index=False, sep=',')
     # Write to table service
-    # write_to_table(account_name=credentials["account_name"], account_key=credentials["account_key"], table=df, table_name="rates")
+    # write_rates_df_to_table(account_name=credentials["account_name"], account_key=credentials["account_key"], table_name="rates", table=df)
+
+    # Write configuration to Azure Table Storage - list of distinct countries & country codes
+    country_df = df[["country_code", "Country"]].drop_duplicates(subset=["country_code", "Country"]).rename({"Country": "country"}, axis=1)
+    country_list = json.dumps(country_df.to_dict(orient="records"))
+    write_config_to_table(account_name=credentials["account_name"], account_key=credentials["account_key"], table_name="rates",
+                          record={"countries": country_list}, partition_key="config", row_key="countries")
+
+
 
 print("Done")

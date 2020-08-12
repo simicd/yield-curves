@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 
 import { SubscriptionSection } from "../components/Subscribe/SubscriptionSection";
 // import { PricingSection } from "../components/Pricing/PricingSection";
-import { SelectMenu } from "../components/SelectMenu/SelectMenu";
+import { DownloadSection } from "../components/DownloadSection/DownloadSection";
 import { YieldCurveWidget } from "../components/Widgets/YieldCurveWidget";
 import { FeatureSection } from "../components/Feature/FeatureSection";
 import { groupBy } from "lodash";
@@ -180,7 +180,7 @@ export const Home: FC = () => {
 
       {/* <Pricing /> */}
 
-      <SelectMenu />
+      <DownloadSection />
 
       <SubscriptionSection />
 
