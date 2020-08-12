@@ -32,18 +32,6 @@ export const SubscriptionSection: FC = () => {
         setStatus("error");
       }
     }
-    // const response = await fetch("https://api.yield-curves.com/register", {
-    //   method: "POST",
-    //   body: JSON.stringify({ email: email }),
-    // });
-    // if (response.status === 201) {
-    //   // const message = await response.json();
-    //   setStatus("success");
-    // } else if (response.status === 500) {
-    //   setStatus("warn");
-    // } else {
-    //   setStatus("error");
-    // }
   };
 
   return (

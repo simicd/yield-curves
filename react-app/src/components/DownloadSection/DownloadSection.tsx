@@ -1,45 +1,22 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState } from "react";
 import ReactGA from "react-ga";
 import { MonthPicker } from "../MonthPicker/MonthPicker";
 import { Notification, NotificationProps } from "../Notification/Notification";
 import { defaultCountries } from "../../assets/sampleData";
+import { useFetch } from "../../utils/useFetch";
 
 export const DownloadSection: FC = () => {
   // List of countries from the EIOPA curves and its corresponding country code for filtering
   const [countries, setCountries] = useState(defaultCountries);
+  type countriesList = typeof defaultCountries;
 
-  useEffect(() => {
-    // Define asynchronous function - since useEffect hook can't handle async directly,
-    // a nested function needs to be defined first and then called thereafter
-    const fetchData = async () => {
-      try {
-        // Fetch data from REST API
-        // for local testing replace with http://localhost:7071/api
-        const response = await fetch("https://api.yield-curves.com/config?id=countries");
-
-        if (response.status === 200) {
-          // const message = await response.json();
-          // Extract json
-          const data: {
-            PartitionKey: string;
-            RowKey: string;
-            countries: {
-              country: string;
-              country_code: string;
-            }[];
-          } = await response.json();
-
-          setCountries(data.countries);
-        } else {
-          console.error("Couldn't reach server");
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    // Call async function
-    fetchData();
-  }, []);
+  useFetch<countriesList>({
+    url: "https://api.yield-curves.com/config?id=countries",
+    processData: (data: any) => {
+      setCountries(data.countries);
+      return data.countries;
+    },
+  });
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedCountry, setSelectedCountry] = useState("United Kingdom");
