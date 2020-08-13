@@ -53,13 +53,13 @@ export const DownloadSection: FC = () => {
               <MonthPicker onChange={setSelectedDate} />
             </div>
             <div className="md:self-end">
-              <label htmlFor="country" className="text-sm font-normal leading-5 text-black align-center">
+              <label htmlFor="countryDropdown" className="text-sm font-normal leading-5 text-black align-center">
                 Country
               </label>
               <select
                 defaultValue={selectedCountry}
                 onChange={(e) => setSelectedCountry(e.target.value)}
-                id="currency"
+                id="countryDropdown"
                 className="block w-full mt-1 text-sm leading-6 border-gray-300 cursor-pointer form-select focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5">
                 {countries.map((c) => (
                   <option key={c.country_code}>{c.country}</option>
