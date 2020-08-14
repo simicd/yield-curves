@@ -1,64 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
-  <title>Yield curves - Solvency II RFR for any currency, any maturity, at any date.</title>
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <meta charset="utf-8" />
     <meta name="google-site-verification" content="gMdq3uih0wj0izD9nqyFXzbFrxtle-faJxAyb65W6iA" />
-    <link rel="icon" href="%PUBLIC_URL%/icon_48x48.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <base href="%PUBLIC_URL%/" />
-    <meta
-      name="description"
+    <!-- Website info & icons -->
+    <title>Yield curves - Solvency II RFR for any currency, any maturity, at any date.</title>
+    <meta name="description"
       content="Get risk free rates published by EIOPA for Solvency II valuations for any currency, any maturity, at any date." />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="icon" href="%PUBLIC_URL%/icon_48x48.png" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/icon_128x128.png" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <base href="%PUBLIC_URL%/" />
+    <!-- Social media cards - Open Graph & Twitter annotation -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Yield curves - Download EIOPA's Solvency II risk free rates" />
-    <meta property="og:description" content="Get risk free rates published by EIOPA for Solvency II valuations for any currency, any maturity, at any date." />
+    <meta property="og:description"
+      content="Get risk free rates published by EIOPA for Solvency II valuations for any currency, any maturity, at any date." />
     <meta property="og:image" content="https://www.yield-curves.com/twitter_card_2x1.png" />
     <meta property="og:url" content="https://www.yield-curves.com" />
     <meta property="og:site_name" content="Yield curves" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Yield curves - Download EIOPA's Solvency II risk free rates" />
-    <meta name="twitter:description" content="Get risk free rates published by EIOPA for Solvency II valuations for any currency, any maturity, at any date." />
+    <meta name="twitter:description"
+      content="Get risk free rates published by EIOPA for Solvency II valuations for any currency, any maturity, at any date." />
     <meta name="twitter:image" content="https://www.yield-curves.com/twitter_card_1x1.png" />
     <meta name="twitter:image:alt" content="Picture of yield curve live demo" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/icon_128x128.png" />
+    <!-- Preconnect to frequently used pages to speed up queries -->
+    <link href="https://api.yield-curves.com" rel="preconnect" crossorigin>
+    <link href="https://www.google-analytics.com" rel="preconnect" crossorigin>
+    <link href="https://dc.services.visualstudio.com" rel="preconnect" crossorigin>
+    <!-- Schema.org definition -->
     <script type="application/ld+json">
-      {
-        "@context": "http://schema.org/",
-        "@type": "Product",
-        "additionalProperty": "Financial product",
-        "name": "EIOPA risk free rates",
-        "description": "Our service provides cleaned EIOPA risk free rates delivered through an API in a fast & efficient manner.",
-        "alternateName": "EIOPA risk free yield curves",
-        "audience": {
-          "@type": "Audience",
-          "audienceType": "Insurance industry",
-          "geographicArea": "Europe"},
-        "provider": "EIOPA",
-        "url": "https://www.yield-curves.com",
-        "logo":"%PUBLIC_URL%/icon_48x48.png",
-        "offers": {
-          "@type": "Offer",
-          "price": "1",
-          "priceCurrency": "CHF",
-          "priceValidUntil": "2021-12-31",
-          "priceSpecification": "Monthly subscription",
-          "availability": "https://schema.org/InStock",
-          "url": "yield-curves.com",
-          "acceptedPaymentMethod": "Card Payment",
-          "availabilityStarts": "2016-01-01",
-          "availableDeliveryMethod": "REST API",
-          "sku": "1000000",
-          "slogan": "Get risk free rates published by EIOPA for Solvency II valuations for any currency, any maturity, at any date",
-          "category": "financial product > risk free rates"
+        {
+          "@context": "http://schema.org/",
+          "@type": "Product",
+          "additionalProperty": "Financial product",
+          "name": "EIOPA risk free rates",
+          "description": "Our service provides cleaned EIOPA risk free rates delivered through an API in a fast & efficient manner.",
+          "alternateName": "EIOPA risk free yield curves",
+          "audience": {
+            "@type": "Audience",
+            "audienceType": "Insurance industry",
+            "geographicArea": "Europe"},
+          "provider": "EIOPA",
+          "url": "https://www.yield-curves.com",
+          "logo":"%PUBLIC_URL%/icon_48x48.png",
+          "offers": {
+            "@type": "Offer",
+            "price": "1",
+            "priceCurrency": "CHF",
+            "priceValidUntil": "2021-12-31",
+            "priceSpecification": "Monthly subscription",
+            "availability": "https://schema.org/InStock",
+            "url": "yield-curves.com",
+            "acceptedPaymentMethod": "Card Payment",
+            "availabilityStarts": "2016-01-01",
+            "availableDeliveryMethod": "REST API",
+            "sku": "1000000",
+            "slogan": "Get risk free rates published by EIOPA for Solvency II valuations for any currency, any maturity, at any date",
+            "category": "financial product > risk free rates"
+          }
         }
-      }
-    </script>
+      </script>
   </head>
+
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
   </body>
+
 </html>

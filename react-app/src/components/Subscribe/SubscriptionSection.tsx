@@ -22,7 +22,6 @@ export const SubscriptionSection: FC = () => {
         body: JSON.stringify({ email: email }),
       },
     });
-    console.log(response);
     if (response.status === "success") {
       setStatus("success");
     } else if (response.status === "error") {
