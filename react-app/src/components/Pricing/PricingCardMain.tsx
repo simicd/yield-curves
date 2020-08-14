@@ -11,10 +11,10 @@ export const PricingCardMain: FC<PricingCardProps> = ({ title, amount, benefits,
   return (
     <div className="max-w-lg mx-auto mt-10 lg:mt-0 lg:max-w-none lg:mx-0 lg:col-start-3 lg:col-end-6 lg:row-start-1 lg:row-end-4">
       <div className="relative z-10 rounded-lg shadow-xl">
-        <div className="absolute inset-0 border-2 border-indigo-600 rounded-lg pointer-events-none"></div>
+        <div className="absolute inset-0 border-2 border-teal-600 rounded-lg pointer-events-none"></div>
         <div className="absolute inset-x-0 top-0 transform translate-y-px">
           <div className="flex justify-center transform -translate-y-1/2">
-            {/* <span className="inline-flex px-4 py-1 text-sm font-semibold leading-5 tracking-wider text-white uppercase bg-indigo-600 rounded-full">
+            {/* <span className="inline-flex px-4 py-1 text-sm font-semibold leading-5 tracking-wider text-white uppercase bg-teal-600 rounded-full">
               Most popular
             </span> */}
           </div>
@@ -48,7 +48,7 @@ export const PricingCardMain: FC<PricingCardProps> = ({ title, amount, benefits,
             <div className="rounded-lg shadow-md">
               <Link
                 to={buttonUrl}
-                className="block w-full px-6 py-4 text-xl font-medium leading-6 text-center text-white transition duration-150 ease-in-out bg-indigo-600 border border-transparent rounded-lg hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo"
+                className="block w-full px-6 py-4 text-xl font-medium leading-6 text-center text-white transition duration-150 ease-in-out bg-teal-600 border border-transparent rounded-lg hover:bg-teal-500 focus:outline-none focus:border-teal-700 focus:shadow-outline-teal"
                 aria-describedby="tier-growth">
                 {buttonText}
               </Link>

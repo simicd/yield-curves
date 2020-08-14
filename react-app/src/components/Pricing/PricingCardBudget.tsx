@@ -41,7 +41,7 @@ export const PricingCardBudget: FC<PricingCardProps> = ({ title, amount, benefit
               <div className="rounded-lg shadow-md">
                 <Link
                   to={buttonUrl}
-                  className="block w-full px-6 py-3 text-base font-medium leading-6 text-center text-indigo-600 transition duration-150 ease-in-out bg-white border border-transparent rounded-lg hover:text-indigo-100 hover:bg-indigo-600 focus:outline-none focus:shadow-outline"
+                  className="block w-full px-6 py-3 text-base font-medium leading-6 text-center text-teal-600 transition duration-150 ease-in-out bg-white border border-transparent rounded-lg hover:text-teal-100 hover:bg-teal-600 focus:outline-none focus:shadow-outline"
                   aria-describedby="tier-hobby">
                   {buttonText}
                 </Link>

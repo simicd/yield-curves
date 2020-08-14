@@ -60,7 +60,7 @@ export const DownloadSection: FC = () => {
                 defaultValue={selectedCountry}
                 onChange={(e) => setSelectedCountry(e.target.value)}
                 id="countryDropdown"
-                className="block w-full mt-1 text-sm leading-6 border-gray-300 cursor-pointer form-select focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:leading-5">
+                className="block w-full mt-1 text-sm leading-6 border-gray-300 cursor-pointer form-select focus:outline-none focus:shadow-outline-blue focus:border-teal-300 sm:leading-5">
                 {countries.map((c) => (
                   <option key={c.country_code}>{c.country}</option>
                 ))}
