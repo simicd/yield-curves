@@ -37,7 +37,11 @@ export const SubscriptionSection: FC = () => {
   return (
     <div className="bg-white" id="subscription">
       <div className="max-w-screen-xl px-4 py-12 mx-auto sm:px-6 lg:py-16 lg:px-8">
-        <div className="px-6 py-6 bg-teal-800 rounded-lg md:py-12 md:px-12 lg:py-16 lg:px-16 xl:flex xl:items-center">
+
+
+        <div className="px-6 py-6 rounded-lg bg-gradient-to-tr from-teal-900 to-teal-500 md:py-12 md:px-12 lg:py-16 lg:px-16 xl:flex xl:items-center">
+
+
           <div className="xl:w-0 xl:flex-1">
             <h2 className="text-2xl font-bold leading-8 tracking-tight text-white sm:text-3xl sm:leading-9">
               Want to be notified when we go live?
@@ -59,7 +63,7 @@ export const SubscriptionSection: FC = () => {
               />
               <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">
                 <button
-                  className="flex items-center justify-center w-full px-5 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-teal-800 border border-transparent border-white rounded-md hover:bg-teal-500 focus:outline-none focus:bg-teal-500"
+                  className="flex items-center justify-center w-full px-5 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out border border-transparent border-white rounded-md hover:bg-teal-500 focus:outline-none focus:bg-teal-500"
                   onClick={() => submitEmail(email)}>
                   Notify me
                 </button>
