@@ -39,9 +39,9 @@ export const SubscriptionSection: FC = () => {
       <div className="max-w-screen-xl px-4 py-12 mx-auto sm:px-6 lg:py-16 lg:px-8">
 
 
-        <div className="px-6 py-6 rounded-lg bg-gradient-to-tr from-blue-900 to-teal-400 md:py-12 md:px-12 lg:py-16 lg:px-16 xl:flex xl:items-center">
+        <div className="px-6 py-6 rounded-lg bg-gradient-to-tr from-teal-900 to-teal-500 md:py-12 md:px-12 lg:py-16 lg:px-16 xl:flex xl:items-center">
 
-          
+
           <div className="xl:w-0 xl:flex-1">
             <h2 className="text-2xl font-bold leading-8 tracking-tight text-white sm:text-3xl sm:leading-9">
               Want to be notified when we go live?

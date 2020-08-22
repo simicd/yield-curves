@@ -8,6 +8,9 @@ module.exports = {
     "./src/**/*.jsx",
     "./src/**/*.js",
   ],
+  future: {
+    removeDeprecatedGapUtilities: true,
+  },
   theme: {
     extend: {
       fontFamily: {

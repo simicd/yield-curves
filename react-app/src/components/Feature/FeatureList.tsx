@@ -8,7 +8,7 @@ import React, { FC } from "react";
 export const FeatureList: FC = ({ children }) => {
   return (
     <div className="mt-10">
-      <ul className="md:grid md:grid-cols-2 md:col-gap-8 md:row-gap-10">{children}</ul>
+      <ul className="md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">{children}</ul>
     </div>
   );
 };
