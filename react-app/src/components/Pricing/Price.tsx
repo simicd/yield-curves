@@ -10,7 +10,7 @@ export const Price: FC<{ price: string | number }> = ({ price }) => {
             <span className="font-extrabold">{price}</span>
           </>
         ) : (
-          <span className="text-5xl font-extrabold">{price}</span>
+          <span className="mt-2 text-5xl font-extrabold">{price}</span>
         )}
       </span>
       {typeof price === "number" ? <span className="text-xl font-medium leading-7 text-gray-500">/month</span> : <></>}

@@ -2,8 +2,11 @@ import React, { FC } from "react";
 import { PricingCardProps } from "./PricingCardProps";
 import { CheckmarkIcon } from "./CheckMarkIcon";
 import { Price } from "./Price";
-import { Link } from "react-router-dom";
 
+/**
+ * Pricing card with tag and feature list
+ * @param PricingCardProps Pricing card properties
+ */
 export const PricingCard: FC<PricingCardProps> = ({ benefits, buttonText, buttonUrl, price, title }) => {
   return (
     <>
@@ -30,7 +33,7 @@ export const PricingCard: FC<PricingCardProps> = ({ benefits, buttonText, button
             ))}
           </ul>
           <div className="mt-8">
-          <div className="rounded-lg shadow-md">
+            <div className="rounded-lg shadow-md">
               <a
                 href={buttonUrl}
                 className="block w-full px-4 py-2 leading-6 text-center text-white transition duration-150 ease-in-out bg-teal-600 border border-transparent rounded-lg text-md hover:bg-teal-500 focus:outline-none focus:border-teal-700 focus:shadow-outline-teal"
@@ -38,7 +41,7 @@ export const PricingCard: FC<PricingCardProps> = ({ benefits, buttonText, button
                 {buttonText}
               </a>
             </div>
-            </div>
+          </div>
         </div>
       </div>
     </>

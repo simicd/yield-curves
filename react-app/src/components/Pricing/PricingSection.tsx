@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 
-import { PricingCardTop } from "./PricingCardTop";
-import { PricingCardMain } from "./PricingCardMain";
-import { PricingCardBudget } from "./PricingCardBudget";
+// import { PricingCardTop } from "./PricingCardTop";
+// import { PricingCardMain } from "./PricingCardMain";
+// import { PricingCardBudget } from "./PricingCardBudget";
 import { PricingCard } from "./PricingCard";
 
 /**
@@ -11,10 +11,13 @@ import { PricingCard } from "./PricingCard";
 export const PricingSection: FC = () => {
   return (
     <>
-      <div className="bg-gray-900">
-        <div className="px-4 pt-12 sm:px-6 lg:px-8 lg:pt-20">
+      <div className="bg-gray-800">
+        <div className="px-4 pt-12 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-3xl font-semibold leading-6 tracking-wider text-gray-300 uppercase">Pricing</h2>
+            <h2 className="text-base font-semibold leading-6 tracking-wider uppercase text-teal-50">Pricing</h2>
+            <h3 className="mt-2 text-3xl font-extrabold leading-8 tracking-tight text-white sm:text-4xl sm:leading-10">
+            Subscription plans
+          </h3>
           </div>
         </div>
 

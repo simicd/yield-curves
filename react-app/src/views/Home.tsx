@@ -159,11 +159,13 @@ export const Home: FC = () => {
 
       <PricingSection />
 
-      <div className="mt-48">
+      <div className="mt-12">
         <DownloadSection />
       </div>
 
-      <SubscriptionSection />
+      <div className="mt-12">
+        <SubscriptionSection />
+      </div>
 
       <Notification status={showNotification} onClick={() => setShowNotification(undefined)}>
         <>
