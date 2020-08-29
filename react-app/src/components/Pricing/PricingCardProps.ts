@@ -2,7 +2,7 @@ export interface PricingCardProps {
   /** Pricing card title */
   title: string;
   /** Service cost */
-  amount: number;
+  price: number | string;
   /** Benefits list */
   benefits: string[];
   /** Button text */

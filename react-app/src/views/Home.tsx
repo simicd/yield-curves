@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import groupBy from "lodash.groupby"; // Installed only groupby function - for all functions go to package.json and install lodash instead of lodash.groupby
 
-// import { PricingSection } from "../components/Pricing";
+import { PricingSection } from "../components/Pricing";
 import { SubscriptionSection } from "../components/Subscribe";
 import { DownloadSection } from "../components/DownloadSection";
 import { YieldCurveWidget } from "../components/Widgets";
@@ -157,7 +157,7 @@ export const Home: FC = () => {
         </FeatureList>
       </FeatureSection>
 
-      {/* <PricingSection /> */}
+      <PricingSection />
 
       <DownloadSection />
 

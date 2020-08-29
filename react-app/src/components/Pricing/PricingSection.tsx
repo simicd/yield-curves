@@ -24,21 +24,21 @@ export const PricingSection: FC = () => {
               <div className="relative lg:grid lg:grid-cols-7">
                 <PricingCardBudget
                   title="Free"
-                  amount={0}
+                  price={0}
                   benefits={["Yield curve dashboard", "Monthly data as .csv", "Free, forever"]}
                   buttonText="Show dashboard"
                   buttonUrl="/"
                 />
                 <PricingCardMain
                   title="Individual"
-                  amount={0}
+                  price={15}
                   benefits={["All features from Free tier", "Access to REST API", "For personal use", "...", "..."]}
                   buttonText="Get started"
                   buttonUrl="/"
                 />
                 <PricingCardTop
                   title="Enterprise"
-                  amount={0}
+                  price={"Custom"}
                   benefits={["All features from Individual tier", "Distribution within company", "On-demand support"]}
                   buttonText="Get started"
                   buttonUrl="/"
