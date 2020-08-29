@@ -25,7 +25,7 @@ export const PricingSection: FC = () => {
           <div className="relative z-0">
             <div className="absolute inset-0 bg-gray-800 h-5/6 lg:h-2/3"></div>
             <div className="max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">
-              <div className="relative grid grid-cols-1 gap-4 lg:grid-cols-3">  {/* When using section with top/main/budget cards set grid cols to 7 */}
+              <div className="relative grid grid-cols-1 gap-4 mx-auto lg:grid-cols-3 max-w-max-content">  {/* When using section with top/main/budget cards set grid cols to 7 */}
                 <PricingCard
                   title="Free"
                   price={0}
