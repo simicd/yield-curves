@@ -10,12 +10,10 @@ import { Price } from "./Price";
 export const PricingCard: FC<PricingCardProps> = ({ benefits, buttonText, buttonUrl, price, title }) => {
   return (
     <>
-      <div className="flex flex-col overflow-hidden rounded-lg shadow-lg">
+      <div className="flex flex-col max-w-sm overflow-hidden rounded-lg shadow-lg">
         <div className="px-6 py-8 bg-white sm:p-10 sm:pb-6 h-44">
           <div className="flex items-center justify-center">
-            <h3
-              className="inline-flex px-4 py-1 text-sm font-semibold leading-5 tracking-wide text-teal-600 uppercase rounded-full bg-teal-50"
-              id="tier-standard">
+            <h3 className="inline-flex px-4 py-1 text-sm font-semibold leading-5 tracking-wide text-teal-600 uppercase bg-gray-100 rounded-full">
               {title}
             </h3>
           </div>
