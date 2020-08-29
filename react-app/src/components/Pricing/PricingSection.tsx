@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import { PricingCardTop } from "./PricingCardTop";
 import { PricingCardMain } from "./PricingCardMain";
 import { PricingCardBudget } from "./PricingCardBudget";
+import { PricingCard } from "./PricingCard";
 
 /**
  * Pricing component with pricing three tiers
@@ -21,27 +22,27 @@ export const PricingSection: FC = () => {
           <div className="relative z-0">
             <div className="absolute inset-0 bg-gray-900 h-5/6 lg:h-2/3"></div>
             <div className="max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">
-              <div className="relative lg:grid lg:grid-cols-7">
-                <PricingCardBudget
+              <div className="relative lg:grid lg:grid-cols-3 lg:gap-4">  {/* When using section with top/main/budget cards set grid cols to 7 */}
+                <PricingCard
                   title="Free"
                   price={0}
                   benefits={["Yield curve dashboard", "Monthly data as .csv", "Free, forever"]}
-                  buttonText="Show dashboard"
-                  buttonUrl="/"
+                  buttonText="Download"
+                  buttonUrl="#download"
                 />
-                <PricingCardMain
+                <PricingCard
                   title="Individual"
                   price={15}
                   benefits={["All features from Free tier", "Access to REST API", "For personal use", "...", "..."]}
-                  buttonText="Get started"
-                  buttonUrl="/"
+                  buttonText="Sign up"
+                  buttonUrl="#subscription"
                 />
-                <PricingCardTop
+                <PricingCard
                   title="Enterprise"
                   price={"Custom"}
                   benefits={["All features from Individual tier", "Distribution within company", "On-demand support"]}
-                  buttonText="Get started"
-                  buttonUrl="/"
+                  buttonText="Contact us"
+                  buttonUrl="#subscription"
                 />
               </div>
             </div>

@@ -159,7 +159,9 @@ export const Home: FC = () => {
 
       <PricingSection />
 
-      <DownloadSection />
+      <div className="mt-48">
+        <DownloadSection />
+      </div>
 
       <SubscriptionSection />
 
