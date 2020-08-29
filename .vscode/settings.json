@@ -3,6 +3,10 @@
     "yield-curves",
     "azure-function"
   ],
+  "python.analysis.extraPaths": [
+    "yield-curves",
+    "azure-function"
+  ],
   "python.testing.pytestArgs": [
     "yield-curves"
   ],
