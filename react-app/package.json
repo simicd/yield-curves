@@ -36,7 +36,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.3",
     "react-transition-group": "^4.4.1",
-    "tailwindcss": "^1.7.3",
+    "tailwindcss": "^1.8.2",
     "typescript": "^3.9.7"
   },
   "scripts": {
