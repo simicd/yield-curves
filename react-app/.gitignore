@@ -1,5 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Ignore tailwindcss output
+# See also https://github.com/tailwindlabs/discuss/issues/352#issuecomment-545606781
+**/main.css
+
 # dependencies
 /node_modules
 /.pnp
