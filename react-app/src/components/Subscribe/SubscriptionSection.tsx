@@ -43,10 +43,10 @@ export const SubscriptionSection: FC = () => {
 
           <div className="xl:w-0 xl:flex-1">
             <h2 className="text-2xl font-bold leading-8 tracking-tight text-white sm:text-3xl sm:leading-9">
-              Want to be notified when we go live?
+              Want to subscribe to our service?
             </h2>
             <p className="max-w-3xl mt-3 text-lg leading-6 text-teal-50" id="newsletter-headline">
-              Sign up to stay up to date.
+              Leave your e-mail and we will get in touch with you
             </p>
           </div>
           <div className="mt-8 sm:w-full sm:max-w-md xl:mt-0 xl:ml-8">
@@ -64,7 +64,7 @@ export const SubscriptionSection: FC = () => {
                 <button
                   className="flex items-center justify-center w-full px-5 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out border border-transparent border-white rounded-md hover:bg-teal-500 focus:outline-none focus:bg-teal-500"
                   onClick={() => submitEmail(email)}>
-                  Notify me
+                  Contact me
                 </button>
               </div>
             </form>
