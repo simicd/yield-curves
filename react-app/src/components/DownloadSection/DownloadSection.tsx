@@ -24,7 +24,7 @@ export const DownloadSection: FC = () => {
   const [showNotification, setShowNotification] = useState<NotificationProps["status"]>();
 
   return (
-    <div className="relative">
+    <div className="relative" id="download">
       <div className="bg-gray-50">
         <div className="left-0 max-w-screen-xl px-4 py-12 mx-auto sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
           <h2 className="text-2xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-3xl sm:leading-10">

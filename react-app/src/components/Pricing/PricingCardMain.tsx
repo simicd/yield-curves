@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { PricingCardProps } from "./PricingCardProps";
+import { Price } from "./Price";
 import { CheckmarkIcon } from "./CheckMarkIcon";
 import { Link } from "react-router-dom";
 
@@ -7,7 +8,7 @@ import { Link } from "react-router-dom";
  * Central pricing card for main offer
  * @param PricingCardProps Pricing card properties
  */
-export const PricingCardMain: FC<PricingCardProps> = ({ title, amount, benefits, buttonText, buttonUrl }) => {
+export const PricingCardMain: FC<PricingCardProps> = ({ title, price, benefits, buttonText, buttonUrl }) => {
   return (
     <div className="max-w-lg mx-auto mt-10 lg:mt-0 lg:max-w-none lg:mx-0 lg:col-start-3 lg:col-end-6 lg:row-start-1 lg:row-end-4">
       <div className="relative z-10 rounded-lg shadow-xl">
@@ -24,13 +25,7 @@ export const PricingCardMain: FC<PricingCardProps> = ({ title, amount, benefits,
             <h3 className="text-3xl font-semibold leading-9 text-center text-gray-900 sm:-mx-6" id="tier-growth">
               {title}
             </h3>
-            <div className="flex items-center justify-center mt-4">
-              <span className="flex items-start px-3 text-6xl leading-none tracking-tight text-gray-900 sm:text-6xl">
-                <span className="mt-2 mr-2 text-4xl font-medium">$</span>
-                <span className="font-extrabold">{amount}</span>
-              </span>
-              <span className="text-2xl font-medium leading-8 text-gray-500">/month</span>
-            </div>
+            <Price price={price} />
           </div>
         </div>
         <div className="px-6 pt-10 pb-8 border-t-2 border-gray-100 rounded-b-lg bg-gray-50 sm:px-10 sm:py-10">
