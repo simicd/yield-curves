@@ -19,7 +19,7 @@ export const FeatureListItem: FC<FeatureListItemProps> = ({ title, description, 
       <li className="mt-10 md:mt-0">
         <div className="flex lg:ml-1/4">
           <div className="flex-shrink-0">
-            <div className="flex items-center justify-center w-12 h-12 text-white bg-teal-600 rounded-md">
+            <div className="flex items-center justify-center w-12 h-12 text-white bg-teal-600 rounded-md bg-gradient-to-tr from-teal-500 to-blue-800">
               <svg
                 className="w-6 h-6"
                 fill="none"

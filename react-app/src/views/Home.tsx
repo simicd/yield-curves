@@ -91,7 +91,7 @@ export const Home: FC = () => {
           content: (
             <>
               <h2 className="text-4xl font-extrabold leading-10 tracking-tight text-gray-900 sm:text-5xl sm:leading-none md:text-6xl">
-                A <span className="text-teal-500"> time series of EIOPA's risk free rates </span>
+                A <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-blue-800"> time series of EIOPA's risk free rates </span>
                 <br className="xl:hidden" />
                 at your fingertips
               </h2>

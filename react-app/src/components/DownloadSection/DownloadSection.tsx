@@ -47,7 +47,7 @@ export const DownloadSection: FC = () => {
               today
             </span>
             <br />
-            <span className="text-teal-500">Pick a month and currency</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-blue-800">Pick a month and currency</span>
           </h2>
           <div className="flex flex-col flex-wrap h-48 align-bottom md:h-auto md:flex-row lg:w-2/5 justify-evenly">
             <div style={{ maxWidth: 100 }} className="mb-1 md:self-end">
