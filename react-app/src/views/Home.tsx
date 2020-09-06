@@ -11,6 +11,7 @@ import { HeaderSection } from "../components/Layout";
 import { useFetch } from "../utils/useFetch";
 import { defaultData } from "../assets/sampleData";
 import { TimeSerie } from "../types";
+import { Button } from "../components/Button";
 
 interface DataRow {
   CRA: number;
@@ -58,13 +59,24 @@ export const Home: FC = () => {
 
   // Get latest available date (previous month end)
   // Note that JS/TS months are zero-indexed (e.g. new Date(2020, 5, 30) => June 30th, 2020)
-  const lastAvailableDate = new Date(new Date().setDate(0))    // new Date() returns current date and .setDate(0) moves to previous month
-  new Date().getDate() < 2 && lastAvailableDate.setDate(0)     // Since new data is only available on the second day of the new month use previous previous month end otherwise
+  const lastAvailableDate = new Date(new Date().setDate(0)); // new Date() returns current date and .setDate(0) moves to previous month
+  new Date().getDate() < 2 && lastAvailableDate.setDate(0); // Since new data is only available on the second day of the new month use previous previous month end otherwise
 
   // for local testing replace with http://localhost:7071/api
   const { response } = useFetch<TimeSerie[]>({
-    url: `https://api.yield-curves.com/yield-curve?date=${lastAvailableDate.toISOString().split("T")[0]}&filter=${
-      ["US", "GB", "CN", "CH", "JP", "NO", "DE", "RU", "AU", "HK", "SG"]
+    url: `https://api.yield-curves.com/yield-curve?date=${lastAvailableDate.toISOString().split("T")[0]}&filter=${[
+      "US",
+      "GB",
+      "CN",
+      "CH",
+      "JP",
+      "NO",
+      "DE",
+      "RU",
+      "AU",
+      "HK",
+      "SG",
+    ]
       .map((c) => `country_code eq '${c}'`)
       .join(" or ")}`,
     processData: processData,
@@ -87,21 +99,18 @@ export const Home: FC = () => {
                 Browse EIOPA's Solvency II risk free rates for any currency, any maturity, at any date.
               </p>
               <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                <div className="rounded-md shadow">
-                  <a
-                    href="#subscription"
-                    className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-teal-700 border border-transparent rounded-md hover:bg-teal-500 focus:outline-none focus:border-teal-800 focus:shadow-outline-teal md:py-4 md:text-lg md:px-10">
-                    Get started
-                  </a>
-                </div>
+                <a href="#subscription">
+                  <Button size="lg">Get Started</Button>
+                </a>
                 <div className="mt-3 sm:mt-0 sm:ml-3">
-                  <button
+                  <Button
+                    size="lg"
+                    theme="light"
                     onClick={() => {
                       setShowNotification("info");
-                    }}
-                    className="flex items-center justify-center w-full px-8 py-3 text-base font-medium leading-6 text-teal-800 transition duration-150 ease-in-out border border-transparent rounded-md bg-cool-gray-100 hover:text-teal-500 hover:bg-cool-gray-100 focus:outline-none focus:shadow-outline-teal focus:border-teal-300 md:py-4 md:text-lg md:px-10">
-                    Live demo
-                  </button>
+                    }}>
+                    Live Demo
+                  </Button>
                 </div>
               </div>
             </>
