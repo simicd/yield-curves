@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react";
 import { Notification, NotificationProps } from "../Notification";
 import { useFetch } from "../../utils/useFetch";
+import { Button } from "../Button";
 
 /**
  * Subscription section with e-mail field
@@ -60,12 +61,8 @@ export const SubscriptionSection: FC = () => {
                 className="w-full px-5 py-3 text-base leading-6 text-gray-900 placeholder-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md appearance-none focus:outline-none focus:placeholder-gray-400"
                 placeholder="Enter your email"
               />
-              <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3 sm:flex-shrink-0">
-                <button
-                  className="flex items-center justify-center w-full px-5 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out border border-transparent border-white rounded-md hover:bg-teal-500 focus:outline-none focus:bg-teal-500"
-                  onClick={() => submitEmail(email)}>
-                  Contact me
-                </button>
+              <div className="mt-3 sm:mt-0 sm:ml-3 sm:flex-shrink-0">
+                <Button theme="transparent" onClick={() => submitEmail(email)}>Contact me</Button>
               </div>
             </form>
           </div>
