@@ -19,7 +19,7 @@ with open(r'yield-curves/local.settings.json') as json_file:
 
 # # Download risk-free yield curves between these two dates
 # download_files(start_date=date(2016, 1, 1), end_date=date(2020, 7, 1), path=raw_data_path)
-# download_file(date=date(2020, 6, 30), path=raw_data_path)
+# download_file(date=date(2020, 8, 31), path=raw_data_path)
 
 
 # Extract all files in raw file folder ending with ...Term_Structures.xlsx
@@ -40,13 +40,13 @@ for date, df in cleaned_dfs.items():
     # Store output as .csv
     df.to_csv(os.path.join(clean_data_path, f"eiopa-rfr-{date}.csv"), index=False, sep=',')
     # Write to table service
-    # write_rates_df_to_table(account_name=credentials["account_name"], account_key=credentials["account_key"], table_name="rates", table=df)
+    write_rates_df_to_table(account_name=credentials["account_name"], account_key=credentials["account_key"], table_name="rates", table=df)
 
     # Write configuration to Azure Table Storage - list of distinct countries & country codes
-    country_df = df[["country_code", "Country"]].drop_duplicates(subset=["country_code", "Country"]).rename({"Country": "country"}, axis=1)
-    country_list = json.dumps(country_df.to_dict(orient="records"))
-    write_config_to_table(account_name=credentials["account_name"], account_key=credentials["account_key"], table_name="rates",
-                          record={"countries": country_list}, partition_key="config", row_key="countries")
+    # country_df = df[["country_code", "Country"]].drop_duplicates(subset=["country_code", "Country"]).rename({"Country": "country"}, axis=1)
+    # country_list = json.dumps(country_df.to_dict(orient="records"))
+    # write_config_to_table(account_name=credentials["account_name"], account_key=credentials["account_key"], table_name="rates",
+    #                       record={"countries": country_list}, partition_key="config", row_key="countries")
 
 
 

@@ -45,10 +45,11 @@ const processData = (data: DataRow[]) => {
   for (let key in processedData) {
     dataArray.push({
       id: key,
-      date: new Date(Date.UTC(2020, 6 - 1, 30)), // Note that JS/TS months are zero-indexed (e.g. new Date(2020, 5, 30) => June 30th, 2020) TODO@simicd: Use data from API instead of hard-coding
+      date: new Date(data[0].Date),
       data: processedData[key],
     });
   }
+  console.log(dataArray);
   return dataArray;
 };
 
@@ -56,7 +57,7 @@ export const Home: FC = () => {
   const [showNotification, setShowNotification] = useState<NotificationProps["status"]>();
 
   // Note that JS/TS months are zero-indexed (e.g. new Date(2020, 5, 30) => June 30th, 2020)
-  const date = new Date(Date.UTC(2020, 6 - 1, 30));
+  const date = new Date(Date.UTC(2020, 8 - 1, 31));
 
   // for local testing replace with http://localhost:7071/api
   const { response } = useFetch<TimeSerie[]>({
