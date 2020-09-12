@@ -45,22 +45,25 @@ const processData = (data: DataRow[]) => {
   for (let key in processedData) {
     dataArray.push({
       id: key,
-      date: new Date(Date.UTC(2020, 6 - 1, 30)), // Note that JS/TS months are zero-indexed (e.g. new Date(2020, 5, 30) => June 30th, 2020) TODO@simicd: Use data from API instead of hard-coding
+      date: new Date(data[0].Date),
       data: processedData[key],
     });
   }
+  console.log(dataArray);
   return dataArray;
 };
 
 export const Home: FC = () => {
   const [showNotification, setShowNotification] = useState<NotificationProps["status"]>();
 
+  // Get latest available date (previous month end)
   // Note that JS/TS months are zero-indexed (e.g. new Date(2020, 5, 30) => June 30th, 2020)
-  const date = new Date(Date.UTC(2020, 6 - 1, 30));
+  const lastAvailableDate = new Date(new Date().setDate(0))    // new Date() returns current date and .setDate(0) moves to previous month
+  new Date().getDate() < 2 && lastAvailableDate.setDate(0)     // Since new data is only available on the second day of the new month use previous previous month end otherwise
 
   // for local testing replace with http://localhost:7071/api
   const { response } = useFetch<TimeSerie[]>({
-    url: `https://api.yield-curves.com/yield-curve?date=${date.toISOString().split("T")[0]}&filter=${
+    url: `https://api.yield-curves.com/yield-curve?date=${lastAvailableDate.toISOString().split("T")[0]}&filter=${
       ["US", "GB", "CN", "CH", "JP", "NO", "DE", "RU", "AU", "HK", "SG"]
       .map((c) => `country_code eq '${c}'`)
       .join(" or ")}`,

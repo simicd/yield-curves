@@ -1,4 +1,5 @@
 
+from logging import error
 from azure.cosmosdb.table.tablebatch import TableBatch
 from azure.cosmosdb.table.tableservice import TableService
 import json
@@ -8,11 +9,16 @@ import numpy as np
 from typing import Dict, List, Union
 
 
-def __connect(account_name: str, account_key: str, table_name: str) -> TableService:
+def __connect(table_name: str, account_name: str = None, account_key: str = None, connection_string: str = None) -> TableService:
     """Helper function connecting to Azure Table service"""
 
     # Set up connection to table service
-    table_service =  TableService(account_name=account_name, account_key=account_key)
+    if account_name is not None and account_key is not None:
+        table_service = TableService(account_name=account_name, account_key=account_key)
+    elif connection_string is not None:
+        table_service = TableService(connection_string=connection_string)
+    else:
+        raise ValueError("Specify either the account name & key or the connection string")
 
     # Create a new table only if it does not exists
     table_service.create_table(table_name)
@@ -20,10 +26,10 @@ def __connect(account_name: str, account_key: str, table_name: str) -> TableServ
     return table_service
 
 
-def write_rates_df_to_table(account_name: str, account_key: str, table_name: str, table: pd.DataFrame):
+def write_rates_df_to_table(table_name: str, table: pd.DataFrame, account_name: str = None, account_key: str = None, connection_string: str = None):
 
     # Set up connection to table service
-    table_service =  __connect(account_name, account_key, table_name)
+    table_service =  __connect(table_name, account_name, account_key, connection_string)
 
     # Specify PartitonKey and RowKey
     table["PartitionKey"] = table["Date"]

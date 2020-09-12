@@ -19,6 +19,5 @@
   "azureFunctions.projectLanguage": "Python",
   "azureFunctions.projectRuntime": "~3",
   "debug.internalConsoleOptions": "neverOpen",
-  "git.ignoreLimitWarning": true,
-  "python.pythonPath": "/opt/conda/bin/python"
+  "git.ignoreLimitWarning": true
 }

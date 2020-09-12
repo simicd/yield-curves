@@ -34,16 +34,17 @@ def store_file(file_object: bytes, filepath: str):
         file.write(file_object)
 
 
-def unzip(file_object: BytesIO, filepath: str):
-    """Unzip file and store content at target location specified in filepath variable
+def unzip(file_object: BytesIO):
+    """Unzip file
 
     Args:
         file_object: File as BytesIO buffer
-        filepath: Target extraction location
     """
 
     # ZipFile class expects a file location, e.g. ZipFile("file.zip","r") or a virtual file (BytesIO)
     with ZipFile(file_object) as zip_file:
+        # Return a dictionary with filenames as keys and bytes as
+        return {name: zip_file.read(name) for name in zip_file.namelist()}
         zip_file.extractall(filepath)
 
 
@@ -64,8 +65,11 @@ def fetch_content(url: str):
         print(f"Fetching {url} not successful")
 
 
-def download_file(date: datetime.date, path: str):
-    """Download, store and extract yield curve file for one date
+def download_file(date: datetime.date, path: str = None):
+    """Download and extract yield curve file for one date
+
+    If the filepath is provided store it at the location, else return a dictionary
+    with filenames as key and virutal file/binary as value
 
     Args:
         date: Yield curve date
@@ -87,8 +91,18 @@ def download_file(date: datetime.date, path: str):
             # This there is no need to store the .zip - only the extracted content (next step)
             file_object = BytesIO(file_content)
 
-            # Unzip it into current location with subfolder
-            unzip(file_object, filepath=os.path.join(path, 'EIOPA-RFR', f'{date}'))
+            # Unzip virtual file and get a dictionary with filenames as key and the file (binary) as value
+            files = unzip(file_object)
+
+            if path is None:
+                # If path is not provided return the filename/file content dictionary
+                return files
+            else:
+                # Store files
+                for file_name, file in files.items():
+                    subfolder = os.path.join(path, f'{date}')
+                    os.makedirs(subfolder, exist_ok=True)
+                    store_file(file_object=file, filepath=os.path.join(subfolder, file_name))
     except:
         print(f"Download of {date} not successful")
 
