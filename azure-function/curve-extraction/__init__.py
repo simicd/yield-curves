@@ -1,12 +1,7 @@
 import datetime
 import logging
-import glob
-import re
-import json
 import os
 import sys
-from datetime import date
-import tempfile
 
 # Add the parent path to list of indexed package folders.
 # This is required for local development only since the flow package is outside of the azure-functions folder
@@ -20,8 +15,7 @@ from yield_curves.extraction import download_file, clean_file
 def main(mytimer: func.TimerRequest) -> None:
 
     # Get current time
-    utc_timestamp = datetime.datetime.utcnow().replace(
-        tzinfo=datetime.timezone.utc).isoformat()
+    utc_timestamp = datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc)
 
     # Log if timer is due
     if mytimer.past_due:
@@ -30,8 +24,9 @@ def main(mytimer: func.TimerRequest) -> None:
     # Log when function ran
     logging.info('Python timer trigger function ran at %s', utc_timestamp)
 
-    # Determine download date
-    download_date = date(2020, 8, 31)
+
+    # Determine download date (last day of previous month)
+    download_date = datetime.date.today().replace(day=1)  - datetime.timedelta(days=1)
 
     # Download file, unzip it and retrieve the filename/file dictionary
     files = download_file(date=download_date)
@@ -42,14 +37,8 @@ def main(mytimer: func.TimerRequest) -> None:
     # Open Excel file and clean it
     cleaned_df = clean_file(date=str(download_date), file=rfr_file)
 
-    # logging.info(cleaned_df.head().to_json(orient="split"))
+    logging.info(f"Completed extraction of data from {download_date}")
 
     # Write to table service
     # write_rates_df_to_table(account_name=credentials["account_name"], account_key=credentials["account_key"], table_name="rates", table=df)
-
-
-
-
-
-
 
