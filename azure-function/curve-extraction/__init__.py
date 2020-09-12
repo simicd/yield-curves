@@ -14,30 +14,33 @@ from yield_curves.extraction import download_file, clean_file, write_rates_df_to
 
 def main(mytimer: func.TimerRequest) -> None:
 
-    # Get current time
-    utc_timestamp = datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc)
-
-    # Log if timer is due
-    if mytimer.past_due:
-        logging.info('The timer is past due!')
-
     # Log when function ran
-    logging.info('Python timer trigger function ran at %s', utc_timestamp)
-
+    logging.info(f"Python timer trigger function run at {datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc)}")
 
     # Determine download date (last day of previous month)
     download_date = datetime.date.today().replace(day=1)  - datetime.timedelta(days=1)
 
-    # Download file, unzip it and retrieve the filename/file dictionary
-    files = download_file(date=download_date)
+    try:
+        # Download file, unzip it and retrieve the filename/file dictionary
+        files = download_file(date=download_date)
 
-    # Extract file if ending with "Term_Structures.xlsx"
-    rfr_file = [virtual_file for file_name, virtual_file in files.items() if "Term_Structures.xlsx" in file_name][0]
+        # Extract file if ending with "Term_Structures.xlsx"
+        rfr_file = [virtual_file for file_name, virtual_file in files.items() if "Term_Structures.xlsx" in file_name][0]
 
-    # Open Excel file and clean it
-    cleaned_df = clean_file(date=str(download_date), file=rfr_file)
+        # Open Excel file and clean it
+        cleaned_df = clean_file(date=str(download_date), file=rfr_file)
 
-    logging.info(f"Completed extraction of data from {download_date}")
+        logging.info(f"Completed extraction of data ({download_date})")
+    except:
+        cleaned_df = None
+        logging.error(f"Download and exctracting data ({download_date}) failed")
 
-    # Write to table service
-    write_rates_df_to_table(table_name="rates", table=cleaned_df, connection_string=os.environ["AzureWebJobsStorage"])
+
+    # If downloading & cleaning successful
+    if cleaned_df is not None:
+        # Write to table service
+        try:
+            write_rates_df_to_table(table_name="rates", table=cleaned_df, connection_string=os.environ["AzureWebJobsStorage"])
+            logging.info(f"Successfully written data to Table Storage for {download_date}")
+        except:
+            logging.error(f"Writing data ({download_date}) to Table Storage failed")
