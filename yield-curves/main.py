@@ -39,7 +39,7 @@ for date, df in cleaned_dfs.items():
     # Store output as .csv
     df.to_csv(os.path.join(clean_data_path, f"eiopa-rfr-{date}.csv"), index=False, sep=',')
     # Write to table service
-    write_rates_df_to_table(account_name=credentials["account_name"], account_key=credentials["account_key"], table_name="rates", table=df)
+    write_rates_df_to_table(table_name="rates", table=df, account_name=credentials["account_name"], account_key=credentials["account_key"])
 
     # Write configuration to Azure Table Storage - list of distinct countries & country codes
     # country_df = df[["country_code", "Country"]].drop_duplicates(subset=["country_code", "Country"]).rename({"Country": "country"}, axis=1)

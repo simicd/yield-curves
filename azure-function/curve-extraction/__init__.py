@@ -9,7 +9,7 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname("../"), "yield-curves")))
 
 import azure.functions as func
-from yield_curves.extraction import download_file, clean_file
+from yield_curves.extraction import download_file, clean_file, write_rates_df_to_table
 
 
 def main(mytimer: func.TimerRequest) -> None:
@@ -40,5 +40,4 @@ def main(mytimer: func.TimerRequest) -> None:
     logging.info(f"Completed extraction of data from {download_date}")
 
     # Write to table service
-    # write_rates_df_to_table(account_name=credentials["account_name"], account_key=credentials["account_key"], table_name="rates", table=df)
-
+    write_rates_df_to_table(table_name="rates", table=cleaned_df, connection_string=os.environ["AzureWebJobsStorage"])
