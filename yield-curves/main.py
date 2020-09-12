@@ -21,7 +21,6 @@ with open(r'yield-curves/local.settings.json') as json_file:
 # download_files(start_date=date(2016, 1, 1), end_date=date(2020, 7, 1), path=raw_data_path)
 # download_file(date=date(2020, 8, 31), path=raw_data_path)
 
-
 # Extract all files in raw file folder ending with ...Term_Structures.xlsx
 eiopa_files = list(
     glob.iglob(os.path.join(raw_data_path, r'**/*Term_Structures.xlsx'),

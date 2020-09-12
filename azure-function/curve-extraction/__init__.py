@@ -14,7 +14,7 @@ import tempfile
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname("../"), "yield-curves")))
 
 import azure.functions as func
-from yield_curves.extraction import download_files, download_file, clean_files
+from yield_curves.extraction import download_file, clean_file
 
 
 def main(mytimer: func.TimerRequest) -> None:
@@ -30,36 +30,19 @@ def main(mytimer: func.TimerRequest) -> None:
     # Log when function ran
     logging.info('Python timer trigger function ran at %s', utc_timestamp)
 
+    # Determine download date
+    download_date = date(2020, 8, 31)
 
+    # Download file, unzip it and retrieve the filename/file dictionary
+    files = download_file(date=download_date)
 
-    # Function provided by Azure that returns the location of the temporary folder
-    # See also: https://docs.microsoft.com/en-us/azure/azure-functions/functions-reference-python
-    tempFilePath = tempfile.gettempdir()
+    # Extract file if ending with "Term_Structures.xlsx"
+    rfr_file = [virtual_file for file_name, virtual_file in files.items() if "Term_Structures.xlsx" in file_name][0]
 
-    # Target folder
-    raw_data_path = os.path.join(tempFilePath, r'./raw')
-    clean_data_path = os.path.join(tempFilePath, r'./clean')
-    # Create folders if they don't exist
-    os.makedirs(raw_data_path, exist_ok=True)
-    os.makedirs(clean_data_path, exist_ok=True)
+    # Open Excel file and clean it
+    cleaned_df = clean_file(date=str(download_date), file=rfr_file)
 
-    download_file(date=date(2020, 8, 31), path=raw_data_path)
-
-    # Extract all files in raw file folder ending with ...Term_Structures.xlsx
-    eiopa_files = list(
-        glob.iglob(os.path.join(raw_data_path, r'**/*Term_Structures.xlsx'),
-                recursive=True))
-
-    # Extract dates from the filepath matching the pattern NNNN-NN-NN and create dictionary with dates as key and path as value
-    file_dict = {
-        re.search("[0-9]{4}-[0-9]{2}-[0-9]{2}", filepath).group(): filepath
-        for filepath in eiopa_files
-    }
-
-    # Clean all files listed in the dictionary
-    cleaned_dfs = clean_files(file_dict)
-
-    # logging.info(list(cleaned_dfs.values())[0].head().to_json(orient="split"))
+    # logging.info(cleaned_df.head().to_json(orient="split"))
 
     # Write to table service
     # write_rates_df_to_table(account_name=credentials["account_name"], account_key=credentials["account_key"], table_name="rates", table=df)

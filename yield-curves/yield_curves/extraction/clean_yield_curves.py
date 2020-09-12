@@ -1,12 +1,12 @@
 import pandas as pd
 import uuid
-from typing import Dict
+from typing import Dict, Union
 
-def read_eiopa(filepath: str, sheet_name: str) -> pd.DataFrame:
+def read_eiopa(file: Union[str, bytes], sheet_name: str) -> pd.DataFrame:
     """Read EIOPA RFR Term Structures file.
 
     Args:
-        file_path: The path where the file is stored.
+        file: The path where the file is stored or the binary file
         sheet_name: There are several types of rates, such as RFR_spot_no_VA.
 
     Returns:
@@ -14,7 +14,7 @@ def read_eiopa(filepath: str, sheet_name: str) -> pd.DataFrame:
     """
 
     # header=1 takes the dataframe header from the second row (zero-indexed)
-    return pd.read_excel(filepath, sheet_name=sheet_name, header=1)
+    return pd.read_excel(file, sheet_name=sheet_name, header=1)
 
 
 def clean_eiopa_rfr(df: pd.DataFrame, date: str) -> pd.DataFrame:
@@ -89,24 +89,24 @@ def unpivot_maturities(df: pd.DataFrame) -> pd.DataFrame:
     return df_temp.stack().reset_index()
 
 
-def clean_file(date: str, filepath: str = None, dataframe: pd.DataFrame = None) -> pd.DataFrame:
+def clean_file(date: str, file: Union[str, bytes] = None, dataframe: pd.DataFrame = None) -> pd.DataFrame:
     """Clean a RFR Excel file and return the cleaned dataframe
 
     Args:
-        filepath: Pandas dataframe to be unpivoted
+        file: Pandas dataframe to be unpivoted
         date: Yield curve date
 
     Returns:
         Cleaned padnas dataframe
     """
 
-    if filepath is None and dataframe is None:
+    if file is None and dataframe is None:
         raise ValueError("Please specify either a filepath or pass a dataframe")
 
-    if filepath is None:
+    if file is None:
         df = dataframe
     else:
-        df = read_eiopa(filepath, sheet_name="RFR_spot_no_VA")
+        df = read_eiopa(file, sheet_name="RFR_spot_no_VA")
 
     df = clean_eiopa_rfr(df, date)
     df = unpivot_maturities(df)
