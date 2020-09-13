@@ -22,8 +22,8 @@ export const PricingCard: FC<PricingCardProps> = ({ benefits, buttonText, button
         </div>
         <div className="flex flex-col justify-between flex-1 px-6 pt-6 pb-8 space-y-6 bg-gray-50 sm:p-10 sm:pt-6">
           <ul className="space-y-4">
-            {benefits.map((benefit) => (
-              <li className="flex items-start">
+            {benefits.map((benefit, index) => (
+              <li key={`benefit-${index}`} className="flex items-start">
                 <div className="flex-shrink-0">
                   <CheckmarkIcon />
                 </div>
