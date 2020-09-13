@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { PricingCardProps } from "./PricingCardProps";
 import { CheckmarkIcon } from "./CheckMarkIcon";
 import { Price } from "./Price";
+import { Button } from "../Button";
 
 /**
  * Pricing card with tag and feature list
@@ -21,8 +22,8 @@ export const PricingCard: FC<PricingCardProps> = ({ benefits, buttonText, button
         </div>
         <div className="flex flex-col justify-between flex-1 px-6 pt-6 pb-8 space-y-6 bg-gray-50 sm:p-10 sm:pt-6">
           <ul className="space-y-4">
-            {benefits.map((benefit) => (
-              <li className="flex items-start">
+            {benefits.map((benefit, index) => (
+              <li key={`benefit-${index}`} className="flex items-start">
                 <div className="flex-shrink-0">
                   <CheckmarkIcon />
                 </div>
@@ -34,9 +35,8 @@ export const PricingCard: FC<PricingCardProps> = ({ benefits, buttonText, button
             <div className="rounded-lg shadow-md">
               <a
                 href={buttonUrl}
-                className="block w-full px-4 py-2 leading-6 text-center text-white transition duration-150 ease-in-out bg-teal-600 border border-transparent rounded-lg text-md hover:bg-teal-500 focus:outline-none focus:border-teal-700 focus:shadow-outline-teal"
                 aria-describedby="tier-growth">
-                {buttonText}
+                <Button size="md">{buttonText}</Button>
               </a>
             </div>
           </div>

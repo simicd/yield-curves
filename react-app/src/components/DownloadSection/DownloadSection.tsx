@@ -4,6 +4,7 @@ import { MonthPicker } from "../MonthPicker/MonthPicker";
 import { Notification, NotificationProps } from "../Notification/Notification";
 import { defaultCountries } from "../../assets/sampleData";
 import { useFetch } from "../../utils/useFetch";
+import { Button } from "../Button";
 
 export const DownloadSection: FC = () => {
   // List of countries from the EIOPA curves and its corresponding country code for filtering
@@ -73,9 +74,10 @@ export const DownloadSection: FC = () => {
                   countries.filter((d) => d.country === selectedCountry)[0].country_code
                 }'&data_format=csv`
               }
-              className="px-6 py-2 text-sm font-normal text-white bg-teal-700 border border-transparent rounded-md md:self-end hover:text-teal-white hover:bg-teal-500 focus:outline-none focus:shadow-outline-teal focus:border-teal-300"
-              onClick={() => GAevent("User", "Download Yield Curves")}>
-              <button onClick={() => GAevent("User", "Download Yield Curves")}>Download</button>
+              className="md:self-end">
+              <Button size="sm" onClick={() => GAevent("User", "Download Yield Curves")}>
+                Download
+              </Button>
             </a>
           </div>
         </div>
