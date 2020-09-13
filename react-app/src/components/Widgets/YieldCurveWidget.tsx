@@ -124,7 +124,7 @@ export const YieldCurveWidget: FC<YieldCurveWidgetProps> = ({ data }) => {
             <button
               key={d.id}
               className={clsx(
-                "ml-1 mt-1 w-10 h-10 text-white rounded-md hover:bg-gradient-to-tr hover:from-teal-400 hover:to-blue-600 focus:outline-none shadow-inner",
+                "ml-1 mt-1 w-10 h-10 text-white rounded-md hover:bg-gradient-to-tr hover:from-teal-400 hover:to-blue-700 focus:outline-none shadow-inner",
                 {
                   "bg-gradient-to-tr from-teal-500 to-blue-800": country === d.id,
                   "bg-gradient-to-tr from-gray-700 to-gray-700": country !== d.id,
