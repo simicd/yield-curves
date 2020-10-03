@@ -26,7 +26,11 @@ def main(req: func.HttpRequest, registration: func.Out[str]) -> func.HttpRespons
 
     # Notify me via e-mail whenever a new user registers
     try:
-        send_mail(registrant=email)
+        send_mail(registrant=email,
+                  mail_from=os.environ["MAIL_FROM"],
+                  mail_to=os.environ["MAIL_TO"],
+                  token=os.environ["SENDGRID_TOKEN"])
+        logging.info("Successfully sent notification e-mail")
     except:
         logging.error(f"E-mail notification failed for new user {email}")
 
@@ -36,17 +40,18 @@ def main(req: func.HttpRequest, registration: func.Out[str]) -> func.HttpRespons
                              mimetype="application/json")
 
 
-def send_mail(registrant: str):
+def send_mail(registrant: str, mail_from: str, mail_to: str, token: str):
     """Send an e-mail via SendGrid to personal account whenver a new user signs up"""
 
+    # Define POST request body for SendGrid API
     body = {
         "personalizations": [{
             "to": [{
-                "email": os.environ["MAIL_TO"]
+                "email": mail_to
             }]
         }],
         "from": {
-            "email": os.environ["MAIL_FROM"]
+            "email": mail_from
         },
         "subject": "A new user registered (yield-curves.com)",
         "content": [{
@@ -55,6 +60,10 @@ def send_mail(registrant: str):
         }]
     }
 
+    # Send request
     requests.post("https://api.sendgrid.com/v3/mail/send",
                   data=json.dumps(body),
-                  headers={"Authorization": "Bearer " + os.environ["SENDGRID_TOKEN"]})
+                  headers={
+                      "Authorization": f"Bearer {token}",
+                      "content-type": "application/json"
+                  })
