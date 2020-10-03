@@ -1,5 +1,7 @@
 import logging
 import json
+import os
+import requests
 
 import azure.functions as func
 
@@ -22,7 +24,37 @@ def main(req: func.HttpRequest, registration: func.Out[str]) -> func.HttpRespons
     # Call the function binding - this step saves the data row to Table Storage
     registration.set(json.dumps(data))
 
+    # Notify me via e-mail whenever a new user registers
+    try:
+        send_mail(registrant=email)
+    except:
+        logging.error(f"E-mail notification failed for new user {email}")
+
     # Finally confirm creation of registration with status code 201 (resource created)
     return func.HttpResponse(json.dumps({"message": f"Email registered: {email}"}),
                              status_code=201,
                              mimetype="application/json")
+
+
+def send_mail(registrant: str):
+    """Send an e-mail via SendGrid to personal account whenver a new user signs up"""
+
+    body = {
+        "personalizations": [{
+            "to": [{
+                "email": os.environ["MAIL_TO"]
+            }]
+        }],
+        "from": {
+            "email": os.environ["MAIL_FROM"]
+        },
+        "subject": "A new user registered (yield-curves.com)",
+        "content": [{
+            "type": "text/plain",
+            "value": f"A new user signed up: {registrant}"
+        }]
+    }
+
+    requests.post("https://api.sendgrid.com/v3/mail/send",
+                  data=json.dumps(body),
+                  headers={"Authorization": "Bearer " + os.environ["SENDGRID_TOKEN"]})
