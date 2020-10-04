@@ -82,7 +82,8 @@ export const Home: FC = () => {
     processData: processData,
   });
 
-  const data = response.status === "success" ? response.data : defaultData;
+  // Check if message successful and data is returned - if no fallback to default dataset
+  const data = (response.status === "success" && response.data.length > 0) ? response.data : defaultData;
 
   return (
     <>
