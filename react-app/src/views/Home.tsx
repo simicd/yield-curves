@@ -41,7 +41,7 @@ const processData = (data: DataRow[]) => {
     .sort((a, b) => (a.x > b.x ? 1 : -1));
 
   // Generate required for nivo charts (Serie[])
-  const processedData = groupBy(transformedData, (r) => r.id);
+  const processedData = groupBy(transformedData, (r: typeof transformedData[0]) => r.id);
   const dataArray: TimeSerie[] = [];
   for (let key in processedData) {
     dataArray.push({
@@ -60,7 +60,7 @@ export const Home: FC = () => {
   // Get latest available date (previous month end)
   // Note that JS/TS months are zero-indexed (e.g. new Date(2020, 5, 30) => June 30th, 2020)
   const lastAvailableDate = new Date(new Date().setDate(0)); // new Date() returns current date and .setDate(0) moves to previous month
-  new Date().getDate() < 2 && lastAvailableDate.setDate(0); // Since new data is only available on the second day of the new month use previous previous month end otherwise
+  new Date().getDate() < 6 && lastAvailableDate.setDate(0); // Since new data is only available on the sixth day of the new month use previous previous month end otherwise
 
   // for local testing replace with http://localhost:7071/api
   const { response } = useFetch<TimeSerie[]>({
