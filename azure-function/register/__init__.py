@@ -26,10 +26,11 @@ def main(req: func.HttpRequest, registration: func.Out[str]) -> func.HttpRespons
 
     # Notify me via e-mail whenever a new user registers
     try:
-        send_mail(registrant=email,
-                  mail_from=os.environ["MAIL_FROM"],
-                  mail_to=os.environ["MAIL_TO"],
-                  token=os.environ["SENDGRID_TOKEN"])
+        # send_mail(registrant=email,
+        #           mail_from=os.environ["MAIL_FROM"],
+        #           mail_to=os.environ["MAIL_TO"],
+        #           token=os.environ["SENDGRID_TOKEN"])
+        notify_on_github(owner=os.environ["GITHUB_REPO_OWNER"], repo=os.environ["GITHUB_REPO"], issue=os.environ["GITHUB_ISSUE"], token=os.environ["GITHUB_TOKEN"])
         logging.info("Successfully sent notification e-mail")
     except:
         logging.error(f"E-mail notification failed for new user {email}")
@@ -38,6 +39,19 @@ def main(req: func.HttpRequest, registration: func.Out[str]) -> func.HttpRespons
     return func.HttpResponse(json.dumps({"message": f"Email registered: {email}"}),
                              status_code=201,
                              mimetype="application/json")
+
+
+def notify_on_github(owner: str, repo: str, issue: str, token: str):
+    """Notify via GitHub whenver a new user signs up. Note that the users e-mail address shouldn't be posted, only a message indicating that there is a new user."""
+
+    body = {
+	    "body": f"Notify @{owner}"
+    }
+
+    requests.post(f"https://api.github.com/repos/{owner}/{repo}/issues/{issue}/comments", data=json.dumps(body), headers={
+                      "Authorization": f"Bearer {token}",
+                      "content-type": "application/json"
+                  })
 
 
 def send_mail(registrant: str, mail_from: str, mail_to: str, token: str):

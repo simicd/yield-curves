@@ -6,6 +6,10 @@
     "AzureWebJobsStorage": "...",
     "MAIL_FROM": "...",
     "MAIL_TO": "...",
-    "SENDGRID_TOKEN": "..."
+    "SENDGRID_TOKEN": "...",
+    "GITHUB_REPO_OWNER": "...",
+    "GITHUB_REPO": "...",
+    "GITHUB_ISSUE": "...",
+    "GITHUB_TOKEN": "..."
   }
 }
