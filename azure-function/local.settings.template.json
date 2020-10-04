@@ -1,0 +1,11 @@
+// Remove "template" from the file name and populate the fields below
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "AzureWebJobsStorage": "...",
+    "MAIL_FROM": "...",
+    "MAIL_TO": "...",
+    "SENDGRID_TOKEN": "..."
+  }
+}
